@@ -167,17 +167,6 @@ button.row:active{background:#E8E8ED;transition:none}
 .facecam video{transform:scaleX(-1);opacity:0;transition:opacity .4s}
 .facecam.live video{opacity:1}
 .ring{position:absolute;inset:0}
-.turn-hint{position:absolute;inset:0;pointer-events:none}
-.turn-hint .th{position:absolute;top:50%;transform:translateY(-50%);opacity:0;transition:opacity .3s ease}
-.turn-hint .th-left{left:-14px}
-.turn-hint .th-right{right:-14px}
-.turn-hint.dir-left .th-left{opacity:1;animation:nudgeL 1s ease-in-out infinite}
-.turn-hint.dir-right .th-right{opacity:1;animation:nudgeR 1s ease-in-out infinite}
-@keyframes nudgeL{0%,100%{transform:translateY(-50%) translateX(0)}50%{transform:translateY(-50%) translateX(-9px)}}
-@keyframes nudgeR{0%,100%{transform:translateY(-50%) translateX(0)}50%{transform:translateY(-50%) translateX(9px)}}
-@keyframes flagpop{0%{transform:scale(.55);opacity:0}60%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
-.flag{animation:flagpop .32s cubic-bezier(.2,.9,.25,1)}
-@media (prefers-reduced-motion: reduce){.turn-hint .th{animation:none!important}.flag{animation:none!important}}
 .ring .prog{transition:stroke .3s ease}
 .instr{margin:clamp(16px,3vh,32px) 36px 0;min-height:30px;text-align:center;font-family:var(--display);font-size:22px;line-height:1.25;font-weight:600;letter-spacing:-.018em;transition:opacity .18s ease, transform .3s cubic-bezier(.2,.8,.2,1)}
 .instr.out{opacity:0;transform:translateY(4px)}
@@ -396,24 +385,15 @@ button.row:active{background:#E8E8ED;transition:none}
   <div class="nav"><button class="navbtn" data-back><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><span data-i18n="back">Atrás</span></button></div>
   <span class="step" data-i18n="step1">Paso 1 de 3</span>
   <h1 class="large-title" data-i18n="rev_title">Confirma tus datos</h1>
-  <p class="body" data-i18n="rev_sub">Revisa que las fotos se vean bien y que tus datos coincidan.</p>
+  <p class="body" data-i18n="rev_sub">Revisa que las dos fotos se vean nítidas y que el documento se lea con claridad.</p>
   <div class="thumbs fi" id="thumbs" style="--d:40ms">
     <figure><img id="thumbFront" alt=""><figcaption data-i18n="cap_front_c">Frente</figcaption></figure>
     <figure id="thumbBackFig"><img id="thumbBack" alt=""><figcaption data-i18n="cap_back_c">Reverso</figcaption></figure>
   </div>
   <div class="group-label" style="margin-top:24px" id="docLabel">Cédula de identidad · Nicaragua</div>
-  <dl class="group" style="margin-top:0;margin-bottom:0">
-    <div class="row fi" style="--d:80ms"><dt data-i18n="f_name">Nombre</dt><dd class="value" id="revName" style="margin:0">María José López Rivas</dd></div>
-    <div class="sep"></div>
-    <div class="row fi" style="--d:130ms"><dt data-i18n="f_number">Número</dt><dd class="value" id="revNum" style="margin:0;font-variant-numeric:tabular-nums">001-150390-0012K</dd></div>
-    <div class="sep"></div>
-    <div class="row fi" style="--d:180ms"><dt data-i18n="f_birth">Nacimiento</dt><dd class="value" id="revBirth" style="margin:0">15 mar 1990</dd></div>
-    <div class="sep"></div>
-    <div class="row fi" style="--d:230ms"><dt data-i18n="f_expiry">Vencimiento</dt><dd class="value" id="revExpiry" style="margin:0">22 ago 2031</dd></div>
-  </dl>
-  <p class="footnote fi" style="--d:280ms" data-i18n="rev_foot">Datos de ejemplo: la lectura automática del documento aún no está conectada.</p>
+  <p class="footnote fi" style="--d:120ms;margin-top:10px" data-i18n="rev_check">Asegúrate de que el documento salga completo, enfocado y sin reflejos.</p>
   <div class="bottom">
-    <button class="btn" id="revCont" data-push="selfie" data-i18n="continue">Continuar</button>
+    <button class="btn" data-push="selfie" data-i18n="continue">Continuar</button>
     <button class="btn-plain" id="retakeAll" data-i18n="retake_all">Volver a tomar las fotos</button>
   </div>
 </section>
@@ -433,10 +413,6 @@ button.row:active{background:#E8E8ED;transition:none}
       <circle cx="150" cy="150" r="144" fill="none" stroke="#E8E8ED" stroke-width="4"/>
       <circle class="prog" id="ringProg" cx="150" cy="150" r="144" fill="none" stroke="var(--accent)" stroke-width="4" stroke-linecap="round" stroke-dasharray="904.78" stroke-dashoffset="904.78" transform="rotate(-90 150 150)"/>
     </svg>
-    <div class="turn-hint" id="turnHint" aria-hidden="true">
-      <svg class="th th-left" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
-      <svg class="th th-right" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
-    </div>
   </div>
   <p class="instr" id="instr" role="status">Mira de frente a la cámara</p>
   <p class="body center" id="instrSub" style="margin-top:8px;font-size:15px">Quítate los lentes y la gorra.</p>
@@ -463,7 +439,6 @@ button.row:active{background:#E8E8ED;transition:none}
     <li class="sep" aria-hidden="true"></li>
     <li class="row fi" style="--d:380ms"><span id="resMatch" data-i18n="res_3">El rostro coincide</span><svg id="resMatchIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5L19.5 7"/></svg></li>
   </ul>
-  <div id="resData" class="fi" style="--d:410ms"></div>
   <p class="footnote fi" style="--d:440ms"><span data-i18n="res_foot">Tus imágenes ya se eliminaron de este dispositivo. Referencia VRF-</span><span id="ref">0000</span></p>
   <div class="bottom fi" style="--d:500ms"><button class="btn" id="finish" data-i18n="finish">Terminar</button><div class="kyf"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2l7 2.6v5.4c0 4.4-2.9 8.2-7 9.6-4.1-1.4-7-5.2-7-9.6V5.8l7-2.6z"/><path d="M9 12l2 2 4-4"/></svg><span data-i18n="protected_by">Protegido por</span><b>SecurPro</b></div></div>
 </section>
@@ -618,7 +593,7 @@ const STR = {
     side_front:'Frente', side_back:'Reverso', cap_front_c:'Frente', cap_back_c:'Reverso',
     retake:'Repetir', use_photo:'Usar foto',
     aria_handoff:'Continuar en otro dispositivo', aria_shutter:'Tomar foto', aria_torch:'Linterna', aria_face_shutter:'Tomar selfie',
-    rev_title:'Confirma tus datos', rev_sub:'Revisa que las fotos se vean bien y que tus datos coincidan.',
+    rev_title:'Confirma tus datos', rev_sub:'Revisa que las dos fotos se vean nítidas y que el documento se lea con claridad.', rev_check:'Asegúrate de que el documento salga completo, enfocado y sin reflejos.',
     f_name:'Nombre', f_number:'Número', f_birth:'Nacimiento', f_expiry:'Vencimiento',
     rev_foot:'Toca cada dato para revisarlo.', rev_reading:'Leyendo el documento…', rev_read_ok:'Lectura automática del documento. Verifica que los datos sean correctos.', rev_read_none:'No se pudo leer el documento automáticamente aquí. Revisa los datos manualmente.', rev_blank:'No pudimos leer el documento. Toma la foto de nuevo, bien enfocada y con buena luz.', retake_all:'Volver a tomar las fotos',
     selfie_title:'Ahora, una selfie', selfie_sub:'Coloca tu rostro dentro del círculo.',
@@ -690,7 +665,7 @@ const STR = {
     side_front:'Front', side_back:'Back', cap_front_c:'Front', cap_back_c:'Back',
     retake:'Retake', use_photo:'Use photo',
     aria_handoff:'Continue on another device', aria_shutter:'Take photo', aria_torch:'Flashlight', aria_face_shutter:'Take selfie',
-    rev_title:'Confirm your details', rev_sub:'Check that the photos look good and your details match.',
+    rev_title:'Confirm your details', rev_sub:'Check that both photos are sharp and the document reads clearly.', rev_check:'Make sure the document appears complete, in focus and glare-free.',
     f_name:'Name', f_number:'Number', f_birth:'Date of birth', f_expiry:'Expiry',
     rev_foot:'Review each field below.', rev_reading:'Reading the document…', rev_read_ok:'Automatic document reading. Please check the data is correct.', rev_read_none:'Could not read the document automatically here. Please check the data manually.', rev_blank:'We could not read the document. Retake the photo, well focused and in good light.', retake_all:'Retake the photos',
     selfie_title:'Now, a selfie', selfie_sub:'Place your face inside the circle.',
@@ -1057,8 +1032,6 @@ function renderPhotos(data) {
     const col = data.matchPass === false ? '#C2410C' : '#15803D';
     const bits = [`<b style="color:${col}">${t('vf_match')}: ${data.match}%</b>`];
     if (data.live != null) bits.push(`${t('vf_live')}: ${data.live ? '✓' : '—'}`);
-    if (data.name) bits.push(`${t('vf_name')}: ${data.name}`);
-    if (data.ced) bits.push(`${t('vf_ced')}: ${data.ced}`);
     vf = `<div style="margin:0 20px 10px;font-size:13.5px;color:var(--ink);line-height:1.5">${bits.join(' · ')}</div>`;
   }
   box.innerHTML =
@@ -1322,43 +1295,8 @@ function fillReview() {
   if (d.sides === 2) $('thumbBack').src = state.photos.back || '';
   $('thumbs').style.gridTemplateColumns = d.sides === 1 ? '1fr' : '';
   $('docLabel').textContent = `${t(d.nameKey)} · ${state.country}`;
-  readDocFields();
 }
-let lastOcrFront = null;
-function revFoot() { const sec = el('revision'); return sec ? sec.querySelector('[data-i18n="rev_foot"]') : null; }
-function setRev(name, num, birth, expiry) {
-  const m = { revName: name, revNum: num, revBirth: birth, revExpiry: expiry };
-  for (const id in m) { const e = $(id); if (e) e.textContent = m[id]; }
-}
-function gateCont(ok) { const b = $('revCont'); if (b) { b.disabled = !ok; } }
-async function readDocFields() {
-  const f = state.verify.fields;
-  if (f && lastOcrFront === state.photos.front) {   // ya leído estas fotos
-    setRev(f.name || '—', f.num || '—', f.birth || '—', f.expiry || '—');
-    const ft = revFoot(); if (ft) ft.textContent = t('rev_read_ok');
-    gateCont(true); return;
-  }
-  setRev('…', '…', '…', '…'); gateCont(false);
-  const ft = revFoot(); if (ft) ft.textContent = t('rev_reading');
-  const o = await ocrDoc();
-  lastOcrFront = state.photos.front;
-  const got = o && (o.num || o.name || o.birth || o.expiry);
-  if (got) {
-    state.verify.fields = o; if (o.num) state.verify.ced = o.num;
-    setRev(o.name || '—', o.num || '—', o.birth || '—', o.expiry || '—');
-    const f2 = revFoot(); if (f2) f2.textContent = t('rev_read_ok');
-    gateCont(true);
-  } else if (o && o.ran) {              // el OCR corrió pero no leyó nada -> documento ilegible/vacío
-    setRev('—', '—', '—', '—');
-    const f3 = revFoot(); if (f3) f3.textContent = t('rev_blank');
-    gateCont(false);
-  } else {                              // no se pudo correr el OCR aquí (p. ej. vista previa) -> no bloquear
-    setRev('—', '—', '—', '—');
-    const f4 = revFoot(); if (f4) f4.textContent = t('rev_read_none');
-    gateCont(true);
-  }
-}
-$('retakeAll').addEventListener('click', () => { state.photos.front && URL.revokeObjectURL(state.photos.front); state.photos.back && URL.revokeObjectURL(state.photos.back); state.photos.front = state.photos.back = null; state.verify.fields = null; lastOcrFront = null; freshCapture = true; pop(); });
+$('retakeAll').addEventListener('click', () => { state.photos.front && URL.revokeObjectURL(state.photos.front); state.photos.back && URL.revokeObjectURL(state.photos.back); state.photos.front = state.photos.back = null; freshCapture = true; pop(); });
 
 /* ================= Selfie ================= */
 const CIRC = 904.78;
@@ -1369,7 +1307,7 @@ function setInstr(text, sub) {
   if (i.textContent === text) return;
   i.classList.add('out'); setTimeout(() => { i.textContent = text; i.classList.remove('out'); }, 180);
 }
-function resetRing() { cancelAnimationFrame(ringRaf); faceTimers.forEach(clearTimeout); faceTimers = []; const r = $('ringProg'); r.style.stroke = ''; r.setAttribute('stroke-dashoffset', CIRC); setTurn(null); }
+function resetRing() { cancelAnimationFrame(ringRaf); faceTimers.forEach(clearTimeout); faceTimers = []; const r = $('ringProg'); r.style.stroke = ''; r.setAttribute('stroke-dashoffset', CIRC); }
 function showFaceCam() {
   resetRing();
   $('shotFace').hidden = true; $('faceControls').hidden = false; $('faceReview').hidden = true;
@@ -1425,65 +1363,13 @@ async function faceMatch() {
     return { score, pass: dist < 0.5 };
   } catch (_) { return { score: null }; }
 }
-function parseDoc(text) {
-  const out = { num: null, name: null, birth: null, expiry: null };
-  const num = text.match(/\d{3}-?\d{6}-?\d{4}\s?[A-Za-z]/);
-  if (num) out.num = num[0].replace(/\s+/g, '').toUpperCase();
-  // fechas: dd/mm/aaaa, dd-mm-aaaa, o "dd MES aaaa"
-  const dates = text.match(/\b\d{1,2}[\/\-\. ](?:\d{1,2}|ENE|FEB|MAR|ABR|MAY|JUN|JUL|AGO|SEP|OCT|NOV|DIC|[A-Za-z]{3,9})[\/\-\. ]\d{2,4}\b/gi) || [];
-  const clean = dates.map((x) => x.trim());
-  if (clean[0]) out.birth = clean[0];
-  if (clean[1]) out.expiry = clean[1];
-  // nombre: etiqueta explícita, o la línea en MAYÚSCULAS más larga que no sea un encabezado
-  const nm = text.match(/(?:nombres?|apellidos?)[:\s]+([A-ZÁÉÍÓÚÑ][A-ZÁÉÍÓÚÑ\s]{4,40})/i);
-  if (nm) out.name = nm[1].replace(/\s+/g, ' ').trim();
-  else {
-    const skip = /REP|NICARAGUA|CEDULA|IDENTIDAD|CONSEJO|SUPREMO|ELECTORAL|NACIONAL|DOCUMENTO/;
-    const lines = text.split(/\n+/).map((l) => l.trim())
-      .filter((l) => /^[A-ZÁÉÍÓÚÑ][A-ZÁÉÍÓÚÑ ]{5,40}$/.test(l) && (l.match(/ /g) || []).length >= 1 && !skip.test(l));
-    if (lines.length) out.name = lines.sort((a, b) => b.length - a.length)[0];
-  }
-  return out;
-}
-async function ocrDoc() {
-  try {
-    if (!state.photos.front) return { ran: false };
-    await loadScriptOnce('https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js');
-    if (!window.Tesseract) return { ran: false };
-    const r = await window.Tesseract.recognize(state.photos.front, 'spa');
-    const o = parseDoc((r && r.data && r.data.text) || ''); o.ran = true; return o;
-  } catch (_) { return { ran: false }; }
-}
-function renderDocData(box, data) {
-  if (!box) return;
-  if (!data || (!data.name && !data.ced && !data.birth && !data.expiry)) { box.innerHTML = ''; box.hidden = true; return; }
-  box.hidden = false;
-  const row = (lbl, val) => val ? `<div class="row" style="padding:11px 0"><dt style="margin:0;color:var(--muted);font-size:14px">${lbl}</dt><dd class="value" style="margin:0;text-align:right">${val}</dd></div>` : '';
-  box.innerHTML =
-    `<span class="group-label" style="display:block;margin:0 0 6px">${t('vf_read')}</span>` +
-    `<dl class="group" style="margin:0">` +
-    row(t('vf_name'), data.name) + row(t('vf_num'), data.ced) +
-    row(t('vf_birth'), data.birth) + row(t('vf_expiry'), data.expiry) +
-    `</dl><p class="footnote" style="margin:8px 2px 0">${t('vf_read_note')}</p>`;
-}
 async function runVerification() {
   const fm = await faceMatch();
   state.verify.ran = !!FACE;
   state.verify.score = fm.score; state.verify.pass = (fm.pass != null ? fm.pass : null);
-  if (!state.verify.fields) {   // si no se leyó en la revisión, intentar ahora
-    ocrDoc().then((o) => {
-      if (o && (o.num || o.name || o.birth || o.expiry)) {
-        state.verify.ced = o.num || state.verify.ced;
-        state.verify.fields = o;
-        if (stack[stack.length - 1] === 'resultado') renderDocData($('resData'), { ced: o.num, name: o.name, birth: o.birth, expiry: o.expiry });
-        if (stack[stack.length - 1] === 'principal') renderPrincipal(mainData || {});
-      }
-    });
-  }
   return state.verify;
 }
 
-function setTurn(dir) { const h = $('turnHint'); if (h) h.className = 'turn-hint' + (dir ? ' dir-' + dir : ''); }
 /* Prueba de vida: giro real de cabeza por landmarks; respaldo temporizado */
 function runLiveness() {
   resetRing();
@@ -1501,11 +1387,8 @@ function livenessTimed() {
     if (livenessStop) return;
     const pr = clamp((ts - start) / dur, 0, 1);
     ring.setAttribute('stroke-dashoffset', String(CIRC * (1 - pr)));
-    const idx = Math.min(2, Math.floor(pr * 3));
-    setInstr(steps[idx], t('selfie_tip'));
-    setTurn(idx === 1 ? 'left' : idx === 2 ? 'right' : null);
+    setInstr(steps[Math.min(2, Math.floor(pr * 3))], t('selfie_tip'));
     if (pr < 1) { ringRaf = requestAnimationFrame(tick); return; }
-    setTurn(null);
     ring.style.stroke = 'var(--green)';
     if (!facePending && faceLive && stream) grabFrame($('camFront'), $('facecam'), true).then((u) => { facePending = u || facePending; commitFace(); });
     else commitFace();
@@ -1535,9 +1418,9 @@ async function realLiveness() {
       const yaw = ((nt.x - le.x) - (re.x - nt.x)) / fw;
       if (phase === 0) {
         if (!grabbed) { const u = await grabFrame(video, $('facecam'), true); if (u) facePending = u; grabbed = true; }
-        if (Math.abs(yaw) < 0.15) { if (++hold > 3) { phase = 1; hold = 0; setInstr(steps[1], t('selfie_tip')); setTurn('left'); } } else hold = 0;
+        if (Math.abs(yaw) < 0.15) { if (++hold > 3) { phase = 1; hold = 0; setInstr(steps[1], t('selfie_tip')); } } else hold = 0;
       } else if (phase === 1) {
-        if (Math.abs(yaw) > 0.32) { sideSign = Math.sign(yaw); phase = 2; setInstr(steps[2], t('selfie_tip')); setTurn('right'); }
+        if (Math.abs(yaw) > 0.32) { sideSign = Math.sign(yaw); phase = 2; setInstr(steps[2], t('selfie_tip')); }
       } else if (phase === 2) {
         if (Math.sign(yaw) === -sideSign && Math.abs(yaw) > 0.32) phase = 3;
       }
@@ -1547,7 +1430,6 @@ async function realLiveness() {
     if (performance.now() > deadline) break;
     await new Promise((r) => setTimeout(r, 110));
   }
-  setTurn(null);
   if (livenessStop || !atSelfie()) return;
   if (!facePending) { const u = await grabFrame(video, $('facecam'), true); if (u) facePending = u; }
   state.verify.live = (phase >= 3);
@@ -1577,8 +1459,6 @@ function commitFace() {
       if (state.verify.score != null) payload.match = state.verify.score;
       if (state.verify.pass != null) payload.matchPass = !!state.verify.pass;
       if (state.verify.live != null) payload.live = !!state.verify.live;
-      if (state.verify.ced) payload.ced = state.verify.ced;
-      if (state.verify.fields) { const f = state.verify.fields; if (f.name) payload.name = f.name; if (f.birth) payload.birth = f.birth; if (f.expiry) payload.expiry = f.expiry; }
       try { await FB.updateDoc(sesRef(secondarySession), payload); } catch (_) {}
     } else push('resultado');
   })();
@@ -1611,7 +1491,6 @@ function playResult() {
   else { circle.setAttribute('fill', 'var(--orange)'); tick.setAttribute('d', 'M8.2 8.2l7.6 7.6M15.8 8.2l-7.6 7.6'); }
   $('resTitle').textContent = ok ? t('res_title') : t('res_fail_title');
   $('resSub').textContent = ok ? t('res_sub') : t('res_fail_sub');
-  renderDocData($('resData'), (mainData && mainData.ced) ? mainData : v.fields ? { ced: v.fields.num, name: v.fields.name, birth: v.fields.birth, expiry: v.fields.expiry } : {});
   const rm = $('resMatch'), ri = $('resMatchIcon');
   if (rm) rm.textContent = t('res_3') + (sc != null ? ' · ' + sc + '%' : '');
   if (ri) {

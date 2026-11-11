@@ -24,7 +24,11 @@ body{position:fixed;inset:0;color:var(--ink);font-family:var(--font);font-optica
 button{font:inherit;color:inherit;background:none;border:none;padding:0;margin:0;cursor:pointer}
 [hidden]{display:none !important}
 #app{position:absolute;inset:0;overflow:hidden;max-width:520px;margin:0 auto;background:#fff}
-@media (min-width:521px){#app{box-shadow:0 0 0 1px #E8E8ED}}
+@media (min-width:560px){
+  html,body{position:static;height:100%}
+  body{min-height:100%;background:radial-gradient(1200px 800px at 50% -10%, #F4F6FA 0%, #E9ECF2 60%, #E4E8EF 100%);display:flex;align-items:center;justify-content:center;padding:24px 0}
+  #app{position:relative;inset:auto;width:402px;max-width:none;height:min(864px,92vh);border-radius:32px;overflow:hidden;box-shadow:0 0 0 1px rgba(16,24,40,.06),0 40px 90px rgba(16,24,40,.22)}
+}
 .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
 /* ---------- Screens & navigation ---------- */
@@ -167,7 +171,9 @@ button.row:active{background:#E8E8ED;transition:none}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 /* DEMO badge */
 .demo-pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:#FFF2E8;color:#C2410C;font-size:11px;font-weight:700;letter-spacing:.12em}
-.demo-top{position:absolute;top:calc(env(safe-area-inset-top) + 12px);left:50%;transform:translateX(-50%);z-index:2}
+.demo-top{position:absolute;top:calc(env(safe-area-inset-top) + 8px);left:50%;transform:translateX(-50%);height:44px;display:flex;align-items:center;z-index:2}
+.flag{width:22px;height:16px;border-radius:4px;overflow:hidden;display:inline-block;box-shadow:0 0 0 1px rgba(0,0,0,.1);flex:none}
+.flag svg{width:100%;height:100%;display:block}
 /* PIN gate */
 .gate{position:absolute;inset:0;z-index:100;background:#fff;display:flex;flex-direction:column;align-items:center;text-align:center;
   padding:calc(env(safe-area-inset-top) + 20px) 24px calc(env(safe-area-inset-bottom) + 28px);
@@ -452,6 +458,27 @@ button.row:active{background:#E8E8ED;transition:none}
   </div>
 </section>
 
+<!-- 10a · Principal: continuando en otro dispositivo -->
+<section class="screen" id="principal" aria-label="Continuando en otro dispositivo">
+  <div class="nav"><button class="navbtn" data-back><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><span data-i18n="back">Atrás</span></button></div>
+  <div class="fi" style="--d:0ms;display:flex;justify-content:center;margin-top:20px;color:var(--accent)">
+    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.3" y="4" width="13" height="10" rx="2"/><path d="M6 17.3h6M9 14v3.3"/><rect x="15.2" y="9.3" width="6.5" height="11.4" rx="1.8"/><path d="M17.6 18.2h1.7"/></svg>
+  </div>
+  <h1 class="hero-title fi" style="--d:60ms;margin-top:18px;font-size:27px;line-height:1.16" data-i18n="pr_title">Continuando en otro dispositivo</h1>
+  <p class="body center fi" style="--d:100ms;margin-top:10px" id="prStatus">El otro dispositivo está completando la verificación…</p>
+  <ul class="group fi" style="--d:160ms;margin-top:24px" aria-label="Detalles">
+    <li class="row"><span data-i18n="ap_device">Dispositivo</span><span class="value" id="prDeviceVal" style="color:var(--ink)">—</span></li>
+    <li class="sep"></li>
+    <li class="row"><span data-i18n="ap_location">Ubicación aproximada</span><span class="value" id="prLocVal">—</span></li>
+    <li class="sep"></li>
+    <li class="row"><span data-i18n="ap_time">Hora</span><span class="value" id="prTimeVal">—</span></li>
+    <li class="sep"></li>
+    <li class="row"><span data-i18n="ap_code">Código</span><span class="value" id="prCodeVal" style="font-variant-numeric:tabular-nums;letter-spacing:.14em;color:var(--ink);font-weight:600">—</span></li>
+  </ul>
+  <p class="footnote fi" style="--d:200ms" id="prHint" data-i18n="pr_hint_wait">No cierres esta pantalla.</p>
+  <div class="bottom" id="prButtons"></div>
+</section>
+
 <!-- 10b · Esperando aprobación (dispositivo que escanea) -->
 <section class="screen" id="esperando" aria-label="Esperando aprobación">
   <div class="nav"><button class="navbtn" data-back><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><span data-i18n="back">Atrás</span></button></div>
@@ -577,6 +604,7 @@ const STR = {
     fb_note:'Traspaso en tiempo real activo. Escanea el código en el otro dispositivo.',
     wait_title:'Esperando aprobación', wait_sub:'Confirma en el dispositivo principal para continuar aquí.', ses_notfound:'La sesión ya no está disponible.',
     demo_badge:'DEMO', gate_title:'Acceso a la demo', gate_sub:'Ingresa el PIN para continuar.', gate_wrong:'PIN incorrecto',
+    pr_title:'Continuando en otro dispositivo', pr_wait:'El otro dispositivo está completando la verificación…', pr_ready:'Terminó. Revisa y envía los datos.', pr_send:'Aceptar y enviar', pr_hint_wait:'No cierres esta pantalla.', pr_hint_ready:'Al enviar, se completa la verificación con Banco Ejemplo.',
   },
   en: {
     doc_title_tag:'SecurPro · Identity verification',
@@ -639,11 +667,14 @@ const STR = {
     fb_note:'Real-time handoff active. Scan the code on the other device.',
     wait_title:'Waiting for approval', wait_sub:'Confirm on the main device to continue here.', ses_notfound:'The session is no longer available.',
     demo_badge:'DEMO', gate_title:'Demo access', gate_sub:'Enter the PIN to continue.', gate_wrong:'Wrong PIN',
+    pr_title:'Continuing on another device', pr_wait:'The other device is completing the verification…', pr_ready:'Done. Review and send the data.', pr_send:'Accept and send', pr_hint_wait:"Don't close this screen.", pr_hint_ready:'When you send, verification completes with Banco Ejemplo.',
   },
 };
 let lang = 'es';
 try { const sv = localStorage.getItem('securpro_lang'); if (sv === 'en' || sv === 'es') lang = sv; } catch (_) {}
 function t(k, v) { let str = (STR[lang] && STR[lang][k] != null) ? STR[lang][k] : (STR.es[k] != null ? STR.es[k] : k); if (v) for (const pk in v) str = str.replace('{' + pk + '}', v[pk]); return str; }
+const FLAG_EN = '<svg viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><clipPath id="uk-t"><path d="M0 0v30h60V0z"/></clipPath><clipPath id="uk-s"><path d="M30 15h30v15zv15H0zH0V0zV0h30z"/></clipPath><g clip-path="url(#uk-t)"><path d="M0 0v30h60V0z" fill="#012169"/><path d="M0 0l60 30m0-30L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0l60 30m0-30L0 30" clip-path="url(#uk-s)" stroke="#C8102E" stroke-width="4"/><path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></g></svg>';
+const FLAG_ES = '<svg viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="60" height="36" fill="#fff"/><rect width="60" height="12" fill="#0067C6"/><rect y="24" width="60" height="12" fill="#0067C6"/></svg>';
 function applyLang(l) {
   lang = l;
   try { localStorage.setItem('securpro_lang', l); } catch (_) {}
@@ -652,8 +683,11 @@ function applyLang(l) {
   document.querySelectorAll('[data-i18n]').forEach((e) => { e.textContent = t(e.dataset.i18n); });
   document.querySelectorAll('[data-i18n-html]').forEach((e) => { e.innerHTML = t(e.dataset.i18nHtml); });
   document.querySelectorAll('[data-i18n-aria]').forEach((e) => { e.setAttribute('aria-label', t(e.dataset.i18nAria)); });
-  const ll = $('langLabel'); if (ll) ll.textContent = l === 'es' ? 'English' : 'Español';
-  const lb = $('langBtn'); if (lb) lb.setAttribute('aria-label', l === 'es' ? 'Change language to English' : 'Cambiar idioma a español');
+  const lb = $('langBtn');
+  if (lb) {
+    lb.innerHTML = `<span class="flag">${l === 'es' ? FLAG_EN : FLAG_ES}</span><span id="langLabel">${l === 'es' ? 'English' : 'Español'}</span>`;
+    lb.setAttribute('aria-label', l === 'es' ? 'Change language to English' : 'Cambiar idioma a español');
+  }
 }
 
 
@@ -777,7 +811,7 @@ function openSheet(title, html, after) {
   after && after($('sheetBody'));
 }
 function closeSheet(velocity) {
-  sheetOpen = false; scrim.classList.remove('on'); stopMainListen();
+  sheetOpen = false; scrim.classList.remove('on');
   springTo(sh, 0, { damping: 1, response: 0.36, velocity }, renderSheet, () => { if (!sheetOpen) sheet.style.visibility = 'hidden'; });
 }
 scrim.addEventListener('click', () => closeSheet());
@@ -852,6 +886,7 @@ const firebaseConfig = {
 };
 let FB = null, mainUnsub = null, scanUnsub = null;
 let approvalMode = 'local', approvalSession = null, remoteDevice = null, remoteCode = '';
+let isSecondary = false, secondarySession = null, principalLocal = false, mainData = null;
 let handoffCode = '';
 async function initFirebase() {
   try {
@@ -897,6 +932,34 @@ async function decideApproval(estado) {
 }
 $('apAccept').addEventListener('click', () => decideApproval('aprobado'));
 $('apReject').addEventListener('click', () => decideApproval('rechazado'));
+function renderPrincipal(data) {
+  const d = (data && data.device) ? data.device : deviceInfo();
+  let time = ''; try { time = new Date().toLocaleTimeString(lang === 'es' ? 'es-NI' : 'en-US', { hour: '2-digit', minute: '2-digit' }); } catch (_) { time = new Date().toTimeString().slice(0, 5); }
+  $('prDeviceVal').textContent = (d.os || '—') + ' · ' + (d.br || '—');
+  $('prLocVal').textContent = d.loc || t('loc_unknown');
+  $('prTimeVal').textContent = time;
+  $('prCodeVal').textContent = handoffCode || '—';
+  const ready = principalLocal || !!(data && data.listo);
+  $('prStatus').textContent = ready ? t('pr_ready') : t('pr_wait');
+  $('prHint').textContent = ready ? t('pr_hint_ready') : t('pr_hint_wait');
+  const btns = $('prButtons');
+  if (ready) {
+    btns.innerHTML = `<button class="btn" id="prSend">${t('pr_send')}</button><button class="btn-plain destructive" id="prReject">${t('ap_reject')}</button>`;
+    $('prSend').onclick = () => decidePrincipal('aprobado');
+    $('prReject').onclick = () => decidePrincipal('rechazado');
+  } else {
+    btns.innerHTML = `<div style="display:flex;justify-content:center;padding:8px 0 4px"><svg class="spinner" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 3a9 9 0 019 9"/></svg></div><button class="btn-plain" id="prCancel">${t('cancel')}</button>`;
+    $('prCancel').onclick = () => { stopMainListen(); pop(); };
+  }
+}
+function enterPrincipal() { renderPrincipal(mainData || {}); }
+async function decidePrincipal(estado) {
+  if (!principalLocal && FB && approvalSession) { try { await FB.updateDoc(sesRef(approvalSession), { estado }); } catch (_) {} }
+  stopMainListen();
+  if (estado === 'aprobado') { if (principalLocal) { pop(); toast(t('ap_accepted')); } else { push('resultado'); } }
+  else { pop(); toast(t('ap_rejected')); }
+  principalLocal = false;
+}
 function shareUrl() {
   // Prefer a canonical URL if declared; otherwise the live page URL without hash.
   const can = document.querySelector('link[rel="canonical"]');
@@ -931,16 +994,17 @@ function openHandoff() {
       const sh = body.querySelector('[data-share]');
       if (sh) sh.addEventListener('click', async () => { try { await navigator.share({ title: t('share_title'), text: t('share_text'), url }); } catch (_) {} });
       body.querySelector('[data-copy]').addEventListener('click', () => copyText(url).then(() => toast(t('copied')), () => toast(t('copy_fail'))));
-      body.querySelector('[data-preview]').addEventListener('click', () => { approvalMode = 'local'; approvalSession = null; remoteDevice = null; closeSheet(); setTimeout(() => push('aprobar'), 280); });
+      body.querySelector('[data-preview]').addEventListener('click', () => { principalLocal = true; mainData = { device: deviceInfo(), listo: true }; approvalSession = null; closeSheet(); setTimeout(() => push('principal'), 280); });
     });
   if (sessionActive) {
     stopMainListen();
     mainUnsub = FB.onSnapshot(sesRef(handoffCode), (snap) => {
       const data = snap.data(); if (!data) return;
+      mainData = data; approvalSession = handoffCode;
+      if (data.estado === 'aprobado' || data.estado === 'rechazado') return;
       if (data.device) {
-        stopMainListen();
-        approvalMode = 'remote'; approvalSession = handoffCode; remoteDevice = data.device || null; remoteCode = data.code || handoffCode;
-        closeSheet(); setTimeout(() => push('aprobar'), 300);
+        if (stack[stack.length - 1] !== 'principal') { principalLocal = false; closeSheet(); setTimeout(() => push('principal'), 300); }
+        else renderPrincipal(data);
       }
     });
   }
@@ -950,14 +1014,14 @@ function openHandoff() {
 async function startScanner(code) {
   let snap; try { snap = await FB.getDoc(sesRef(code)); } catch (_) { return; }
   if (!snap.exists()) { toast(t('ses_notfound')); return; }
-  handoffCode = code;
+  handoffCode = code; isSecondary = true; secondarySession = code;
   try { await FB.updateDoc(sesRef(code), { device: deviceInfo() }); } catch (_) {}
-  if (stack[stack.length - 1] !== 'esperando') push('esperando');
+  freshCapture = true; push('documento');
   stopScan();
   scanUnsub = FB.onSnapshot(sesRef(code), (s2) => {
     const d = s2.data(); if (!d) return;
-    if (d.estado === 'aprobado') { stopScan(); if (stack[stack.length - 1] === 'esperando') pop(); toast(t('ap_accepted')); setTimeout(() => push('documento'), 380); }
-    else if (d.estado === 'rechazado') { stopScan(); if (stack[stack.length - 1] === 'esperando') pop(); toast(t('ap_rejected')); }
+    if (d.estado === 'aprobado') { stopScan(); isSecondary = false; if (stack[stack.length - 1] === 'esperando') pop(); setTimeout(() => push('resultado'), 340); }
+    else if (d.estado === 'rechazado') { stopScan(); isSecondary = false; toast(t('ap_rejected')); if (stack[stack.length - 1] === 'esperando') pop(); }
   });
 }
 function onFirebaseReady() {
@@ -1181,7 +1245,10 @@ $('useFace').addEventListener('click', () => {
     ring.setAttribute('stroke-dashoffset', String(CIRC * (1 - e)));
     if (pr < 1) { ringRaf = requestAnimationFrame(tick); return; }
     ring.style.stroke = 'var(--green)'; setInstr(t('done_word'), '');
-    faceTimers.push(setTimeout(() => push('resultado'), 650));
+    faceTimers.push(setTimeout(() => {
+      if (isSecondary && FB && secondarySession) { FB.updateDoc(sesRef(secondarySession), { listo: true }).catch(() => {}); push('esperando'); }
+      else push('resultado');
+    }, 650));
   };
   ringRaf = requestAnimationFrame(tick);
 });
@@ -1216,6 +1283,7 @@ function onEnter(id, returning) {
   if (id === 'revision') { fillReview(); replayIn(s); }
   if (id === 'error' || id === 'main' || id === 'cancelado') replayIn(s);
   if (id === 'aprobar') { enterApprove(); replayIn(s); }
+  if (id === 'principal') { enterPrincipal(); replayIn(s); }
   if (id === 'esperando') { $('waitCode').textContent = handoffCode || '—'; replayIn(s); }
   if (id === 'resultado') { replayIn(s); playResult(); }
 }

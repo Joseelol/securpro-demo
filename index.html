@@ -44,7 +44,7 @@ button{font:inherit;color:inherit;background:none;border:none;padding:0;margin:0
   #app{position:relative;inset:auto;width:402px;max-width:none;height:min(864px,92vh);border-radius:32px;overflow:hidden;box-shadow:0 0 0 1px rgba(16,24,40,.06),0 40px 90px rgba(16,24,40,.22)}
 }
 @media (min-width:820px){
-  html,body{position:static;height:auto;overflow:auto}
+  html,body{position:static;height:100%;overflow:hidden}
   body{display:block;padding:0;background:#fff}
   .shell{display:grid;grid-template-columns:minmax(360px,40%) 1fr;min-height:100vh;max-width:none;margin:0;padding:0}
   .desk-aside{display:flex;flex-direction:column;padding:40px clamp(44px,4vw,76px);color:#fff;background:linear-gradient(155deg,#2563EB 0%,#1E40AF 58%,#1B349A 100%);box-sizing:border-box;overflow:hidden}
@@ -60,15 +60,16 @@ button{font:inherit;color:inherit;background:none;border:none;padding:0;margin:0
   .desk-right{display:flex;flex-direction:column;align-items:center;min-width:0;background:#fff}
   .desk-nav{display:flex;align-self:stretch;justify-content:flex-end;align-items:center;gap:16px;padding:22px 32px}
   .desk-nav #langBtnDesk{color:var(--accent)}
-  #app{position:relative;inset:auto;flex:none;width:400px;max-width:none;height:min(828px,84vh);margin:auto 0;border-radius:30px;overflow:hidden;box-shadow:0 0 0 1px rgba(16,24,40,.06),0 24px 60px rgba(16,24,40,.14)}
+  #app{position:relative;inset:auto;flex:none;width:400px;max-width:none;height:min(900px,calc(100vh - 84px));margin:auto 0;border-radius:30px;overflow:hidden;box-shadow:0 0 0 1px rgba(16,24,40,.06),0 24px 60px rgba(16,24,40,.14)}
   #langBtn,#main .demo-top{display:none}
 }
 .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
 /* ---------- Screens & navigation ---------- */
-.screen{position:absolute;inset:0;background:#fff;display:none;flex-direction:column;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;
+.screen{position:absolute;inset:0;background:#fff;display:none;flex-direction:column;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;
   padding:calc(env(safe-area-inset-top) + 8px) 0 calc(env(safe-area-inset-bottom) + 24px);touch-action:pan-y;will-change:transform}
 .screen.visible{display:flex}
+.screen::-webkit-scrollbar{display:none}
 .screen.top{box-shadow:-12px 0 32px rgba(0,0,0,.07)}
 .nav{height:44px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 8px;position:relative}
 .nav .center{position:absolute;left:50%;transform:translateX(-50%);font-size:15px;letter-spacing:-.01em;color:var(--muted);white-space:nowrap}
@@ -242,7 +243,7 @@ button.row:active{background:#E8E8ED;transition:none}
   <aside class="desk-aside">
     <div class="desk-logo"><span class="desk-logo-badge"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2l7 2.6v5.4c0 4.4-2.9 8.2-7 9.6-4.1-1.4-7-5.2-7-9.6V5.8l7-2.6z"/><path d="M9 12l2 2 4-4"/></svg></span><span>SecurPro</span></div>
     <div class="desk-aside-body">
-      <h2 class="desk-h" data-i18n="desk_h">Verificación de identidad para Centroamérica</h2>
+      <h2 class="desk-h" data-i18n="desk_h">Verificación de identidad</h2>
       <p class="desk-p" data-i18n="desk_p">Confirma quién es tu cliente en minutos, desde cualquier dispositivo.</p>
       <ul class="desk-feats">
         <li><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><circle cx="8.5" cy="11" r="2.1"/><path d="M5.6 16.2c.6-1.3 1.7-2 2.9-2s2.3.7 2.9 2"/><path d="M14.5 10h4M14.5 13.5h2.8"/></svg><div><b data-i18n="desk_b1_t">Documento + selfie</b><span data-i18n="desk_b1_d">Lectura del documento y comparación con tu rostro.</span></div></li>
@@ -660,7 +661,7 @@ const STR = {
     fb_note:'Traspaso en tiempo real activo. Escanea el código en el otro dispositivo.',
     wait_title:'Esperando aprobación', wait_sub:'Confirma en el dispositivo principal para continuar aquí.', ses_notfound:'La sesión ya no está disponible.',
     demo_badge:'DEMO', gate_title:'Acceso a la demo', gate_sub:'Ingresa el PIN para continuar.', gate_wrong:'PIN incorrecto', lang_title:'Idioma', verif_id:'ID de verificación', pr_photos:'Capturas recibidas', pr_photos_note:'Las fotos del otro dispositivo aparecerán aquí.', cap_front_c2:'Frente', cap_back_c2:'Reverso', cap_face_c:'Selfie',
-    desk_h:'Verificación de identidad para Centroamérica', desk_p:'Confirma quién es tu cliente en minutos, desde cualquier dispositivo.',
+    desk_h:'Verificación de identidad', desk_p:'Confirma quién es tu cliente en minutos, desde cualquier dispositivo.',
     desk_b1_t:'Documento + selfie', desk_b1_d:'Lectura del documento y comparación con tu rostro.',
     desk_b2_t:'Traspaso entre dispositivos', desk_b2_d:'Empieza en la computadora, termina en el teléfono.',
     desk_b3_t:'Privado por diseño', desk_b3_d:'Las imágenes se procesan y se eliminan al terminar.',
@@ -728,7 +729,7 @@ const STR = {
     fb_note:'Real-time handoff active. Scan the code on the other device.',
     wait_title:'Waiting for approval', wait_sub:'Confirm on the main device to continue here.', ses_notfound:'The session is no longer available.',
     demo_badge:'DEMO', gate_title:'Demo access', gate_sub:'Enter the PIN to continue.', gate_wrong:'Wrong PIN', lang_title:'Language', verif_id:'Verification ID', pr_photos:'Captures received', pr_photos_note:"The other device's photos will appear here.", cap_front_c2:'Front', cap_back_c2:'Back', cap_face_c:'Selfie',
-    desk_h:'Identity verification for Central America', desk_p:'Confirm who your customer is in minutes, from any device.',
+    desk_h:'Identity verification', desk_p:'Confirm who your customer is in minutes, from any device.',
     desk_b1_t:'Document + selfie', desk_b1_d:'Document reading and a match against your face.',
     desk_b2_t:'Device handoff', desk_b2_d:'Start on the computer, finish on the phone.',
     desk_b3_t:'Private by design', desk_b3_d:'Images are processed and deleted when done.',
@@ -739,8 +740,8 @@ const STR = {
 let lang = 'es';
 try { const sv = localStorage.getItem('securpro_lang'); if (sv === 'en' || sv === 'es') lang = sv; } catch (_) {}
 function t(k, v) { let str = (STR[lang] && STR[lang][k] != null) ? STR[lang][k] : (STR.es[k] != null ? STR.es[k] : k); if (v) for (const pk in v) str = str.replace('{' + pk + '}', v[pk]); return str; }
-const FLAG_EN = '<svg viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><clipPath id="uk-t"><path d="M0 0v30h60V0z"/></clipPath><clipPath id="uk-s"><path d="M30 15h30v15zv15H0zH0V0zV0h30z"/></clipPath><g clip-path="url(#uk-t)"><path d="M0 0v30h60V0z" fill="#012169"/><path d="M0 0l60 30m0-30L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0l60 30m0-30L0 30" clip-path="url(#uk-s)" stroke="#C8102E" stroke-width="4"/><path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></g></svg>';
-const FLAG_ES = '<svg viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="60" height="36" fill="#fff"/><rect width="60" height="12" fill="#0067C6"/><rect y="24" width="60" height="12" fill="#0067C6"/></svg>';
+const FLAG_EN = '<svg viewBox="0 0 60 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="60" height="32" fill="#B22234"/><g fill="#fff"><rect y="2.46" width="60" height="2.46"/><rect y="7.38" width="60" height="2.46"/><rect y="12.31" width="60" height="2.46"/><rect y="17.23" width="60" height="2.46"/><rect y="22.15" width="60" height="2.46"/><rect y="27.08" width="60" height="2.46"/></g><rect width="26" height="17.23" fill="#3C3B6E"/><g fill="#fff"><circle cx="3" cy="2.6" r="0.9"/><circle cx="7" cy="2.6" r="0.9"/><circle cx="11" cy="2.6" r="0.9"/><circle cx="15" cy="2.6" r="0.9"/><circle cx="19" cy="2.6" r="0.9"/><circle cx="23" cy="2.6" r="0.9"/><circle cx="3" cy="5.6" r="0.9"/><circle cx="7" cy="5.6" r="0.9"/><circle cx="11" cy="5.6" r="0.9"/><circle cx="15" cy="5.6" r="0.9"/><circle cx="19" cy="5.6" r="0.9"/><circle cx="23" cy="5.6" r="0.9"/><circle cx="3" cy="8.6" r="0.9"/><circle cx="7" cy="8.6" r="0.9"/><circle cx="11" cy="8.6" r="0.9"/><circle cx="15" cy="8.6" r="0.9"/><circle cx="19" cy="8.6" r="0.9"/><circle cx="23" cy="8.6" r="0.9"/><circle cx="3" cy="11.6" r="0.9"/><circle cx="7" cy="11.6" r="0.9"/><circle cx="11" cy="11.6" r="0.9"/><circle cx="15" cy="11.6" r="0.9"/><circle cx="19" cy="11.6" r="0.9"/><circle cx="23" cy="11.6" r="0.9"/><circle cx="3" cy="14.6" r="0.9"/><circle cx="7" cy="14.6" r="0.9"/><circle cx="11" cy="14.6" r="0.9"/><circle cx="15" cy="14.6" r="0.9"/><circle cx="19" cy="14.6" r="0.9"/><circle cx="23" cy="14.6" r="0.9"/></g></svg>';
+const FLAG_ES = '<svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="60" height="40" fill="#C60B1E"/><rect y="10" width="60" height="20" fill="#FFC400"/></svg>';
 function applyLang(l) {
   lang = l;
   try { localStorage.setItem('securpro_lang', l); } catch (_) {}
@@ -749,7 +750,7 @@ function applyLang(l) {
   document.querySelectorAll('[data-i18n]').forEach((e) => { e.textContent = t(e.dataset.i18n); });
   document.querySelectorAll('[data-i18n-html]').forEach((e) => { e.innerHTML = t(e.dataset.i18nHtml); });
   document.querySelectorAll('[data-i18n-aria]').forEach((e) => { e.setAttribute('aria-label', t(e.dataset.i18nAria)); });
-  const flagHtml = `<span class="flag">${l === 'es' ? FLAG_EN : FLAG_ES}</span><span>${l === 'es' ? 'English' : 'Español'}</span>`;
+  const flagHtml = `<span class="flag">${l === 'es' ? FLAG_ES : FLAG_EN}</span><span>${l === 'es' ? 'Español' : 'English'}</span>`;
   const al = l === 'es' ? 'Change language to English' : 'Cambiar idioma a español';
   [$('langBtn'), $('langBtnDesk')].forEach((lb) => { if (lb) { lb.innerHTML = flagHtml; lb.setAttribute('aria-label', al); } });
 }

@@ -43,10 +43,10 @@ button{font:inherit;color:inherit;background:none;border:none;padding:0;margin:0
   body{min-height:100%;background:radial-gradient(1200px 800px at 50% -10%, #F4F6FA 0%, #E9ECF2 60%, #E4E8EF 100%);display:flex;align-items:center;justify-content:center;padding:24px 0}
   #app{position:relative;inset:auto;width:402px;max-width:none;height:min(864px,92vh);border-radius:32px;overflow:hidden;box-shadow:0 0 0 1px rgba(16,24,40,.06),0 40px 90px rgba(16,24,40,.22)}
 }
-@media (min-width:900px){
+@media (min-width:820px){
   html,body{position:static;height:auto;overflow:auto}
   body{display:block;padding:0;background:#fff}
-  .shell{display:grid;grid-template-columns:minmax(420px,42%) 1fr;min-height:100vh;max-width:none;margin:0;padding:0}
+  .shell{display:grid;grid-template-columns:minmax(360px,40%) 1fr;min-height:100vh;max-width:none;margin:0;padding:0}
   .desk-aside{display:flex;flex-direction:column;padding:40px clamp(44px,4vw,76px);color:#fff;background:linear-gradient(155deg,#2563EB 0%,#1E40AF 58%,#1B349A 100%);box-sizing:border-box;overflow:hidden}
   .desk-aside .desk-logo{color:#fff;flex:none}
   .desk-aside .desk-logo-badge{background:rgba(255,255,255,.18);color:#fff}
@@ -60,7 +60,7 @@ button{font:inherit;color:inherit;background:none;border:none;padding:0;margin:0
   .desk-right{display:flex;flex-direction:column;align-items:center;min-width:0;background:#fff}
   .desk-nav{display:flex;align-self:stretch;justify-content:flex-end;align-items:center;gap:16px;padding:22px 32px}
   .desk-nav #langBtnDesk{color:var(--accent)}
-  #app{position:relative;inset:auto;flex:none;width:432px;max-width:none;height:min(828px,82vh);margin:auto 0;border-radius:30px;overflow:hidden;box-shadow:0 0 0 1px rgba(16,24,40,.06),0 24px 60px rgba(16,24,40,.14)}
+  #app{position:relative;inset:auto;flex:none;width:400px;max-width:none;height:min(828px,84vh);margin:auto 0;border-radius:30px;overflow:hidden;box-shadow:0 0 0 1px rgba(16,24,40,.06),0 24px 60px rgba(16,24,40,.14)}
   #langBtn,#main .demo-top{display:none}
 }
 .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
@@ -519,6 +519,7 @@ button.row:active{background:#E8E8ED;transition:none}
   </div>
   <h1 class="hero-title fi" style="--d:60ms;margin-top:18px;font-size:27px;line-height:1.16" data-i18n="pr_title">Continuando en otro dispositivo</h1>
   <p class="body center fi" style="--d:100ms;margin-top:10px" id="prStatus">El otro dispositivo está completando la verificación…</p>
+  <div id="prPhotos" class="fi" style="--d:140ms;margin:18px 16px 0"></div>
   <ul class="group fi" style="--d:160ms;margin-top:24px" aria-label="Detalles">
     <li class="row"><span data-i18n="ap_device">Dispositivo</span><span class="value" id="prDeviceVal" style="color:var(--ink)">—</span></li>
     <li class="sep"></li>
@@ -653,12 +654,12 @@ const STR = {
     err_bright_t:'Hay demasiado brillo', err_bright_b:'Un reflejo tapa los datos. Cambia el ángulo y prueba otra vez.',
     handoff_code_label:'Código de verificación', handoff_preview:'Ver la pantalla del dispositivo principal',
     ap_title:'Un dispositivo quiere continuar tu verificación', ap_sub:'Acéptalo solo si fuiste tú quien abrió el enlace en el otro dispositivo.',
-    ap_device:'Dispositivo', ap_location:'Ubicación aproximada', ap_time:'Hora', ap_code:'Código',
+    ap_device:'Dispositivo', ap_location:'Ubicación aproximada', ap_time:'Hora', ap_code:'ID de verificación',
     ap_code_hint:'Verifica que el código coincida con el del otro dispositivo.', ap_accept:'Aceptar', ap_reject:'Rechazar',
     ap_accepted:'Solicitud aceptada', ap_rejected:'Solicitud rechazada', loc_unknown:'Desconocida',
     fb_note:'Traspaso en tiempo real activo. Escanea el código en el otro dispositivo.',
     wait_title:'Esperando aprobación', wait_sub:'Confirma en el dispositivo principal para continuar aquí.', ses_notfound:'La sesión ya no está disponible.',
-    demo_badge:'DEMO', gate_title:'Acceso a la demo', gate_sub:'Ingresa el PIN para continuar.', gate_wrong:'PIN incorrecto',
+    demo_badge:'DEMO', gate_title:'Acceso a la demo', gate_sub:'Ingresa el PIN para continuar.', gate_wrong:'PIN incorrecto', lang_title:'Idioma', verif_id:'ID de verificación', pr_photos:'Capturas recibidas', pr_photos_note:'Las fotos del otro dispositivo aparecerán aquí.', cap_front_c2:'Frente', cap_back_c2:'Reverso', cap_face_c:'Selfie',
     desk_h:'Verificación de identidad para Centroamérica', desk_p:'Confirma quién es tu cliente en minutos, desde cualquier dispositivo.',
     desk_b1_t:'Documento + selfie', desk_b1_d:'Lectura del documento y comparación con tu rostro.',
     desk_b2_t:'Traspaso entre dispositivos', desk_b2_d:'Empieza en la computadora, termina en el teléfono.',
@@ -721,12 +722,12 @@ const STR = {
     err_bright_t:"There's too much glare", err_bright_b:'A reflection covers the data. Change the angle and try again.',
     handoff_code_label:'Verification code', handoff_preview:"See the main device's screen",
     ap_title:'A device wants to continue your verification', ap_sub:'Only accept if you opened the link on the other device.',
-    ap_device:'Device', ap_location:'Approximate location', ap_time:'Time', ap_code:'Code',
+    ap_device:'Device', ap_location:'Approximate location', ap_time:'Time', ap_code:'Verification ID',
     ap_code_hint:'Check that the code matches the one on the other device.', ap_accept:'Accept', ap_reject:'Reject',
     ap_accepted:'Request accepted', ap_rejected:'Request rejected', loc_unknown:'Unknown',
     fb_note:'Real-time handoff active. Scan the code on the other device.',
     wait_title:'Waiting for approval', wait_sub:'Confirm on the main device to continue here.', ses_notfound:'The session is no longer available.',
-    demo_badge:'DEMO', gate_title:'Demo access', gate_sub:'Enter the PIN to continue.', gate_wrong:'Wrong PIN',
+    demo_badge:'DEMO', gate_title:'Demo access', gate_sub:'Enter the PIN to continue.', gate_wrong:'Wrong PIN', lang_title:'Language', verif_id:'Verification ID', pr_photos:'Captures received', pr_photos_note:"The other device's photos will appear here.", cap_front_c2:'Front', cap_back_c2:'Back', cap_face_c:'Selfie',
     desk_h:'Identity verification for Central America', desk_p:'Confirm who your customer is in minutes, from any device.',
     desk_b1_t:'Document + selfie', desk_b1_d:'Document reading and a match against your face.',
     desk_b2_t:'Device handoff', desk_b2_d:'Start on the computer, finish on the phone.',
@@ -964,6 +965,19 @@ const sesRef = (id) => FB.doc(FB.db, 'sesiones', id);
 function stopMainListen() { if (mainUnsub) { try { mainUnsub(); } catch (_) {} mainUnsub = null; } }
 function stopScan() { if (scanUnsub) { try { scanUnsub(); } catch (_) {} scanUnsub = null; } }
 const genCode = () => String(Math.floor(100000 + Math.random() * 900000));
+async function genToken() {
+  const seed = Date.now().toString(36) + Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2);
+  try {
+    if (window.crypto && crypto.subtle) {
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(seed));
+      return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, '0')).join('');
+    }
+  } catch (_) {}
+  const a = new Uint8Array(32);
+  if (window.crypto && crypto.getRandomValues) crypto.getRandomValues(a); else for (let i = 0; i < 32; i++) a[i] = Math.floor(Math.random() * 256);
+  return [...a].map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+const shortId = (h) => h ? h.slice(0, 10) + '…' + h.slice(-6) : '—';
 function deviceInfo() {
   const ua = navigator.userAgent;
   let os = 'Dispositivo';
@@ -1001,8 +1015,10 @@ function renderPrincipal(data) {
   $('prDeviceVal').textContent = (d.os || '—') + ' · ' + (d.br || '—');
   $('prLocVal').textContent = d.loc || t('loc_unknown');
   $('prTimeVal').textContent = time;
-  $('prCodeVal').textContent = handoffCode || '—';
+  $('prCodeVal').textContent = shortId(handoffCode); $('prCodeVal').style.fontFamily = 'ui-monospace,SFMono-Regular,Menlo,monospace';
   const ready = principalLocal || !!(data && data.listo);
+  renderPhotos(ready ? data : null);
+  if (!ready) $('prPhotos').innerHTML = '';
   $('prStatus').textContent = ready ? t('pr_ready') : t('pr_wait');
   $('prHint').textContent = ready ? t('pr_hint_ready') : t('pr_hint_wait');
   const btns = $('prButtons');
@@ -1014,6 +1030,20 @@ function renderPrincipal(data) {
     btns.innerHTML = `<div style="display:flex;justify-content:center;padding:8px 0 4px"><svg class="spinner" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 3a9 9 0 019 9"/></svg></div><button class="btn-plain" id="prCancel">${t('cancel')}</button>`;
     $('prCancel').onclick = () => { stopMainListen(); pop(); };
   }
+}
+function photoCell(src, label, square) {
+  return src ? `<figure style="margin:0;position:relative;${square ? 'aspect-ratio:1/1;' : 'aspect-ratio:3/2;'}border-radius:12px;overflow:hidden;background:var(--group)"><img src="${src}" alt="" style="width:100%;height:100%;object-fit:cover;display:block"><figcaption style="position:absolute;left:8px;bottom:8px;padding:3px 8px;border-radius:999px;background:rgba(255,255,255,.88);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);font-size:11px;font-weight:600">${label}</figcaption></figure>` : '';
+}
+function renderPhotos(data) {
+  const box = $('prPhotos');
+  if (principalLocal) { box.innerHTML = `<p class="footnote" style="margin:0;text-align:center">${t('pr_photos_note')}</p>`; return; }
+  const hasDoc = data && (data.imgFront || data.imgBack);
+  if (!hasDoc && !(data && data.imgFace)) { box.innerHTML = ''; return; }
+  const docCells = [photoCell(data.imgFront, t('cap_front_c2'), false), photoCell(data.imgBack, t('cap_back_c2'), false)].filter(Boolean).join('');
+  box.innerHTML =
+    `<span class="group-label" style="margin:0 20px 8px;display:block">${t('pr_photos')}</span>` +
+    `<div style="display:grid;grid-template-columns:${data.imgFront && data.imgBack ? 'repeat(2,minmax(0,1fr))' : '1fr'};gap:10px">${docCells}</div>` +
+    (data.imgFace ? `<div style="display:grid;grid-template-columns:1fr;gap:10px;margin-top:10px;max-width:60%">${photoCell(data.imgFace, t('cap_face_c'), true)}</div>` : '');
 }
 function enterPrincipal() { renderPrincipal(mainData || {}); }
 async function decidePrincipal(estado) {
@@ -1029,12 +1059,12 @@ function shareUrl() {
   let u = (can && can.href) || location.href;
   return u.split('#')[0];
 }
-function openHandoff() {
+async function openHandoff() {
   const base = shareUrl();
-  handoffCode = genCode();
+  handoffCode = await genToken();
   const sessionActive = !!FB;
   if (FB) { FB.setDoc(sesRef(handoffCode), { estado: 'pendiente', code: handoffCode, creado: FB.serverTimestamp() }).catch(() => {}); }
-  const url = sessionActive ? base + '#sesion-' + handoffCode : base;
+  const url = sessionActive ? base + '#/api/verify/' + handoffCode : base;
   const proto = location.protocol;
   const nonShareable = proto === 'file:' || proto === 'blob:' || proto === 'about:' || /^(localhost|127\.|0\.0\.0\.0)/.test(location.hostname) || location.ancestorOrigins && location.ancestorOrigins.length;
   const lan = /^(192\.168\.|10\.|172\.(1[6-9]|2\d|3[01])\.)/.test(location.hostname);
@@ -1046,7 +1076,7 @@ function openHandoff() {
     `<p class="body" style="margin-top:6px">${t('handoff_sub')}</p>` +
     `<div class="qr">${qrSvg(url) || '<span class="footnote">' + t('handoff_noqr') + '</span>'}</div>` +
     `<div class="urlbox">${url.replace(/&/g, '&amp;').replace(/</g, '&lt;')}</div>` +
-    `<div class="urlbox" style="margin-top:8px;color:var(--ink)">${t('handoff_code_label')}: <b style="letter-spacing:.2em;font-variant-numeric:tabular-nums">${handoffCode}</b></div>` + note +
+    `<div class="urlbox" style="margin-top:8px;color:var(--ink);text-align:left">${t('verif_id')}<br><b style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;font-weight:600;word-break:break-all;line-height:1.4">${handoffCode}</b></div>` + note +
     '<div style="padding:18px 24px 4px;display:flex;flex-direction:column;gap:4px">' +
     (navigator.share ? `<button class="btn" data-share>${t('share_link')}</button>` : '') +
     `<button class="${navigator.share ? 'btn-plain' : 'btn'}" data-copy>${t('copy_link')}</button>` +
@@ -1089,10 +1119,11 @@ async function startScanner(code) {
 }
 function onFirebaseReady() {
   const h = location.hash || '';
-  if (FB && h.indexOf('#sesion-') === 0) {
-    const code = h.slice(8).replace(/[^0-9A-Za-z]/g, '');
+  const m = h.match(/\/api\/verify\/([0-9a-fA-F]{16,64})/);
+  if (FB && m) {
+    const code = m[1];
     try { history.replaceState(null, '', location.pathname + location.search); } catch (_) {}
-    if (code) startScanner(code);
+    startScanner(code);
   }
 }
 document.querySelectorAll('[data-handoff]').forEach((b) => b.addEventListener('click', openHandoff));
@@ -1162,6 +1193,18 @@ function luminance(url) {
       res(sum / (d.length / 4));
     };
     img.onerror = () => res(128); img.src = url;
+  });
+}
+function compressURL(url, max, q) {
+  return new Promise((res) => {
+    const img = new Image();
+    img.onload = () => {
+      let w = img.naturalWidth || img.width, h2 = img.naturalHeight || img.height;
+      const sc = Math.min(1, max / Math.max(w, h2));
+      const c = document.createElement('canvas'); c.width = Math.max(1, Math.round(w * sc)); c.height = Math.max(1, Math.round(h2 * sc));
+      try { c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); res(c.toDataURL('image/jpeg', q)); } catch (_) { res(null); }
+    };
+    img.onerror = () => res(null); img.src = url;
   });
 }
 function flash() {
@@ -1309,8 +1352,18 @@ $('useFace').addEventListener('click', () => {
     if (pr < 1) { ringRaf = requestAnimationFrame(tick); return; }
     ring.style.stroke = 'var(--green)'; setInstr(t('done_word'), '');
     faceTimers.push(setTimeout(() => {
-      if (isSecondary && FB && secondarySession) { FB.updateDoc(sesRef(secondarySession), { listo: true }).catch(() => {}); push('esperando'); }
-      else push('resultado');
+      if (isSecondary && FB && secondarySession) {
+        push('esperando');
+        (async () => {
+          const payload = { listo: true };
+          try {
+            if (state.photos.front) payload.imgFront = await compressURL(state.photos.front, 560, 0.5);
+            if (state.photos.back) payload.imgBack = await compressURL(state.photos.back, 560, 0.5);
+            if (state.photos.face) payload.imgFace = await compressURL(state.photos.face, 460, 0.5);
+          } catch (_) {}
+          try { await FB.updateDoc(sesRef(secondarySession), payload); } catch (_) {}
+        })();
+      } else push('resultado');
     }, 650));
   };
   ringRaf = requestAnimationFrame(tick);
@@ -1347,7 +1400,7 @@ function onEnter(id, returning) {
   if (id === 'error' || id === 'main' || id === 'cancelado') replayIn(s);
   if (id === 'aprobar') { enterApprove(); replayIn(s); }
   if (id === 'principal') { enterPrincipal(); replayIn(s); }
-  if (id === 'esperando') { $('waitCode').textContent = handoffCode || '—'; replayIn(s); }
+  if (id === 'esperando') { $('waitCode').textContent = shortId(handoffCode); $('waitCode').style.fontFamily = 'ui-monospace,SFMono-Regular,Menlo,monospace'; replayIn(s); }
   if (id === 'resultado') { replayIn(s); playResult(); }
 }
 function onLeave(id) {
@@ -1360,9 +1413,15 @@ document.addEventListener('visibilitychange', () => {
 });
 window.addEventListener('resize', () => render(nav.x));
 
-const toggleLang = () => applyLang(lang === 'es' ? 'en' : 'es');
-$('langBtn').addEventListener('click', toggleLang);
-$('langBtnDesk').addEventListener('click', toggleLang);
+function openLangMenu() {
+  const chk = '<svg class="check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5L19.5 7"/></svg>';
+  const row = (code, label, flag) => `<button class="row" role="radio" aria-checked="${lang === code}" data-lang="${code}"><span style="display:flex;align-items:center;gap:12px"><span class="flag">${flag}</span>${label}</span>${chk}</button>`;
+  openSheet(t('lang_title'), `<div class="group" role="radiogroup" aria-label="${t('lang_title')}" style="margin-top:16px">${row('es', 'Español', FLAG_ES)}<div class="sep"></div>${row('en', 'English', FLAG_EN)}</div><div style="height:8px"></div>`, (body) => {
+    body.querySelectorAll('[data-lang]').forEach((bn) => bn.addEventListener('click', () => { applyLang(bn.dataset.lang); body.querySelectorAll('[data-lang]').forEach((x) => x.setAttribute('aria-checked', String(x === bn))); setTimeout(() => closeSheet(), 200); }));
+  });
+}
+$('langBtn').addEventListener('click', openLangMenu);
+$('langBtnDesk').addEventListener('click', openLangMenu);
 applyLang(lang);
 el('main').classList.add('visible');
 

@@ -103,6 +103,7 @@ button.row:active{background:#E8E8ED;transition:none}
 
 /* ---------- Buttons ---------- */
 .bottom{margin-top:auto;padding:28px 24px 0;display:flex;flex-direction:column;gap:4px;flex:none}
+.btn:disabled{opacity:.4;pointer-events:none}
 .btn{height:52px;border-radius:26px;background:var(--accent);color:#fff;font-size:17px;font-weight:600;letter-spacing:-.01em;width:100%;display:flex;align-items:center;justify-content:center;
   transition:transform .16s ease-out, background-color .16s ease-out}
 .btn:active{transform:scale(.97);background:var(--accent-press);transition:none}
@@ -166,6 +167,17 @@ button.row:active{background:#E8E8ED;transition:none}
 .facecam video{transform:scaleX(-1);opacity:0;transition:opacity .4s}
 .facecam.live video{opacity:1}
 .ring{position:absolute;inset:0}
+.turn-hint{position:absolute;inset:0;pointer-events:none}
+.turn-hint .th{position:absolute;top:50%;transform:translateY(-50%);opacity:0;transition:opacity .3s ease}
+.turn-hint .th-left{left:-14px}
+.turn-hint .th-right{right:-14px}
+.turn-hint.dir-left .th-left{opacity:1;animation:nudgeL 1s ease-in-out infinite}
+.turn-hint.dir-right .th-right{opacity:1;animation:nudgeR 1s ease-in-out infinite}
+@keyframes nudgeL{0%,100%{transform:translateY(-50%) translateX(0)}50%{transform:translateY(-50%) translateX(-9px)}}
+@keyframes nudgeR{0%,100%{transform:translateY(-50%) translateX(0)}50%{transform:translateY(-50%) translateX(9px)}}
+@keyframes flagpop{0%{transform:scale(.55);opacity:0}60%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+.flag{animation:flagpop .32s cubic-bezier(.2,.9,.25,1)}
+@media (prefers-reduced-motion: reduce){.turn-hint .th{animation:none!important}.flag{animation:none!important}}
 .ring .prog{transition:stroke .3s ease}
 .instr{margin:clamp(16px,3vh,32px) 36px 0;min-height:30px;text-align:center;font-family:var(--display);font-size:22px;line-height:1.25;font-weight:600;letter-spacing:-.018em;transition:opacity .18s ease, transform .3s cubic-bezier(.2,.8,.2,1)}
 .instr.out{opacity:0;transform:translateY(4px)}
@@ -401,7 +413,7 @@ button.row:active{background:#E8E8ED;transition:none}
   </dl>
   <p class="footnote fi" style="--d:280ms" data-i18n="rev_foot">Datos de ejemplo: la lectura automática del documento aún no está conectada.</p>
   <div class="bottom">
-    <button class="btn" data-push="selfie" data-i18n="continue">Continuar</button>
+    <button class="btn" id="revCont" data-push="selfie" data-i18n="continue">Continuar</button>
     <button class="btn-plain" id="retakeAll" data-i18n="retake_all">Volver a tomar las fotos</button>
   </div>
 </section>
@@ -421,6 +433,10 @@ button.row:active{background:#E8E8ED;transition:none}
       <circle cx="150" cy="150" r="144" fill="none" stroke="#E8E8ED" stroke-width="4"/>
       <circle class="prog" id="ringProg" cx="150" cy="150" r="144" fill="none" stroke="var(--accent)" stroke-width="4" stroke-linecap="round" stroke-dasharray="904.78" stroke-dashoffset="904.78" transform="rotate(-90 150 150)"/>
     </svg>
+    <div class="turn-hint" id="turnHint" aria-hidden="true">
+      <svg class="th th-left" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+      <svg class="th th-right" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+    </div>
   </div>
   <p class="instr" id="instr" role="status">Mira de frente a la cámara</p>
   <p class="body center" id="instrSub" style="margin-top:8px;font-size:15px">Quítate los lentes y la gorra.</p>
@@ -604,7 +620,7 @@ const STR = {
     aria_handoff:'Continuar en otro dispositivo', aria_shutter:'Tomar foto', aria_torch:'Linterna', aria_face_shutter:'Tomar selfie',
     rev_title:'Confirma tus datos', rev_sub:'Revisa que las fotos se vean bien y que tus datos coincidan.',
     f_name:'Nombre', f_number:'Número', f_birth:'Nacimiento', f_expiry:'Vencimiento',
-    rev_foot:'Toca cada dato para revisarlo.', rev_reading:'Leyendo el documento…', rev_read_ok:'Lectura automática del documento. Verifica que los datos sean correctos.', rev_read_none:'No se pudo leer el documento automáticamente aquí. Revisa los datos manualmente.', retake_all:'Volver a tomar las fotos',
+    rev_foot:'Toca cada dato para revisarlo.', rev_reading:'Leyendo el documento…', rev_read_ok:'Lectura automática del documento. Verifica que los datos sean correctos.', rev_read_none:'No se pudo leer el documento automáticamente aquí. Revisa los datos manualmente.', rev_blank:'No pudimos leer el documento. Toma la foto de nuevo, bien enfocada y con buena luz.', retake_all:'Volver a tomar las fotos',
     selfie_title:'Ahora, una selfie', selfie_sub:'Coloca tu rostro dentro del círculo.',
     res_title:'Identidad verificada', res_sub:'Listo, María José. Ya puedes continuar con tu solicitud.',
     res_fail_title:'No pudimos verificar', res_fail_sub:'El rostro no coincide o no detectamos un rostro real. Intenta de nuevo con buena luz y sin lentes.', res_demo:'Modo demostración: la verificación automática no corrió en este entorno (ábrela en el sitio publicado para probarla real).',
@@ -676,7 +692,7 @@ const STR = {
     aria_handoff:'Continue on another device', aria_shutter:'Take photo', aria_torch:'Flashlight', aria_face_shutter:'Take selfie',
     rev_title:'Confirm your details', rev_sub:'Check that the photos look good and your details match.',
     f_name:'Name', f_number:'Number', f_birth:'Date of birth', f_expiry:'Expiry',
-    rev_foot:'Review each field below.', rev_reading:'Reading the document…', rev_read_ok:'Automatic document reading. Please check the data is correct.', rev_read_none:'Could not read the document automatically here. Please check the data manually.', retake_all:'Retake the photos',
+    rev_foot:'Review each field below.', rev_reading:'Reading the document…', rev_read_ok:'Automatic document reading. Please check the data is correct.', rev_read_none:'Could not read the document automatically here. Please check the data manually.', rev_blank:'We could not read the document. Retake the photo, well focused and in good light.', retake_all:'Retake the photos',
     selfie_title:'Now, a selfie', selfie_sub:'Place your face inside the circle.',
     res_title:'Identity verified', res_sub:'Done, María José. You can now continue with your request.',
     res_fail_title:'We could not verify', res_fail_sub:'The face does not match or no real face was detected. Try again in good light without glasses.', res_demo:'Demo mode: automatic verification did not run in this environment (open the published site to test it for real).',
@@ -1314,24 +1330,32 @@ function setRev(name, num, birth, expiry) {
   const m = { revName: name, revNum: num, revBirth: birth, revExpiry: expiry };
   for (const id in m) { const e = $(id); if (e) e.textContent = m[id]; }
 }
+function gateCont(ok) { const b = $('revCont'); if (b) { b.disabled = !ok; } }
 async function readDocFields() {
   const f = state.verify.fields;
   if (f && lastOcrFront === state.photos.front) {   // ya leído estas fotos
     setRev(f.name || '—', f.num || '—', f.birth || '—', f.expiry || '—');
     const ft = revFoot(); if (ft) ft.textContent = t('rev_read_ok');
-    return;
+    gateCont(true); return;
   }
-  setRev('…', '…', '…', '…');
+  setRev('…', '…', '…', '…'); gateCont(false);
   const ft = revFoot(); if (ft) ft.textContent = t('rev_reading');
   const o = await ocrDoc();
   lastOcrFront = state.photos.front;
-  if (o && (o.num || o.name || o.birth || o.expiry)) {
+  const got = o && (o.num || o.name || o.birth || o.expiry);
+  if (got) {
     state.verify.fields = o; if (o.num) state.verify.ced = o.num;
     setRev(o.name || '—', o.num || '—', o.birth || '—', o.expiry || '—');
     const f2 = revFoot(); if (f2) f2.textContent = t('rev_read_ok');
-  } else {
+    gateCont(true);
+  } else if (o && o.ran) {              // el OCR corrió pero no leyó nada -> documento ilegible/vacío
     setRev('—', '—', '—', '—');
-    const f3 = revFoot(); if (f3) f3.textContent = t('rev_read_none');
+    const f3 = revFoot(); if (f3) f3.textContent = t('rev_blank');
+    gateCont(false);
+  } else {                              // no se pudo correr el OCR aquí (p. ej. vista previa) -> no bloquear
+    setRev('—', '—', '—', '—');
+    const f4 = revFoot(); if (f4) f4.textContent = t('rev_read_none');
+    gateCont(true);
   }
 }
 $('retakeAll').addEventListener('click', () => { state.photos.front && URL.revokeObjectURL(state.photos.front); state.photos.back && URL.revokeObjectURL(state.photos.back); state.photos.front = state.photos.back = null; state.verify.fields = null; lastOcrFront = null; freshCapture = true; pop(); });
@@ -1345,7 +1369,7 @@ function setInstr(text, sub) {
   if (i.textContent === text) return;
   i.classList.add('out'); setTimeout(() => { i.textContent = text; i.classList.remove('out'); }, 180);
 }
-function resetRing() { cancelAnimationFrame(ringRaf); faceTimers.forEach(clearTimeout); faceTimers = []; const r = $('ringProg'); r.style.stroke = ''; r.setAttribute('stroke-dashoffset', CIRC); }
+function resetRing() { cancelAnimationFrame(ringRaf); faceTimers.forEach(clearTimeout); faceTimers = []; const r = $('ringProg'); r.style.stroke = ''; r.setAttribute('stroke-dashoffset', CIRC); setTurn(null); }
 function showFaceCam() {
   resetRing();
   $('shotFace').hidden = true; $('faceControls').hidden = false; $('faceReview').hidden = true;
@@ -1423,12 +1447,12 @@ function parseDoc(text) {
 }
 async function ocrDoc() {
   try {
-    if (!state.photos.front) return {};
+    if (!state.photos.front) return { ran: false };
     await loadScriptOnce('https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js');
-    if (!window.Tesseract) return {};
+    if (!window.Tesseract) return { ran: false };
     const r = await window.Tesseract.recognize(state.photos.front, 'spa');
-    return parseDoc((r && r.data && r.data.text) || '');
-  } catch (_) { return {}; }
+    const o = parseDoc((r && r.data && r.data.text) || ''); o.ran = true; return o;
+  } catch (_) { return { ran: false }; }
 }
 function renderDocData(box, data) {
   if (!box) return;
@@ -1459,6 +1483,7 @@ async function runVerification() {
   return state.verify;
 }
 
+function setTurn(dir) { const h = $('turnHint'); if (h) h.className = 'turn-hint' + (dir ? ' dir-' + dir : ''); }
 /* Prueba de vida: giro real de cabeza por landmarks; respaldo temporizado */
 function runLiveness() {
   resetRing();
@@ -1476,8 +1501,11 @@ function livenessTimed() {
     if (livenessStop) return;
     const pr = clamp((ts - start) / dur, 0, 1);
     ring.setAttribute('stroke-dashoffset', String(CIRC * (1 - pr)));
-    setInstr(steps[Math.min(2, Math.floor(pr * 3))], t('selfie_tip'));
+    const idx = Math.min(2, Math.floor(pr * 3));
+    setInstr(steps[idx], t('selfie_tip'));
+    setTurn(idx === 1 ? 'left' : idx === 2 ? 'right' : null);
     if (pr < 1) { ringRaf = requestAnimationFrame(tick); return; }
+    setTurn(null);
     ring.style.stroke = 'var(--green)';
     if (!facePending && faceLive && stream) grabFrame($('camFront'), $('facecam'), true).then((u) => { facePending = u || facePending; commitFace(); });
     else commitFace();
@@ -1507,9 +1535,9 @@ async function realLiveness() {
       const yaw = ((nt.x - le.x) - (re.x - nt.x)) / fw;
       if (phase === 0) {
         if (!grabbed) { const u = await grabFrame(video, $('facecam'), true); if (u) facePending = u; grabbed = true; }
-        if (Math.abs(yaw) < 0.15) { if (++hold > 3) { phase = 1; hold = 0; setInstr(steps[1], t('selfie_tip')); } } else hold = 0;
+        if (Math.abs(yaw) < 0.15) { if (++hold > 3) { phase = 1; hold = 0; setInstr(steps[1], t('selfie_tip')); setTurn('left'); } } else hold = 0;
       } else if (phase === 1) {
-        if (Math.abs(yaw) > 0.32) { sideSign = Math.sign(yaw); phase = 2; setInstr(steps[2], t('selfie_tip')); }
+        if (Math.abs(yaw) > 0.32) { sideSign = Math.sign(yaw); phase = 2; setInstr(steps[2], t('selfie_tip')); setTurn('right'); }
       } else if (phase === 2) {
         if (Math.sign(yaw) === -sideSign && Math.abs(yaw) > 0.32) phase = 3;
       }
@@ -1519,6 +1547,7 @@ async function realLiveness() {
     if (performance.now() > deadline) break;
     await new Promise((r) => setTimeout(r, 110));
   }
+  setTurn(null);
   if (livenessStop || !atSelfie()) return;
   if (!facePending) { const u = await grabFrame(video, $('facecam'), true); if (u) facePending = u; }
   state.verify.live = (phase >= 3);

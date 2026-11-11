@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#FFFFFF">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="SecurPro">
+<title>SecurPro · Verificación de identidad</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%22131.0%20134.7%201026.1%201026.1%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%232E6BFF%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%231B40B0%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20x%3D%22131.0%22%20y%3D%22134.7%22%20width%3D%221026.1%22%20height%3D%221026.1%22%20rx%3D%22225.7%22%20fill%3D%22url%28%23g%29%22/%3E%3Cpath%20d%3D%22M560.75%201058.19%20C556.21%201057.73%20551.78%201056.34%20546.00%201053.58%20C535.85%201048.72%20526.92%201037.65%20523.95%201026.25%20C522.44%201020.45%20522.44%201011.27%20523.95%201005.50%20C527.73%20991.08%20538.04%20980.06%20551.98%20975.51%20C558.56%20973.36%20564.50%20972.68%20570.65%20973.38%20C591.85%20975.78%20607.60%20991.98%20609.27%201013.09%20C610.85%201033.12%20596.96%201052.07%20577.07%201057.01%20C573.27%201057.95%20564.57%201058.58%20560.75%201058.19%20Z%20M616.50%20953.00%20C607.65%20951.95%20596.67%20948.11%20589.22%20943.44%20C574.16%20934.01%20565.12%20918.42%20566.15%20903.70%20C566.46%20899.35%20568.13%20893.62%20570.16%20889.94%20C571.29%20887.88%20576.16%20878.33%20596.38%20838.50%20C601.05%20829.29%20608.31%20815.00%20612.51%20806.75%20C616.70%20798.50%20623.61%20784.89%20627.87%20776.50%20C639.62%20753.37%20649.17%20734.63%20653.74%20725.75%20C656.00%20721.35%20660.96%20711.67%20664.75%20704.25%20C668.55%20696.83%20672.41%20689.69%20673.35%20688.40%20C675.01%20686.10%20679.74%20682.18%20682.69%20680.65%20C683.50%20680.23%20685.42%20679.42%20686.96%20678.85%20C690.14%20677.67%20685.45%20677.76%20773.50%20677.05%20C828.19%20676.61%20824.96%20676.82%20832.39%20673.16%20C838.83%20669.99%20843.70%20665.81%20847.47%20660.25%20C848.77%20658.33%20853.38%20649.58%20857.71%20640.81%20C863.96%20628.16%20865.75%20624.08%20866.36%20621.08%20C868.13%20612.40%20864.29%20604.90%20856.57%20601.95%20L853.75%20600.88%20L772.12%20601.17%20C693.43%20601.45%20690.41%20601.50%20688.37%20602.41%20C687.20%20602.93%20685.86%20603.80%20685.38%20604.34%20C684.89%20604.88%20680.55%20612.96%20675.71%20622.29%20C670.88%20631.62%20665.33%20642.29%20663.38%20646.00%20C661.44%20649.71%20658.45%20655.45%20656.75%20658.75%20C655.05%20662.05%20652.58%20666.77%20651.27%20669.25%20C649.96%20671.73%20647.65%20676.11%20646.13%20679.00%20C641.46%20687.88%20638.41%20693.64%20636.99%20696.25%20C636.23%20697.62%20634.67%20700.55%20633.50%20702.75%20C632.34%20704.95%20630.88%20707.65%20630.26%20708.75%20C629.64%20709.85%20627.61%20713.67%20625.74%20717.25%20C623.88%20720.83%20621.52%20725.33%20620.50%20727.25%20C619.48%20729.17%20617.12%20733.67%20615.25%20737.25%20C613.38%20740.83%20611.23%20744.65%20610.47%20745.75%20C607.88%20749.50%20603.76%20752.92%20595.25%20758.37%20C590.58%20761.37%20578.54%20769.18%20568.50%20775.73%20C541.40%20793.42%20530.14%20800.75%20521.25%20806.48%20C516.85%20809.31%20510.21%20813.59%20506.50%20816.00%20C499.29%20820.67%20485.59%20829.49%20477.00%20835.00%20C474.11%20836.85%20467.93%20840.84%20463.25%20843.86%20C458.57%20846.89%20450.25%20852.24%20444.75%20855.76%20C439.25%20859.28%20431.94%20864.01%20428.50%20866.27%20C425.06%20868.53%20418.54%20872.74%20414.00%20875.62%20C409.46%20878.51%20400.58%20884.18%20394.26%20888.23%20C378.99%20898.02%20375.99%20899.52%20367.04%20901.75%20C359.46%20903.64%20352.92%20904.21%20346.88%20903.51%20C331.54%20901.74%20320.56%20896.58%20310.19%20886.28%20C301.49%20877.64%20296.88%20869.29%20294.14%20857.20%20C292.84%20851.45%20292.97%20838.45%20294.40%20832.17%20C296.50%20822.88%20301.16%20813.09%20306.90%20805.88%20C310.21%20801.71%20316.58%20795.66%20320.29%20793.15%20C323.36%20791.08%20324.85%20790.15%20338.25%20782.00%20C342.65%20779.32%20351.88%20773.69%20358.75%20769.49%20C365.62%20765.29%20374.29%20760.01%20378.00%20757.75%20C381.71%20755.50%20386.89%20752.34%20389.50%20750.74%20C394.65%20747.58%20431.10%20725.57%20447.25%20715.86%20C458.49%20709.11%20469.12%20702.40%20478.75%20695.99%20C482.32%20693.61%20494.01%20685.83%20504.71%20678.71%20C515.42%20671.58%20527.68%20663.42%20531.96%20660.58%20C536.25%20657.74%20539.75%20655.15%20539.75%20654.83%20C539.75%20654.51%20539.52%20654.29%20539.23%20654.34%20C538.95%20654.39%20496.86%20654.59%20445.72%20654.79%20C351.03%20655.16%20350.89%20655.16%20343.50%20653.42%20C329.54%20650.12%20316.91%20641.52%20309.34%20630.14%20C298.04%20613.13%20296.01%20592.53%20303.51%20570.77%20C308.21%20557.15%20316.31%20544.63%20327.34%20533.95%20C333.21%20528.26%20335.93%20526.21%20355.13%20512.99%20C363.17%20507.46%20375.15%20499.20%20381.75%20494.63%20C394.62%20485.73%20406.59%20477.50%20419.00%20468.99%20C423.26%20466.07%20430.46%20461.12%20435.00%20458.00%20C439.54%20454.88%20449.26%20448.26%20456.60%20443.29%20C463.95%20438.32%20475.37%20430.54%20481.99%20426.00%20C488.62%20421.46%20499.37%20414.14%20505.89%20409.73%20C512.41%20405.32%20524.16%20397.35%20532.00%20392.02%20C553.12%20377.64%20570.27%20366.08%20606.75%20341.59%20C616.38%20335.13%20628.75%20326.76%20634.25%20323.00%20C639.75%20319.23%20651.45%20311.32%20660.25%20305.42%20C669.05%20299.51%20680.75%20291.64%20686.25%20287.92%20C711.37%20270.94%20748.30%20246.37%20750.01%20245.50%20C753.47%20243.73%20761.92%20240.54%20765.85%20239.50%20C770.51%20238.28%20780.39%20237.00%20785.11%20237.00%20C788.54%20237.00%20796.66%20238.08%20800.12%20239.00%20C801.16%20239.28%20802.73%20239.70%20803.62%20239.94%20C808.67%20241.29%20816.89%20245.23%20822.37%20248.92%20C827.39%20252.30%20833.55%20258.17%20837.40%20263.25%20C840.42%20267.24%20844.35%20274.97%20846.18%20280.52%20C852.49%20299.68%20848.11%20321.24%20834.46%20338.14%20C829.72%20344.01%20823.46%20349.82%20818.25%20353.17%20C805.99%20361.05%20797.96%20366.17%20784.00%20374.99%20C775.61%20380.29%20766.39%20386.14%20763.50%20388.00%20C749.92%20396.73%20742.46%20401.49%20739.25%20403.49%20C737.33%20404.70%20732.38%20407.85%20728.25%20410.51%20C721.01%20415.17%20712.64%20420.52%20703.25%20426.50%20C700.77%20428.07%20695.49%20431.45%20691.50%20434.01%20C687.51%20436.56%20681.77%20440.23%20678.75%20442.16%20C675.73%20444.09%20670.89%20447.18%20668.00%20449.02%20C665.11%20450.87%20657.69%20455.59%20651.50%20459.52%20C645.31%20463.46%20636.72%20468.94%20632.41%20471.71%20C628.09%20474.48%20622.58%20478.01%20620.16%20479.56%20C617.73%20481.10%20609.45%20486.37%20601.75%20491.27%20C594.05%20496.18%20584.38%20502.31%20580.25%20504.91%20C576.12%20507.51%20563.52%20515.49%20552.25%20522.64%20C512.52%20547.82%20509.01%20550.11%20509.31%20550.60%20C509.57%20551.01%20579.27%20550.71%20591.25%20550.23%20C597.75%20549.98%20603.99%20548.81%20606.93%20547.29%20C608.21%20546.62%20618.01%20540.06%20631.25%20531.00%20C639.27%20525.51%20651.51%20517.22%20662.25%20510.01%20C668.02%20506.13%20676.24%20500.56%20680.50%20497.65%20C692.89%20489.17%20702.61%20485.49%20715.75%20484.30%20C717.40%20484.15%20736.86%20483.88%20759.00%20483.70%20C781.14%20483.52%20810.27%20483.23%20823.75%20483.06%20C837.23%20482.89%20859.27%20482.76%20872.75%20482.76%20C896.16%20482.78%20897.51%20482.83%20903.00%20483.91%20C950.12%20493.20%20985.26%20529.00%20993.46%20576.07%20C993.73%20577.63%20994.21%20582.69%20994.53%20587.32%20C995.45%20600.72%20993.86%20613.79%20989.49%20628.73%20C987.16%20636.70%20986.55%20638.25%20981.99%20647.75%20C978.57%20654.88%20976.01%20660.36%20968.65%20676.25%20C960.94%20692.88%20958.74%20696.92%20951.14%20708.39%20C942.36%20721.64%20934.92%20730.59%20922.81%20742.48%20C899.19%20765.66%20867.54%20783.76%20838.50%20790.68%20C822.08%20794.59%20816.50%20795.00%20779.22%20795.00%20C758.88%20795.00%20747.18%20795.19%20745.54%20795.54%20C741.09%20796.49%20740.12%20797.51%20736.08%20805.50%20C734.06%20809.49%20723.45%20830.41%20712.51%20852.00%20C701.56%20873.59%20688.16%20900.02%20682.73%20910.75%20C677.29%20921.48%20672.16%20931.26%20671.32%20932.50%20C665.14%20941.63%20652.24%20949.30%20638.09%20952.24%20C633.60%20953.17%20621.57%20953.59%20616.50%20953.00%20Z%22%20fill%3D%22%23fff%22%20fill-rule%3D%22evenodd%22/%3E%3C/svg%3E">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --accent:#0066CC; --accent-press:#004E9E;
+  --ink:#1D1D1F; --muted:#6E6E73; --group:#F5F5F7; --sep:#E1E1E6;
+  --green:#248A3D; --orange:#C93400; --red:#D70015;
+  --font:-apple-system, BlinkMacSystemFont, "SF Pro Text", Inter, system-ui, sans-serif;
+  --display:-apple-system, BlinkMacSystemFont, "SF Pro Display", Inter, system-ui, sans-serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:#fff;overscroll-behavior:none}
+body{position:fixed;inset:0;color:var(--ink);font-family:var(--font);font-optical-sizing:auto;-webkit-font-smoothing:antialiased;-webkit-user-select:none;user-select:none;-webkit-text-size-adjust:100%}
+button{font:inherit;color:inherit;background:none;border:none;padding:0;margin:0;cursor:pointer}
+[hidden]{display:none !important}
+#app{position:absolute;inset:0;overflow:hidden;max-width:520px;margin:0 auto;background:#fff}
+.shell,.desk-right{display:contents}
+.desk-nav,.desk-aside{display:none}
+.desk-aside-body{display:contents}
+.desk-logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-size:19px;font-weight:700;letter-spacing:-.01em;color:var(--ink)}
+.desk-logo-badge{width:34px;height:34px;border-radius:10px;background:#EEF3FF;color:var(--accent);display:flex;align-items:center;justify-content:center}
+.desk-navright{display:flex;align-items:center;gap:16px}
+.desk-h{font-family:var(--display);font-size:40px;line-height:1.1;font-weight:800;letter-spacing:-.025em;margin:0}
+.desk-p{font-size:19px;line-height:1.5;letter-spacing:-.01em;color:var(--muted);margin:16px 0 0;max-width:30ch}
+.desk-feats{list-style:none;padding:0;margin:34px 0 0;display:flex;flex-direction:column;gap:20px}
+.desk-feats li{display:flex;gap:16px;align-items:flex-start}
+.desk-feats svg{flex:none;color:var(--accent)}
+.desk-feats b{display:block;font-size:16px;font-weight:600;letter-spacing:-.01em}
+.desk-feats span{display:block;margin-top:3px;font-size:15px;line-height:1.4;color:var(--muted)}
+.desk-note{margin:34px 0 0;display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:#FFF2E8;color:#C2410C;font-size:13px;font-weight:600}
+@media (min-width:560px){
+  html,body{position:static;height:100%}
+  body{min-height:100%;background:radial-gradient(1200px 800px at 50% -10%, #F4F6FA 0%, #E9ECF2 60%, #E4E8EF 100%);display:flex;align-items:center;justify-content:center;padding:24px 0}
+  #app{position:relative;inset:auto;width:402px;max-width:none;height:min(864px,92vh);border-radius:32px;overflow:hidden;box-shadow:0 0 0 1px rgba(16,24,40,.06),0 40px 90px rgba(16,24,40,.22)}
+}
+@media (min-width:820px){
+  html,body{position:static;height:100%;overflow:hidden}
+  body{display:block;padding:0;background:#fff}
+  .shell{display:grid;grid-template-columns:minmax(360px,40%) 1fr;min-height:100vh;max-width:none;margin:0;padding:0}
+  .desk-aside{display:flex;flex-direction:column;padding:40px clamp(44px,4vw,76px);color:#fff;background:linear-gradient(155deg,#2563EB 0%,#1E40AF 58%,#1B349A 100%);box-sizing:border-box;overflow:hidden}
+  .desk-aside .desk-logo{color:#fff;flex:none}
+  .desk-aside .desk-logo-badge{background:rgba(255,255,255,.18);color:#fff}
+  .desk-aside-body{display:block;margin:auto 0;max-width:30em}
+  .desk-h{font-size:clamp(34px,3.1vw,48px);color:#fff}
+  .desk-p{color:rgba(255,255,255,.86);max-width:32ch}
+  .desk-feats b{color:#fff}
+  .desk-feats span{color:rgba(255,255,255,.78)}
+  .desk-feats svg{color:#fff}
+  .desk-note{background:rgba(255,255,255,.16);color:#fff}
+  .desk-right{display:flex;flex-direction:column;align-items:center;min-width:0;background:#fff}
+  .desk-nav{display:flex;align-self:stretch;justify-content:flex-end;align-items:center;gap:16px;padding:22px 32px}
+  .desk-nav #langBtnDesk{color:var(--accent)}
+  #app{position:relative;inset:auto;flex:none;width:400px;max-width:none;height:min(900px,calc(100vh - 84px));margin:auto 0;border-radius:30px;overflow:hidden;box-shadow:0 0 0 1px rgba(16,24,40,.06),0 24px 60px rgba(16,24,40,.14)}
+  #langBtn,#main .demo-top{display:none}
+}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- Screens & navigation ---------- */
+.screen{position:absolute;inset:0;background:#fff;display:none;flex-direction:column;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;
+  padding:calc(env(safe-area-inset-top) + 8px) 0 calc(env(safe-area-inset-bottom) + 24px);touch-action:pan-y;will-change:transform}
+.screen.visible{display:flex}
+.screen::-webkit-scrollbar{display:none}
+.screen.top{box-shadow:-12px 0 32px rgba(0,0,0,.07)}
+.nav{height:44px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 8px;position:relative}
+.nav .center{position:absolute;left:50%;transform:translateX(-50%);font-size:15px;letter-spacing:-.01em;color:var(--muted);white-space:nowrap}
+.navbtn{height:44px;padding:0 8px;display:flex;align-items:center;gap:2px;font-size:17px;letter-spacing:-.01em;color:var(--accent)}
+.navbtn:active{opacity:.4}
+
+/* ---------- Type ---------- */
+.step{margin:14px 20px 0;font-size:15px;letter-spacing:-.01em;color:var(--muted)}
+.large-title{margin:2px 20px 0;font-family:var(--display);font-size:34px;line-height:1.12;font-weight:700;letter-spacing:-.022em}
+.hero-title{margin:28px 32px 0;text-align:center;font-family:var(--display);font-size:34px;line-height:1.12;font-weight:700;letter-spacing:-.022em}
+.title2{margin:20px 32px 0;text-align:center;font-family:var(--display);font-size:28px;line-height:1.15;font-weight:700;letter-spacing:-.02em}
+.body{margin:10px 20px 0;font-size:17px;line-height:1.42;letter-spacing:-.01em;color:var(--muted)}
+.body.center{text-align:center;margin-left:36px;margin-right:36px}
+.footnote{margin:8px 36px 0;font-size:13px;line-height:1.4;color:var(--muted)}
+.group-label{margin:28px 36px 8px;font-size:13px;letter-spacing:-.005em;color:var(--muted)}
+a,.link{color:var(--accent);text-decoration:none}
+
+/* ---------- Grouped lists ---------- */
+.group{margin:0 16px;border-radius:12px;background:var(--group);overflow:hidden;list-style:none;padding:0}
+.row{width:100%;min-height:50px;padding:0 16px;display:flex;align-items:center;justify-content:space-between;gap:16px;text-align:left;font-size:17px;letter-spacing:-.01em;transition:background-color .2s}
+.row.tall{min-height:64px}
+button.row:active{background:#E8E8ED;transition:none}
+.row .sub{display:block;font-size:13px;color:var(--muted);margin-top:2px;letter-spacing:0}
+.row .value{color:var(--muted);text-align:right}
+.sep{height:1px;margin-left:16px;background:var(--sep)}
+.sep.icon{margin-left:52px}
+.check{opacity:0;transform:scale(.6);transition:opacity .18s ease, transform .3s cubic-bezier(.2,.9,.3,1.2);flex:none}
+[aria-checked="true"] .check{opacity:1;transform:none}
+
+/* ---------- Buttons ---------- */
+.bottom{margin-top:auto;padding:28px 24px 0;display:flex;flex-direction:column;gap:4px;flex:none}
+.btn{height:52px;border-radius:26px;background:var(--accent);color:#fff;font-size:17px;font-weight:600;letter-spacing:-.01em;width:100%;display:flex;align-items:center;justify-content:center;
+  transition:transform .16s ease-out, background-color .16s ease-out}
+.btn:active{transform:scale(.97);background:var(--accent-press);transition:none}
+.btn-plain{height:48px;width:100%;color:var(--accent);font-size:17px;letter-spacing:-.01em;display:flex;align-items:center;justify-content:center}
+.btn-plain:active{opacity:.4}
+.btn-plain.destructive{color:var(--red)}
+
+/* ---------- Entrance stagger ---------- */
+.fi{opacity:0;transform:translateY(10px);transition:opacity .5s ease, transform .7s cubic-bezier(.2,.8,.2,1);transition-delay:var(--d,0ms)}
+.in .fi{opacity:1;transform:none}
+
+/* ---------- Welcome ---------- */
+.welcome{padding-top:calc(env(safe-area-inset-top) + clamp(28px, 9vh, 84px))}
+.features{margin:clamp(28px,5vh,44px) 44px 0 40px;display:flex;flex-direction:column;gap:26px}
+.feature{display:flex;gap:18px;align-items:flex-start}
+.feature svg{flex:none}
+.feature b{display:block;font-size:15px;font-weight:600;letter-spacing:-.01em}
+.feature span{display:block;margin-top:3px;font-size:15px;line-height:1.38;letter-spacing:-.01em;color:var(--muted)}
+
+/* ---------- Capture ---------- */
+.seg{position:relative;margin:18px auto 0;display:grid;grid-template-columns:1fr 1fr;width:220px;padding:2px;border-radius:9px;background:#EEEEF0;flex:none}
+.seg .thumb{position:absolute;top:2px;left:2px;width:calc(50% - 2px);height:30px;border-radius:7px;background:#fff;box-shadow:0 1px 1px rgba(0,0,0,.04),0 3px 8px rgba(0,0,0,.12);transition:transform .4s cubic-bezier(.3,.9,.3,1)}
+.seg.back .thumb{transform:translateX(100%)}
+.seg button{position:relative;height:30px;font-size:13px;font-weight:500}
+.seg:not(.back) button:first-of-type,.seg.back button:last-of-type{font-weight:600}
+.seg button .done{display:inline-block;margin-left:4px;color:var(--green)}
+.viewport{position:relative;margin:18px auto 0;width:calc(100% - 40px);max-width:350px;aspect-ratio:350/250;border-radius:22px;background:var(--group);overflow:hidden;display:flex;align-items:center;justify-content:center;flex:none}
+.viewport.tall{aspect-ratio:350/420}
+.viewport video,.viewport img.shot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.viewport video{opacity:0;transition:opacity .4s}
+.viewport.live video{opacity:1}
+.viewport.live .card,.viewport.shot .card{display:none}
+.card{width:83%;aspect-ratio:290/184;border-radius:12px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.06),0 8px 24px rgba(0,0,0,.08);position:relative;overflow:hidden}
+.card i{position:absolute;display:block;border-radius:4px;background:#ECECF0}
+.card .back-only{display:none}
+.viewport.back .card .front-only{display:none}
+.viewport.back .card .back-only{display:block}
+.guide{position:absolute;left:8%;right:8%;top:12.4%;bottom:12.4%;border:2px solid var(--accent);background:rgba(0,102,204,.06);border-radius:14px;transition:opacity .25s ease, border-color .3s, box-shadow .3s}
+.viewport.tall .guide{top:22%;bottom:22%}
+.viewport.live .guide{border-color:#fff;background:transparent;box-shadow:0 0 0 999px rgba(0,0,0,.32)}
+.viewport.shot .guide{opacity:0}
+.flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+.status{margin:18px 32px 0;min-height:46px;display:flex;flex-direction:column;align-items:center;text-align:center;flex:none}
+.status .line{display:flex;align-items:center;gap:7px;font-size:15px;font-weight:600;letter-spacing:-.01em}
+.status .sub{margin-top:4px;font-size:15px;line-height:1.35;letter-spacing:-.01em;color:var(--muted)}
+.spinner{width:16px;height:16px;animation:spin .9s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.controls{margin-top:auto;padding:20px 36px 0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:center;flex:none;min-height:96px}
+.review{margin-top:auto;padding:20px 24px 0;display:grid;grid-template-columns:1fr 1.4fr;gap:12px;align-items:center;flex:none;min-height:96px}
+.icon-btn{width:48px;height:48px;display:flex;align-items:center;justify-content:center;border-radius:24px}
+.icon-btn:active{opacity:.4}
+.icon-btn[aria-pressed="true"]{color:var(--accent)}
+.shutter{justify-self:center;width:76px;height:76px;border-radius:38px;border:3px solid #D1D1D6;display:flex;align-items:center;justify-content:center}
+.shutter span{width:62px;height:62px;border-radius:31px;background:var(--accent);transition:transform .16s ease-out}
+.shutter:active span{transform:scale(.88);transition:none}
+
+/* ---------- Selfie ---------- */
+.facewrap{position:relative;margin:clamp(16px,3vh,32px) auto 0;width:300px;height:300px;display:flex;align-items:center;justify-content:center;flex:none}
+.facecam{width:264px;height:264px;border-radius:50%;background:var(--group);overflow:hidden;position:relative;display:flex;align-items:flex-end;justify-content:center;color:#E3E3E8}
+.facecam video,.facecam img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.facecam video{transform:scaleX(-1);opacity:0;transition:opacity .4s}
+.facecam.live video{opacity:1}
+.ring{position:absolute;inset:0}
+.ring .prog{transition:stroke .3s ease}
+.instr{margin:clamp(16px,3vh,32px) 36px 0;min-height:30px;text-align:center;font-family:var(--display);font-size:22px;line-height:1.25;font-weight:600;letter-spacing:-.018em;transition:opacity .18s ease, transform .3s cubic-bezier(.2,.8,.2,1)}
+.instr.out{opacity:0;transform:translateY(4px)}
+
+/* ---------- Result / thumbnails ---------- */
+.result{padding-top:calc(env(safe-area-inset-top) + clamp(40px, 11vh, 96px))}
+.badge{display:flex;justify-content:center}
+.badge svg{transform:scale(.4);opacity:0}
+.badge .tick{stroke-dasharray:16;stroke-dashoffset:16;transition:stroke-dashoffset .4s cubic-bezier(.5,0,.2,1) .18s}
+.in .badge .tick{stroke-dashoffset:0}
+.thumbs{margin:24px 16px 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.thumbs figure{margin:0;position:relative;aspect-ratio:350/250;border-radius:12px;overflow:hidden;background:var(--group)}
+.thumbs img{width:100%;height:100%;object-fit:cover;display:block}
+.thumbs figcaption{position:absolute;left:8px;bottom:8px;padding:3px 8px;border-radius:999px;background:rgba(255,255,255,.85);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);font-size:12px;font-weight:600}
+
+/* ---------- Sheet ---------- */
+.scrim{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;z-index:20}
+.scrim.on{pointer-events:auto}
+.sheet{position:absolute;left:0;right:0;bottom:0;z-index:21;background:#fff;border-radius:14px 14px 0 0;max-height:88%;display:flex;flex-direction:column;
+  padding:0 0 calc(env(safe-area-inset-bottom) + 16px);transform:translate3d(0,calc(100% + 60px),0);visibility:hidden;box-shadow:0 -10px 40px rgba(0,0,0,.12);touch-action:none}
+.sheet .grab{height:28px;display:flex;align-items:center;justify-content:center;flex:none;cursor:grab}
+.sheet .grab span{width:36px;height:5px;border-radius:3px;background:#D1D1D6}
+.sheet .sh-title{margin:0 20px;font-family:var(--display);font-size:22px;font-weight:700;letter-spacing:-.018em}
+.sheet .sh-body{overflow-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y}
+.kyf{display:flex;align-items:center;justify-content:center;gap:6px;font-size:12px;letter-spacing:-.005em;color:var(--muted);padding-top:14px}
+.kyf b{font-weight:700;letter-spacing:.04em;color:var(--ink)}
+.corner{position:absolute;top:calc(env(safe-area-inset-top) + 8px);right:8px;z-index:2}
+.corner.left{left:8px;right:auto}
+.policy h2{margin:28px 20px 6px;font-family:var(--display);font-size:20px;font-weight:700;letter-spacing:-.015em}
+.policy p,.policy li{font-size:16px;line-height:1.5;letter-spacing:-.01em;color:#3A3A3C}
+.policy p{margin:0 20px 10px}
+.policy ul{margin:0 20px 10px;padding-left:20px}
+.policy li{margin-bottom:6px}
+.qr{margin:20px auto 0;width:212px;height:212px;padding:14px;border-radius:20px;background:#fff;box-shadow:0 0 0 1px #E5E5EA;display:flex;align-items:center;justify-content:center}
+.qr svg{width:100%;height:100%;display:block}
+.urlbox{margin:14px 20px 0;padding:12px 14px;border-radius:12px;background:var(--group);font-size:13px;line-height:1.35;color:var(--muted);word-break:break-all;-webkit-user-select:text;user-select:text;text-align:center}
+.toast{position:absolute;left:50%;top:calc(env(safe-area-inset-top) + 12px);z-index:30;transform:translate(-50%,-20px);opacity:0;padding:10px 16px;border-radius:999px;
+  background:rgba(255,255,255,.9);-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);box-shadow:0 4px 24px rgba(0,0,0,.12);
+  font-size:15px;font-weight:600;letter-spacing:-.01em;transition:opacity .25s, transform .45s cubic-bezier(.2,.9,.25,1);pointer-events:none;white-space:nowrap}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+/* DEMO badge */
+.demo-pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:#FFF2E8;color:#C2410C;font-size:11px;font-weight:700;letter-spacing:.12em}
+.demo-top{position:absolute;top:calc(env(safe-area-inset-top) + 8px);left:50%;transform:translateX(-50%);height:44px;display:flex;align-items:center;z-index:2}
+.flag{width:22px;height:16px;border-radius:4px;overflow:hidden;display:inline-block;box-shadow:0 0 0 1px rgba(0,0,0,.1);flex:none}
+.flag svg{width:100%;height:100%;display:block}
+/* PIN gate */
+.gate{position:absolute;inset:0;z-index:100;background:#fff;display:flex;flex-direction:column;align-items:center;text-align:center;
+  padding:calc(env(safe-area-inset-top) + 20px) 24px calc(env(safe-area-inset-bottom) + 28px);
+  transition:opacity .45s ease, visibility .45s}
+.gate.gone{opacity:0;visibility:hidden;pointer-events:none}
+.gate .lock{margin-top:clamp(20px,7vh,64px);color:var(--accent)}
+.gate h1{margin:22px 24px 0;font-family:var(--display);font-size:28px;font-weight:700;letter-spacing:-.02em}
+.gate p{margin:10px 24px 0;font-size:16px;line-height:1.4;letter-spacing:-.01em;color:var(--muted)}
+.dots{display:flex;gap:18px;margin-top:30px;height:16px}
+.dot{width:14px;height:14px;border-radius:8px;border:2px solid #C4CBD6;box-sizing:border-box;transition:background-color .15s, border-color .15s, transform .15s}
+.dot.on{background:var(--accent);border-color:var(--accent);transform:scale(1.05)}
+.gate.err .dots{animation:shake .4s}
+.gate.err .dot{border-color:var(--red)}
+@keyframes shake{10%,90%{transform:translateX(-2px)}20%,80%{transform:translateX(4px)}30%,50%,70%{transform:translateX(-8px)}40%,60%{transform:translateX(8px)}}
+.gate .wrong{min-height:20px;margin-top:14px;font-size:14px;font-weight:600;color:var(--red);opacity:0;transition:opacity .2s}
+.gate.err .wrong{opacity:1}
+.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;width:258px;margin-top:auto}
+.key{height:64px;border-radius:32px;background:var(--group);font-family:var(--display);font-size:26px;font-weight:500;display:flex;align-items:center;justify-content:center;transition:transform .12s, background-color .12s}
+.key:active{transform:scale(.95);background:#E3E3E8;transition:none}
+.key.blank{background:transparent;pointer-events:none}
+.key.act{background:transparent;font-size:16px;font-weight:600;color:var(--accent)}
+
+@media (prefers-reduced-motion: reduce){
+  .fi{transform:none;transition:opacity .3s ease}
+  .check,.seg .thumb,.instr,.toast{transition-property:opacity}
+  .spinner{animation-duration:2s}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+  <aside class="desk-aside">
+    <div class="desk-logo"><span class="desk-logo-badge"><svg width="22" height="22" viewBox="268.8 213.0 750.6 869.6" aria-hidden="true"><path d="M560.75 1058.19 C556.21 1057.73 551.78 1056.34 546.00 1053.58 C535.85 1048.72 526.92 1037.65 523.95 1026.25 C522.44 1020.45 522.44 1011.27 523.95 1005.50 C527.73 991.08 538.04 980.06 551.98 975.51 C558.56 973.36 564.50 972.68 570.65 973.38 C591.85 975.78 607.60 991.98 609.27 1013.09 C610.85 1033.12 596.96 1052.07 577.07 1057.01 C573.27 1057.95 564.57 1058.58 560.75 1058.19 Z M616.50 953.00 C607.65 951.95 596.67 948.11 589.22 943.44 C574.16 934.01 565.12 918.42 566.15 903.70 C566.46 899.35 568.13 893.62 570.16 889.94 C571.29 887.88 576.16 878.33 596.38 838.50 C601.05 829.29 608.31 815.00 612.51 806.75 C616.70 798.50 623.61 784.89 627.87 776.50 C639.62 753.37 649.17 734.63 653.74 725.75 C656.00 721.35 660.96 711.67 664.75 704.25 C668.55 696.83 672.41 689.69 673.35 688.40 C675.01 686.10 679.74 682.18 682.69 680.65 C683.50 680.23 685.42 679.42 686.96 678.85 C690.14 677.67 685.45 677.76 773.50 677.05 C828.19 676.61 824.96 676.82 832.39 673.16 C838.83 669.99 843.70 665.81 847.47 660.25 C848.77 658.33 853.38 649.58 857.71 640.81 C863.96 628.16 865.75 624.08 866.36 621.08 C868.13 612.40 864.29 604.90 856.57 601.95 L853.75 600.88 L772.12 601.17 C693.43 601.45 690.41 601.50 688.37 602.41 C687.20 602.93 685.86 603.80 685.38 604.34 C684.89 604.88 680.55 612.96 675.71 622.29 C670.88 631.62 665.33 642.29 663.38 646.00 C661.44 649.71 658.45 655.45 656.75 658.75 C655.05 662.05 652.58 666.77 651.27 669.25 C649.96 671.73 647.65 676.11 646.13 679.00 C641.46 687.88 638.41 693.64 636.99 696.25 C636.23 697.62 634.67 700.55 633.50 702.75 C632.34 704.95 630.88 707.65 630.26 708.75 C629.64 709.85 627.61 713.67 625.74 717.25 C623.88 720.83 621.52 725.33 620.50 727.25 C619.48 729.17 617.12 733.67 615.25 737.25 C613.38 740.83 611.23 744.65 610.47 745.75 C607.88 749.50 603.76 752.92 595.25 758.37 C590.58 761.37 578.54 769.18 568.50 775.73 C541.40 793.42 530.14 800.75 521.25 806.48 C516.85 809.31 510.21 813.59 506.50 816.00 C499.29 820.67 485.59 829.49 477.00 835.00 C474.11 836.85 467.93 840.84 463.25 843.86 C458.57 846.89 450.25 852.24 444.75 855.76 C439.25 859.28 431.94 864.01 428.50 866.27 C425.06 868.53 418.54 872.74 414.00 875.62 C409.46 878.51 400.58 884.18 394.26 888.23 C378.99 898.02 375.99 899.52 367.04 901.75 C359.46 903.64 352.92 904.21 346.88 903.51 C331.54 901.74 320.56 896.58 310.19 886.28 C301.49 877.64 296.88 869.29 294.14 857.20 C292.84 851.45 292.97 838.45 294.40 832.17 C296.50 822.88 301.16 813.09 306.90 805.88 C310.21 801.71 316.58 795.66 320.29 793.15 C323.36 791.08 324.85 790.15 338.25 782.00 C342.65 779.32 351.88 773.69 358.75 769.49 C365.62 765.29 374.29 760.01 378.00 757.75 C381.71 755.50 386.89 752.34 389.50 750.74 C394.65 747.58 431.10 725.57 447.25 715.86 C458.49 709.11 469.12 702.40 478.75 695.99 C482.32 693.61 494.01 685.83 504.71 678.71 C515.42 671.58 527.68 663.42 531.96 660.58 C536.25 657.74 539.75 655.15 539.75 654.83 C539.75 654.51 539.52 654.29 539.23 654.34 C538.95 654.39 496.86 654.59 445.72 654.79 C351.03 655.16 350.89 655.16 343.50 653.42 C329.54 650.12 316.91 641.52 309.34 630.14 C298.04 613.13 296.01 592.53 303.51 570.77 C308.21 557.15 316.31 544.63 327.34 533.95 C333.21 528.26 335.93 526.21 355.13 512.99 C363.17 507.46 375.15 499.20 381.75 494.63 C394.62 485.73 406.59 477.50 419.00 468.99 C423.26 466.07 430.46 461.12 435.00 458.00 C439.54 454.88 449.26 448.26 456.60 443.29 C463.95 438.32 475.37 430.54 481.99 426.00 C488.62 421.46 499.37 414.14 505.89 409.73 C512.41 405.32 524.16 397.35 532.00 392.02 C553.12 377.64 570.27 366.08 606.75 341.59 C616.38 335.13 628.75 326.76 634.25 323.00 C639.75 319.23 651.45 311.32 660.25 305.42 C669.05 299.51 680.75 291.64 686.25 287.92 C711.37 270.94 748.30 246.37 750.01 245.50 C753.47 243.73 761.92 240.54 765.85 239.50 C770.51 238.28 780.39 237.00 785.11 237.00 C788.54 237.00 796.66 238.08 800.12 239.00 C801.16 239.28 802.73 239.70 803.62 239.94 C808.67 241.29 816.89 245.23 822.37 248.92 C827.39 252.30 833.55 258.17 837.40 263.25 C840.42 267.24 844.35 274.97 846.18 280.52 C852.49 299.68 848.11 321.24 834.46 338.14 C829.72 344.01 823.46 349.82 818.25 353.17 C805.99 361.05 797.96 366.17 784.00 374.99 C775.61 380.29 766.39 386.14 763.50 388.00 C749.92 396.73 742.46 401.49 739.25 403.49 C737.33 404.70 732.38 407.85 728.25 410.51 C721.01 415.17 712.64 420.52 703.25 426.50 C700.77 428.07 695.49 431.45 691.50 434.01 C687.51 436.56 681.77 440.23 678.75 442.16 C675.73 444.09 670.89 447.18 668.00 449.02 C665.11 450.87 657.69 455.59 651.50 459.52 C645.31 463.46 636.72 468.94 632.41 471.71 C628.09 474.48 622.58 478.01 620.16 479.56 C617.73 481.10 609.45 486.37 601.75 491.27 C594.05 496.18 584.38 502.31 580.25 504.91 C576.12 507.51 563.52 515.49 552.25 522.64 C512.52 547.82 509.01 550.11 509.31 550.60 C509.57 551.01 579.27 550.71 591.25 550.23 C597.75 549.98 603.99 548.81 606.93 547.29 C608.21 546.62 618.01 540.06 631.25 531.00 C639.27 525.51 651.51 517.22 662.25 510.01 C668.02 506.13 676.24 500.56 680.50 497.65 C692.89 489.17 702.61 485.49 715.75 484.30 C717.40 484.15 736.86 483.88 759.00 483.70 C781.14 483.52 810.27 483.23 823.75 483.06 C837.23 482.89 859.27 482.76 872.75 482.76 C896.16 482.78 897.51 482.83 903.00 483.91 C950.12 493.20 985.26 529.00 993.46 576.07 C993.73 577.63 994.21 582.69 994.53 587.32 C995.45 600.72 993.86 613.79 989.49 628.73 C987.16 636.70 986.55 638.25 981.99 647.75 C978.57 654.88 976.01 660.36 968.65 676.25 C960.94 692.88 958.74 696.92 951.14 708.39 C942.36 721.64 934.92 730.59 922.81 742.48 C899.19 765.66 867.54 783.76 838.50 790.68 C822.08 794.59 816.50 795.00 779.22 795.00 C758.88 795.00 747.18 795.19 745.54 795.54 C741.09 796.49 740.12 797.51 736.08 805.50 C734.06 809.49 723.45 830.41 712.51 852.00 C701.56 873.59 688.16 900.02 682.73 910.75 C677.29 921.48 672.16 931.26 671.32 932.50 C665.14 941.63 652.24 949.30 638.09 952.24 C633.60 953.17 621.57 953.59 616.50 953.00 Z" fill="currentColor" fill-rule="evenodd"/></svg></span><span>SecurPro</span></div>
+    <div class="desk-aside-body">
+      <h2 class="desk-h" data-i18n="desk_h">Verificación de identidad</h2>
+      <p class="desk-p" data-i18n="desk_p">Confirma quién es tu cliente en minutos, desde cualquier dispositivo.</p>
+      <ul class="desk-feats">
+        <li><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><circle cx="8.5" cy="11" r="2.1"/><path d="M5.6 16.2c.6-1.3 1.7-2 2.9-2s2.3.7 2.9 2"/><path d="M14.5 10h4M14.5 13.5h2.8"/></svg><div><b data-i18n="desk_b1_t">Documento + selfie</b><span data-i18n="desk_b1_d">Lectura del documento y comparación con tu rostro.</span></div></li>
+        <li><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.3" y="4" width="13" height="10" rx="2"/><path d="M6 17.3h6M9 14v3.3"/><rect x="15.2" y="9.3" width="6.5" height="11.4" rx="1.8"/><path d="M17.6 18.2h1.7"/></svg><div><b data-i18n="desk_b2_t">Traspaso entre dispositivos</b><span data-i18n="desk_b2_d">Empieza en la computadora, termina en el teléfono.</span></div></li>
+        <li><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10.5" rx="2.4"/><path d="M8 10.5V7.5a4 4 0 018 0v3"/></svg><div><b data-i18n="desk_b3_t">Privado por diseño</b><span data-i18n="desk_b3_d">Las imágenes se procesan y se eliminan al terminar.</span></div></li>
+      </ul>
+      <p class="desk-note" data-i18n="desk_badge">Demostración — no ingreses datos reales.</p>
+    </div>
+  </aside>
+  <section class="desk-right">
+    <header class="desk-nav">
+      <span class="demo-pill" data-i18n="demo_badge">DEMO</span>
+      <button class="navbtn" id="langBtnDesk" style="gap:6px"><span class="flag"></span><span>English</span></button>
+    </header>
+    <div id="app">
+
+<!-- PIN gate (demo access) -->
+<div class="gate" id="gate" role="dialog" aria-modal="true" aria-label="Acceso a la demo">
+  <span class="demo-pill" data-i18n="demo_badge">DEMO</span>
+  <div class="lock">
+    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10.5" rx="2.6"/><path d="M8 10.5V7.5a4 4 0 018 0v3"/><circle cx="12" cy="15.5" r="1.2"/></svg>
+  </div>
+  <h1 data-i18n="gate_title">Acceso a la demo</h1>
+  <p data-i18n="gate_sub">Ingresa el PIN para continuar.</p>
+  <div class="dots" id="pinDots" aria-hidden="true"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+  <div class="wrong" id="pinWrong" role="alert" data-i18n="gate_wrong">PIN incorrecto</div>
+  <div class="keypad" id="keypad">
+    <button class="key" data-key="1">1</button><button class="key" data-key="2">2</button><button class="key" data-key="3">3</button>
+    <button class="key" data-key="4">4</button><button class="key" data-key="5">5</button><button class="key" data-key="6">6</button>
+    <button class="key" data-key="7">7</button><button class="key" data-key="8">8</button><button class="key" data-key="9">9</button>
+    <span class="key blank"></span><button class="key" data-key="0">0</button><button class="key act" data-del aria-label="Borrar">⌫</button>
+  </div>
+</div>
+
+<!-- Hidden file inputs: native camera / photo library fallback -->
+<input type="file" id="fileDocCam" class="vh" accept="image/*" capture="environment" tabindex="-1" aria-hidden="true">
+<input type="file" id="fileFaceCam" class="vh" accept="image/*" capture="user" tabindex="-1" aria-hidden="true">
+
+<!-- 1 · Bienvenida -->
+<section class="screen welcome" id="main" aria-label="Bienvenida">
+  <span class="demo-pill demo-top" data-i18n="demo_badge">DEMO</span>
+  <button class="navbtn corner left" id="langBtn" style="gap:5px"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 2.6 15.4 0 18M12 3c-2.6 2.6-2.6 15.4 0 18"/></svg><span id="langLabel">English</span></button>
+  <button class="navbtn corner" id="notNow" data-i18n="cancel">Cancelar</button>
+  <div class="fi" style="--d:0ms;display:flex;justify-content:center;color:var(--accent)">
+    <svg width="76" height="76" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 8V6A2.5 2.5 0 016 3.5h2M16 3.5h2A2.5 2.5 0 0120.5 6v2M20.5 16v2a2.5 2.5 0 01-2.5 2.5h-2M8 20.5H6A2.5 2.5 0 013.5 18v-2"/><path d="M9 9.5v1M15 9.5v1"/><path d="M12 9.5v3.5h-.8"/><path d="M9.3 15.6a4 4 0 005.4 0"/></svg>
+  </div>
+  <h1 class="hero-title fi" style="--d:60ms" data-i18n="welcome_title">Verifica tu identidad</h1>
+  <p class="body center fi" style="--d:100ms;margin-top:12px" data-i18n="welcome_sub">Toma unos dos minutos y solo necesitas tu cédula.</p>
+  <div class="features">
+    <div class="feature fi" style="--d:180ms">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><circle cx="8.5" cy="11" r="2.1"/><path d="M5.6 16.2c.6-1.3 1.7-2 2.9-2s2.3.7 2.9 2"/><path d="M14.5 10h4M14.5 13.5h2.8"/></svg>
+      <div><b data-i18n="f1_t">Tu documento</b><span data-i18n="f1_d">Toma una foto del frente y otra del reverso.</span></div>
+    </div>
+    <div class="feature fi" style="--d:240ms">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.2"/><path d="M9 10v.6M15 10v.6"/><path d="M9.2 14.6a3.9 3.9 0 005.6 0"/></svg>
+      <div><b data-i18n="f2_t">Una selfie</b><span data-i18n="f2_d">Para confirmar que eres la persona del documento.</span></div>
+    </div>
+    <div class="feature fi" style="--d:300ms">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10.5" rx="2.4"/><path d="M8 10.5V7.5a4 4 0 018 0v3"/></svg>
+      <div><b data-i18n="f3_t">Privada por diseño</b><span data-i18n="f3_d">Tus imágenes se eliminan en cuanto termina la verificación.</span></div>
+    </div>
+  </div>
+  <div class="bottom fi" style="--d:380ms">
+    <p class="footnote" style="margin:0 16px 14px;text-align:center"><span data-i18n="welcome_foot_a">Solicitada por Banco Ejemplo. Al continuar, aceptas el </span><button class="link" data-push="privacidad" data-i18n="privacy_link" style="font-size:13px">Aviso de privacidad</button><span data-i18n="welcome_foot_b">.</span></p>
+    <button class="btn" data-push="documento" data-i18n="continue">Continuar</button>
+    <button class="btn-plain" data-handoff data-i18n="handoff_btn">Continuar en otro dispositivo</button>
+    <div class="kyf"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2l7 2.6v5.4c0 4.4-2.9 8.2-7 9.6-4.1-1.4-7-5.2-7-9.6V5.8l7-2.6z"/><path d="M9 12l2 2 4-4"/></svg><span data-i18n="protected_by">Protegido por</span><b>SecurPro</b></div>
+  </div>
+</section>
+
+<!-- 2 · Documento -->
+<section class="screen" id="documento" aria-label="Elegir documento">
+  <div class="nav"><button class="navbtn" data-back><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><span data-i18n="back">Atrás</span></button></div>
+  <span class="step" data-i18n="step1">Paso 1 de 3</span>
+  <h1 class="large-title" data-i18n="doc_title">Elige un documento</h1>
+  <p class="body" data-i18n="doc_sub">Debe ser el original y estar vigente.</p>
+  <div class="group" style="margin-top:32px">
+    <button class="row" id="countryRow"><span data-i18n="country_label">País emisor</span><span class="value" style="display:flex;align-items:center;gap:6px"><span id="countryVal">Nicaragua</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#AEAEB2" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></span></button>
+  </div>
+  <div class="group-label" data-i18n="doc_group">Documento</div>
+  <div class="group" role="radiogroup" aria-label="Documento" id="docs">
+    <button class="row tall" role="radio" aria-checked="true" data-doc="cedula"><span><span data-i18n="doc_cedula">Cédula de identidad</span><span class="sub" data-i18n="sub_two_sides">Frente y reverso</span></span><svg class="check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5L19.5 7"/></svg></button>
+    <div class="sep"></div>
+    <button class="row tall" role="radio" aria-checked="false" data-doc="pasaporte"><span><span data-i18n="doc_pasaporte">Pasaporte</span><span class="sub" data-i18n="sub_passport">Página con tu foto</span></span><svg class="check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5L19.5 7"/></svg></button>
+    <div class="sep"></div>
+    <button class="row tall" role="radio" aria-checked="false" data-doc="licencia"><span><span data-i18n="doc_licencia">Licencia de conducir</span><span class="sub" data-i18n="sub_two_sides">Frente y reverso</span></span><svg class="check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5L19.5 7"/></svg></button>
+  </div>
+  <p class="footnote" data-i18n="doc_foot">No se aceptan fotocopias ni fotos de una pantalla.</p>
+  <div class="bottom"><button class="btn" data-push="captura" data-i18n="continue">Continuar</button></div>
+</section>
+
+<!-- 3 · Captura -->
+<section class="screen" id="captura" aria-label="Foto del documento">
+  <div class="nav"><button class="navbtn" data-back><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><span data-i18n="back">Atrás</span></button><span class="center" data-i18n="step1">Paso 1 de 3</span></div>
+  <h1 class="title2" id="capTitle">Frente de la cédula</h1>
+  <div class="seg" id="seg" role="tablist" aria-label="Lado del documento">
+    <div class="thumb"></div>
+    <button role="tab" data-side="front" aria-selected="true"><span data-i18n="side_front">Frente</span><span class="done" id="doneFront" hidden>✓</span></button>
+    <button role="tab" data-side="back" aria-selected="false"><span data-i18n="side_back">Reverso</span><span class="done" id="doneBack" hidden>✓</span></button>
+  </div>
+  <div class="viewport" id="vp">
+    <div class="card" aria-hidden="true">
+      <i class="front-only" style="left:7%;top:14%;width:23%;height:47%;border-radius:8px;background:#E6E6EB"></i>
+      <i class="front-only" style="left:36%;top:16%;width:52%;height:4%"></i>
+      <i class="front-only" style="left:36%;top:26%;width:38%;height:4%;background:#F1F1F4"></i>
+      <i class="front-only" style="left:36%;top:36%;width:44%;height:4%;background:#F1F1F4"></i>
+      <i class="front-only" style="left:7%;bottom:12%;width:86%;height:4%;background:#F1F1F4"></i>
+      <i class="back-only" style="left:7%;top:14%;width:60%;height:4%"></i>
+      <i class="back-only" style="left:7%;top:24%;width:44%;height:4%;background:#F1F1F4"></i>
+      <i class="back-only" style="left:72%;top:12%;width:21%;height:33%;border-radius:6px;background:#E6E6EB"></i>
+      <i class="back-only" style="left:7%;bottom:26%;width:86%;height:4%;background:#E6E6EB"></i>
+      <i class="back-only" style="left:7%;bottom:17%;width:86%;height:4%;background:#E6E6EB"></i>
+      <i class="back-only" style="left:7%;bottom:8%;width:86%;height:4%;background:#E6E6EB"></i>
+    </div>
+    <video id="camBack" playsinline muted autoplay></video>
+    <img class="shot" id="shotDoc" alt="" hidden>
+    <div class="guide" aria-hidden="true"></div>
+    <div class="flash" id="flash"></div>
+  </div>
+  <div class="status" role="status">
+    <div class="line" id="statusLine"></div>
+    <div class="sub" id="statusSub"></div>
+  </div>
+  <div class="controls" id="capControls">
+    <button class="icon-btn" data-handoff data-i18n-aria="aria_handoff" aria-label="Continuar en otro dispositivo" style="justify-self:start"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6.5" y="2.5" width="11" height="19" rx="2.6"/><path d="M10.5 5.5h3"/><path d="M11 18.5h2"/></svg></button>
+    <button class="shutter" id="shutter" data-i18n-aria="aria_shutter" aria-label="Tomar foto"><span></span></button>
+    <button class="icon-btn" id="torch" data-i18n-aria="aria_torch" aria-label="Linterna" aria-pressed="false" style="justify-self:end;visibility:hidden"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.2 2.5L5.2 13.3h6.2l-1 8.2 8.4-11h-6.2l.6-8z"/></svg></button>
+  </div>
+  <div class="review" id="capReview" hidden>
+    <button class="btn-plain" id="retakeDoc" data-i18n="retake">Repetir</button>
+    <button class="btn" id="useDoc" data-i18n="use_photo">Usar foto</button>
+  </div>
+</section>
+
+<!-- 4 · Revisión -->
+<section class="screen" id="revision" aria-label="Confirmar datos">
+  <div class="nav"><button class="navbtn" data-back><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><span data-i18n="back">Atrás</span></button></div>
+  <span class="step" data-i18n="step1">Paso 1 de 3</span>
+  <h1 class="large-title" data-i18n="rev_title">Confirma tus datos</h1>
+  <p class="body" data-i18n="rev_sub">Revisa que las fotos se vean bien y que tus datos coincidan.</p>
+  <div class="thumbs fi" id="thumbs" style="--d:40ms">
+    <figure><img id="thumbFront" alt=""><figcaption data-i18n="cap_front_c">Frente</figcaption></figure>
+    <figure id="thumbBackFig"><img id="thumbBack" alt=""><figcaption data-i18n="cap_back_c">Reverso</figcaption></figure>
+  </div>
+  <div class="group-label" style="margin-top:24px" id="docLabel">Cédula de identidad · Nicaragua</div>
+  <dl class="group" style="margin-top:0;margin-bottom:0">
+    <div class="row fi" style="--d:80ms"><dt data-i18n="f_name">Nombre</dt><dd class="value" style="margin:0">María José López Rivas</dd></div>
+    <div class="sep"></div>
+    <div class="row fi" style="--d:130ms"><dt data-i18n="f_number">Número</dt><dd class="value" style="margin:0;font-variant-numeric:tabular-nums">001-150390-0012K</dd></div>
+    <div class="sep"></div>
+    <div class="row fi" style="--d:180ms"><dt data-i18n="f_birth">Nacimiento</dt><dd class="value" style="margin:0">15 mar 1990</dd></div>
+    <div class="sep"></div>
+    <div class="row fi" style="--d:230ms"><dt data-i18n="f_expiry">Vencimiento</dt><dd class="value" style="margin:0">22 ago 2031</dd></div>
+  </dl>
+  <p class="footnote fi" style="--d:280ms" data-i18n="rev_foot">Datos de ejemplo: la lectura automática del documento aún no está conectada.</p>
+  <div class="bottom">
+    <button class="btn" data-push="selfie" data-i18n="continue">Continuar</button>
+    <button class="btn-plain" id="retakeAll" data-i18n="retake_all">Volver a tomar las fotos</button>
+  </div>
+</section>
+
+<!-- 5 · Selfie -->
+<section class="screen" id="selfie" aria-label="Selfie">
+  <div class="nav"><button class="navbtn" data-back><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><span data-i18n="back">Atrás</span></button><span class="center" data-i18n="step2">Paso 2 de 3</span></div>
+  <h1 class="title2" data-i18n="selfie_title">Ahora, una selfie</h1>
+  <p class="body center" style="margin-top:8px" data-i18n="selfie_sub">Coloca tu rostro dentro del círculo.</p>
+  <div class="facewrap">
+    <div class="facecam" id="facecam">
+      <svg width="210" height="220" viewBox="0 0 210 220" fill="currentColor" aria-hidden="true"><ellipse cx="105" cy="88" rx="50" ry="60"/><path d="M12 220c6-48 44-74 93-74s87 26 93 74z"/></svg>
+      <video id="camFront" playsinline muted autoplay></video>
+      <img id="shotFace" alt="" hidden>
+    </div>
+    <svg class="ring" width="300" height="300" viewBox="0 0 300 300" aria-hidden="true">
+      <circle cx="150" cy="150" r="144" fill="none" stroke="#E8E8ED" stroke-width="4"/>
+      <circle class="prog" id="ringProg" cx="150" cy="150" r="144" fill="none" stroke="var(--accent)" stroke-width="4" stroke-linecap="round" stroke-dasharray="904.78" stroke-dashoffset="904.78" transform="rotate(-90 150 150)"/>
+    </svg>
+  </div>
+  <p class="instr" id="instr" role="status">Mira de frente a la cámara</p>
+  <p class="body center" id="instrSub" style="margin-top:8px;font-size:15px">Quítate los lentes y la gorra.</p>
+  <div class="controls" id="faceControls" style="grid-template-columns:1fr">
+    <button class="shutter" id="faceShutter" data-i18n-aria="aria_face_shutter" aria-label="Tomar selfie"><span></span></button>
+  </div>
+  <div class="review" id="faceReview" hidden>
+    <button class="btn-plain" id="retakeFace" data-i18n="retake">Repetir</button>
+    <button class="btn" id="useFace" data-i18n="use_photo">Usar foto</button>
+  </div>
+</section>
+
+<!-- 6 · Resultado -->
+<section class="screen result" id="resultado" aria-label="Identidad verificada">
+  <div class="badge">
+    <svg id="badge" width="84" height="84" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="var(--green)"/><path class="tick" d="M7 12.4l3.3 3.3L17.2 8.8" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+  <h1 class="hero-title fi" style="--d:120ms;margin-top:26px" data-i18n="res_title">Identidad verificada</h1>
+  <p class="body center fi" style="--d:170ms;margin-top:12px" data-i18n="res_sub">Listo, María José. Ya puedes continuar con tu solicitud.</p>
+  <ul class="group" style="margin-top:40px" aria-label="Resumen">
+    <li class="row fi" style="--d:260ms"><span data-i18n="res_1">Documento auténtico</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5L19.5 7"/></svg></li>
+    <li class="sep" aria-hidden="true"></li>
+    <li class="row fi" style="--d:320ms"><span data-i18n="res_2">Datos coherentes</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5L19.5 7"/></svg></li>
+    <li class="sep" aria-hidden="true"></li>
+    <li class="row fi" style="--d:380ms"><span id="resMatch" data-i18n="res_3">El rostro coincide</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5L19.5 7"/></svg></li>
+  </ul>
+  <p class="footnote fi" style="--d:440ms"><span data-i18n="res_foot">Tus imágenes ya se eliminaron de este dispositivo. Referencia VRF-</span><span id="ref">0000</span></p>
+  <div class="bottom fi" style="--d:500ms"><button class="btn" id="finish" data-i18n="finish">Terminar</button><div class="kyf"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2l7 2.6v5.4c0 4.4-2.9 8.2-7 9.6-4.1-1.4-7-5.2-7-9.6V5.8l7-2.6z"/><path d="M9 12l2 2 4-4"/></svg><span data-i18n="protected_by">Protegido por</span><b>SecurPro</b></div></div>
+</section>
+
+<!-- 7 · Error -->
+<section class="screen result" id="error" aria-label="No pudimos usar la foto">
+  <div class="fi" style="display:flex;justify-content:center;color:var(--orange)">
+    <svg width="76" height="76" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9L2.4 17.6a2 2 0 001.7 3h15.8a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/><path d="M12 9v4.6"/><path d="M12 17.1v.1"/></svg>
+  </div>
+  <h1 class="hero-title fi" style="--d:60ms;margin-top:24px" id="errTitle">La foto está muy oscura</h1>
+  <p class="body center fi" style="--d:100ms;margin-top:12px" id="errBody">No alcanzamos a leer los datos. Prueba otra vez.</p>
+  <div class="group-label fi" style="--d:160ms;margin-top:36px" data-i18n="err_tips">Sugerencias</div>
+  <ul class="group fi" style="--d:180ms">
+    <li class="row" style="justify-content:flex-start;gap:14px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6E6E73" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none"><circle cx="12" cy="12" r="3.8"/><path d="M12 2.5v2M12 19.5v2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M2.5 12h2M19.5 12h2M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></svg><span data-i18n="err_1">Busca luz pareja, sin reflejos</span></li>
+    <li class="sep icon" aria-hidden="true"></li>
+    <li class="row" style="justify-content:flex-start;gap:14px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6E6E73" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none"><rect x="4" y="6" width="16" height="11" rx="2"/><path d="M2.5 20.5h19"/></svg><span data-i18n="err_2">Apóyala en una superficie oscura</span></li>
+    <li class="sep icon" aria-hidden="true"></li>
+    <li class="row" style="justify-content:flex-start;gap:14px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6E6E73" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none"><path d="M3.5 8V6A2.5 2.5 0 016 3.5h2M16 3.5h2A2.5 2.5 0 0120.5 6v2M20.5 16v2a2.5 2.5 0 01-2.5 2.5h-2M8 20.5H6A2.5 2.5 0 013.5 18v-2"/></svg><span data-i18n="err_3">Que se vean los cuatro bordes</span></li>
+  </ul>
+  <div class="bottom">
+    <button class="btn" data-back data-i18n="try_again">Intentar de nuevo</button>
+  </div>
+</section>
+
+<!-- 8 · Aviso de privacidad -->
+<section class="screen policy" id="privacidad" aria-label="Aviso de privacidad">
+  <div class="nav"><button class="navbtn" data-back><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><span data-i18n="back">Atrás</span></button></div>
+  <h1 class="large-title" style="margin-top:14px" data-i18n="privacy_title">Aviso de privacidad</h1>
+  <p class="body" style="margin-bottom:6px" data-i18n="privacy_updated">Última actualización: [fecha]</p>
+  <div class="policy-body" data-i18n-html="privacy_body"></div>
+  <p class="footnote" style="margin:20px 20px 0;color:var(--muted)" data-i18n="pv_foot">Borrador de referencia. Debe revisarlo un abogado antes de usarse con clientes reales.</p>
+  <div class="bottom"><button class="btn" data-back data-i18n="understood">Entendido</button><div class="kyf"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2l7 2.6v5.4c0 4.4-2.9 8.2-7 9.6-4.1-1.4-7-5.2-7-9.6V5.8l7-2.6z"/><path d="M9 12l2 2 4-4"/></svg><span data-i18n="protected_by">Protegido por</span><b>SecurPro</b></div></div>
+</section>
+
+<!-- 9 · Cancelado -->
+<section class="screen result" id="cancelado" aria-label="Verificación cancelada">
+  <div class="fi" style="display:flex;justify-content:center;color:#8E8E93">
+    <svg width="76" height="76" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M8.6 8.6l6.8 6.8M15.4 8.6l-6.8 6.8"/></svg>
+  </div>
+  <h1 class="hero-title fi" style="--d:60ms;margin-top:24px" data-i18n="cancel_title">Verificación cancelada</h1>
+  <p class="body center fi" style="--d:100ms;margin-top:12px" data-i18n="cancel_sub">No guardamos ninguna foto. Puedes retomarla cuando quieras.</p>
+  <div class="bottom fi" style="--d:160ms">
+    <button class="btn" id="resume" data-i18n="resume_btn">Retomar verificación</button>
+    <button class="btn-plain" data-handoff data-i18n="handoff_btn">Continuar en otro dispositivo</button>
+    <div class="kyf"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2l7 2.6v5.4c0 4.4-2.9 8.2-7 9.6-4.1-1.4-7-5.2-7-9.6V5.8l7-2.6z"/><path d="M9 12l2 2 4-4"/></svg><span data-i18n="protected_by">Protegido por</span><b>SecurPro</b></div>
+  </div>
+</section>
+
+<!-- 10a · Principal: continuando en otro dispositivo -->
+<section class="screen" id="principal" aria-label="Continuando en otro dispositivo">
+  <div class="nav"><button class="navbtn" data-back><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><span data-i18n="back">Atrás</span></button></div>
+  <div class="fi" style="--d:0ms;display:flex;justify-content:center;margin-top:20px;color:var(--accent)">
+    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.3" y="4" width="13" height="10" rx="2"/><path d="M6 17.3h6M9 14v3.3"/><rect x="15.2" y="9.3" width="6.5" height="11.4" rx="1.8"/><path d="M17.6 18.2h1.7"/></svg>
+  </div>
+  <h1 class="hero-title fi" style="--d:60ms;margin-top:18px;font-size:27px;line-height:1.16" data-i18n="pr_title">Continuando en otro dispositivo</h1>
+  <p class="body center fi" style="--d:100ms;margin-top:10px" id="prStatus">El otro dispositivo está completando la verificación…</p>
+  <div id="prPhotos" class="fi" style="--d:140ms;margin:18px 16px 0"></div>
+  <ul class="group fi" style="--d:160ms;margin-top:24px" aria-label="Detalles">
+    <li class="row"><span data-i18n="ap_device">Dispositivo</span><span class="value" id="prDeviceVal" style="color:var(--ink)">—</span></li>
+    <li class="sep"></li>
+    <li class="row"><span data-i18n="ap_location">Ubicación aproximada</span><span class="value" id="prLocVal">—</span></li>
+    <li class="sep"></li>
+    <li class="row"><span data-i18n="ap_time">Hora</span><span class="value" id="prTimeVal">—</span></li>
+    <li class="sep"></li>
+    <li class="row"><span data-i18n="ap_code">Código</span><span class="value" id="prCodeVal" style="font-variant-numeric:tabular-nums;letter-spacing:.14em;color:var(--ink);font-weight:600">—</span></li>
+  </ul>
+  <p class="footnote fi" style="--d:200ms" id="prHint" data-i18n="pr_hint_wait">No cierres esta pantalla.</p>
+  <div class="bottom" id="prButtons"></div>
+</section>
+
+<!-- 10b · Esperando aprobación (dispositivo que escanea) -->
+<section class="screen" id="esperando" aria-label="Esperando aprobación">
+  <div class="nav"><button class="navbtn" data-back><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><span data-i18n="back">Atrás</span></button></div>
+  <div class="fi" style="--d:0ms;display:flex;justify-content:center;margin-top:48px;color:var(--accent)">
+    <svg class="spinner" width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 3a9 9 0 019 9"/></svg>
+  </div>
+  <h1 class="hero-title fi" style="--d:80ms;margin-top:28px" data-i18n="wait_title">Esperando aprobación</h1>
+  <p class="body center fi" style="--d:120ms;margin-top:12px" data-i18n="wait_sub">Confirma en el dispositivo principal para continuar aquí.</p>
+  <ul class="group fi" style="--d:180ms;margin-top:28px" aria-label="Código">
+    <li class="row"><span data-i18n="ap_code">Código</span><span class="value" id="waitCode" style="font-variant-numeric:tabular-nums;letter-spacing:.14em;color:var(--ink);font-weight:600">—</span></li>
+  </ul>
+  <div class="bottom"><button class="btn-plain" data-back data-i18n="cancel">Cancelar</button></div>
+</section>
+
+<!-- 10 · Aprobación (dispositivo principal) -->
+<section class="screen" id="aprobar" aria-label="Solicitud de otro dispositivo">
+  <div class="nav"><button class="navbtn" data-back><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><span data-i18n="back">Atrás</span></button></div>
+  <div class="fi" style="--d:0ms;display:flex;justify-content:center;margin-top:20px;color:var(--accent)">
+    <svg width="68" height="68" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.3" y="4" width="13" height="10" rx="2"/><path d="M6 17.3h6M9 14v3.3"/><rect x="15.2" y="9.3" width="6.5" height="11.4" rx="1.8"/><path d="M17.6 18.2h1.7"/></svg>
+  </div>
+  <h1 class="hero-title fi" style="--d:60ms;margin-top:18px;font-size:27px;line-height:1.16" data-i18n="ap_title">Un dispositivo quiere continuar tu verificación</h1>
+  <p class="body center fi" style="--d:100ms;margin-top:10px" data-i18n="ap_sub">Acéptalo solo si fuiste tú quien abrió el enlace en el otro dispositivo.</p>
+  <ul class="group fi" style="--d:160ms;margin-top:26px" aria-label="Detalles">
+    <li class="row"><span data-i18n="ap_device">Dispositivo</span><span class="value" id="apDeviceVal" style="color:var(--ink)">—</span></li>
+    <li class="sep"></li>
+    <li class="row"><span data-i18n="ap_location">Ubicación aproximada</span><span class="value" id="apLocVal">—</span></li>
+    <li class="sep"></li>
+    <li class="row"><span data-i18n="ap_time">Hora</span><span class="value" id="apTimeVal">—</span></li>
+    <li class="sep"></li>
+    <li class="row"><span data-i18n="ap_code">Código</span><span class="value" id="apCodeVal" style="font-variant-numeric:tabular-nums;letter-spacing:.14em;color:var(--ink);font-weight:600">—</span></li>
+  </ul>
+  <p class="footnote fi" style="--d:200ms" data-i18n="ap_code_hint">Verifica que el código coincida con el del otro dispositivo.</p>
+  <div class="bottom">
+    <button class="btn" id="apAccept" data-i18n="ap_accept">Aceptar</button>
+    <button class="btn-plain destructive" id="apReject" data-i18n="ap_reject">Rechazar</button>
+  </div>
+</section>
+
+<!-- Sheet + toast -->
+<div class="scrim" id="scrim"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+  <div class="grab" id="grab"><span></span></div>
+  <h2 class="sh-title" id="sheetTitle"></h2>
+  <div class="sh-body" id="sheetBody"></div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+</div>
+  </section>
+</div>
+
+<script>/*! qrcode-generator (c) Kazuhiko Arase — MIT License */
+var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],f={},c=function(t,r){o=function(t){for(var r=new Array(t),e=0;e<t;e+=1){r[e]=new Array(t);for(var n=0;n<t;n+=1)r[e][n]=null}return r}(i=4*e+17),l(0,0),l(i-7,0),l(0,i-7),s(),h(),d(t,r),e>=7&&v(t),null==a&&(a=p(e,n,u)),w(a,r)},l=function(t,r){for(var e=-1;e<=7;e+=1)if(!(t+e<=-1||i<=t+e))for(var n=-1;n<=7;n+=1)r+n<=-1||i<=r+n||(o[t+e][r+n]=0<=e&&e<=6&&(0==n||6==n)||0<=n&&n<=6&&(0==e||6==e)||2<=e&&e<=4&&2<=n&&n<=4)},h=function(){for(var t=8;t<i-8;t+=1)null==o[t][6]&&(o[t][6]=t%2==0);for(var r=8;r<i-8;r+=1)null==o[6][r]&&(o[6][r]=r%2==0)},s=function(){for(var t=B.getPatternPosition(e),r=0;r<t.length;r+=1)for(var n=0;n<t.length;n+=1){var i=t[r],a=t[n];if(null==o[i][a])for(var u=-2;u<=2;u+=1)for(var f=-2;f<=2;f+=1)o[i+u][a+f]=-2==u||2==u||-2==f||2==f||0==u&&0==f}},v=function(t){for(var r=B.getBCHTypeNumber(e),n=0;n<18;n+=1){var a=!t&&1==(r>>n&1);o[Math.floor(n/3)][n%3+i-8-3]=a}for(n=0;n<18;n+=1){a=!t&&1==(r>>n&1);o[n%3+i-8-3][Math.floor(n/3)]=a}},d=function(t,r){for(var e=n<<3|r,a=B.getBCHTypeInfo(e),u=0;u<15;u+=1){var f=!t&&1==(a>>u&1);u<6?o[u][8]=f:u<8?o[u+1][8]=f:o[i-15+u][8]=f}for(u=0;u<15;u+=1){f=!t&&1==(a>>u&1);u<8?o[8][i-u-1]=f:u<9?o[8][15-u-1+1]=f:o[8][15-u-1]=f}o[i-8][8]=!t},w=function(t,r){for(var e=-1,n=i-1,a=7,u=0,f=B.getMaskFunction(r),c=i-1;c>0;c-=2)for(6==c&&(c-=1);;){for(var g=0;g<2;g+=1)if(null==o[n][c-g]){var l=!1;u<t.length&&(l=1==(t[u]>>>a&1)),f(n,c-g)&&(l=!l),o[n][c-g]=l,-1==(a-=1)&&(u+=1,a=7)}if((n+=e)<0||i<=n){n-=e,e=-e;break}}},p=function(t,r,e){for(var n=A.getRSBlocks(t,r),o=b(),i=0;i<e.length;i+=1){var a=e[i];o.put(a.getMode(),4),o.put(a.getLength(),B.getLengthInBits(a.getMode(),t)),a.write(o)}var u=0;for(i=0;i<n.length;i+=1)u+=n[i].dataCount;if(o.getLengthInBits()>8*u)throw"code length overflow. ("+o.getLengthInBits()+">"+8*u+")";for(o.getLengthInBits()+4<=8*u&&o.put(0,4);o.getLengthInBits()%8!=0;)o.putBit(!1);for(;!(o.getLengthInBits()>=8*u||(o.put(236,8),o.getLengthInBits()>=8*u));)o.put(17,8);return function(t,r){for(var e=0,n=0,o=0,i=new Array(r.length),a=new Array(r.length),u=0;u<r.length;u+=1){var f=r[u].dataCount,c=r[u].totalCount-f;n=Math.max(n,f),o=Math.max(o,c),i[u]=new Array(f);for(var g=0;g<i[u].length;g+=1)i[u][g]=255&t.getBuffer()[g+e];e+=f;var l=B.getErrorCorrectPolynomial(c),h=k(i[u],l.getLength()-1).mod(l);for(a[u]=new Array(l.getLength()-1),g=0;g<a[u].length;g+=1){var s=g+h.getLength()-a[u].length;a[u][g]=s>=0?h.getAt(s):0}}var v=0;for(g=0;g<r.length;g+=1)v+=r[g].totalCount;var d=new Array(v),w=0;for(g=0;g<n;g+=1)for(u=0;u<r.length;u+=1)g<i[u].length&&(d[w]=i[u][g],w+=1);for(g=0;g<o;g+=1)for(u=0;u<r.length;u+=1)g<a[u].length&&(d[w]=a[u][g],w+=1);return d}(o,n)};f.addData=function(t,r){var e=null;switch(r=r||"Byte"){case"Numeric":e=M(t);break;case"Alphanumeric":e=x(t);break;case"Byte":e=m(t);break;case"Kanji":e=L(t);break;default:throw"mode:"+r}u.push(e),a=null},f.isDark=function(t,r){if(t<0||i<=t||r<0||i<=r)throw t+","+r;return o[t][r]},f.getModuleCount=function(){return i},f.make=function(){if(e<1){for(var t=1;t<40;t++){for(var r=A.getRSBlocks(t,n),o=b(),i=0;i<u.length;i++){var a=u[i];o.put(a.getMode(),4),o.put(a.getLength(),B.getLengthInBits(a.getMode(),t)),a.write(o)}var g=0;for(i=0;i<r.length;i++)g+=r[i].dataCount;if(o.getLengthInBits()<=8*g)break}e=t}c(!1,function(){for(var t=0,r=0,e=0;e<8;e+=1){c(!0,e);var n=B.getLostPoint(f);(0==e||t>n)&&(t=n,r=e)}return r}())},f.createTableTag=function(t,r){t=t||2;var e="";e+='<table style="',e+=" border-width: 0px; border-style: none;",e+=" border-collapse: collapse;",e+=" padding: 0px; margin: "+(r=void 0===r?4*t:r)+"px;",e+='">',e+="<tbody>";for(var n=0;n<f.getModuleCount();n+=1){e+="<tr>";for(var o=0;o<f.getModuleCount();o+=1)e+='<td style="',e+=" border-width: 0px; border-style: none;",e+=" border-collapse: collapse;",e+=" padding: 0px; margin: 0px;",e+=" width: "+t+"px;",e+=" height: "+t+"px;",e+=" background-color: ",e+=f.isDark(n,o)?"#000000":"#ffffff",e+=";",e+='"/>';e+="</tr>"}return e+="</tbody>",e+="</table>"},f.createSvgTag=function(t,r,e,n){var o={};"object"==typeof arguments[0]&&(t=(o=arguments[0]).cellSize,r=o.margin,e=o.alt,n=o.title),t=t||2,r=void 0===r?4*t:r,(e="string"==typeof e?{text:e}:e||{}).text=e.text||null,e.id=e.text?e.id||"qrcode-description":null,(n="string"==typeof n?{text:n}:n||{}).text=n.text||null,n.id=n.text?n.id||"qrcode-title":null;var i,a,u,c,g=f.getModuleCount()*t+2*r,l="";for(c="l"+t+",0 0,"+t+" -"+t+",0 0,-"+t+"z ",l+='<svg version="1.1" xmlns="http://www.w3.org/2000/svg"',l+=o.scalable?"":' width="'+g+'px" height="'+g+'px"',l+=' viewBox="0 0 '+g+" "+g+'" ',l+=' preserveAspectRatio="xMinYMin meet"',l+=n.text||e.text?' role="img" aria-labelledby="'+y([n.id,e.id].join(" ").trim())+'"':"",l+=">",l+=n.text?'<title id="'+y(n.id)+'">'+y(n.text)+"</title>":"",l+=e.text?'<description id="'+y(e.id)+'">'+y(e.text)+"</description>":"",l+='<rect width="100%" height="100%" fill="white" cx="0" cy="0"/>',l+='<path d="',a=0;a<f.getModuleCount();a+=1)for(u=a*t+r,i=0;i<f.getModuleCount();i+=1)f.isDark(a,i)&&(l+="M"+(i*t+r)+","+u+c);return l+='" stroke="transparent" fill="black"/>',l+="</svg>"},f.createDataURL=function(t,r){t=t||2,r=void 0===r?4*t:r;var e=f.getModuleCount()*t+2*r,n=r,o=e-r;return I(e,e,function(r,e){if(n<=r&&r<o&&n<=e&&e<o){var i=Math.floor((r-n)/t),a=Math.floor((e-n)/t);return f.isDark(a,i)?0:1}return 1})},f.createImgTag=function(t,r,e){t=t||2,r=void 0===r?4*t:r;var n=f.getModuleCount()*t+2*r,o="";return o+="<img",o+=' src="',o+=f.createDataURL(t,r),o+='"',o+=' width="',o+=n,o+='"',o+=' height="',o+=n,o+='"',e&&(o+=' alt="',o+=y(e),o+='"'),o+="/>"};var y=function(t){for(var r="",e=0;e<t.length;e+=1){var n=t.charAt(e);switch(n){case"<":r+="&lt;";break;case">":r+="&gt;";break;case"&":r+="&amp;";break;case'"':r+="&quot;";break;default:r+=n}}return r};return f.createASCII=function(t,r){if((t=t||1)<2)return function(t){t=void 0===t?2:t;var r,e,n,o,i,a=1*f.getModuleCount()+2*t,u=t,c=a-t,g={"██":"█","█ ":"▀"," █":"▄","  ":" "},l={"██":"▀","█ ":"▀"," █":" ","  ":" "},h="";for(r=0;r<a;r+=2){for(n=Math.floor((r-u)/1),o=Math.floor((r+1-u)/1),e=0;e<a;e+=1)i="█",u<=e&&e<c&&u<=r&&r<c&&f.isDark(n,Math.floor((e-u)/1))&&(i=" "),u<=e&&e<c&&u<=r+1&&r+1<c&&f.isDark(o,Math.floor((e-u)/1))?i+=" ":i+="█",h+=t<1&&r+1>=c?l[i]:g[i];h+="\n"}return a%2&&t>0?h.substring(0,h.length-a-1)+Array(a+1).join("▀"):h.substring(0,h.length-1)}(r);t-=1,r=void 0===r?2*t:r;var e,n,o,i,a=f.getModuleCount()*t+2*r,u=r,c=a-r,g=Array(t+1).join("██"),l=Array(t+1).join("  "),h="",s="";for(e=0;e<a;e+=1){for(o=Math.floor((e-u)/t),s="",n=0;n<a;n+=1)i=1,u<=n&&n<c&&u<=e&&e<c&&f.isDark(o,Math.floor((n-u)/t))&&(i=0),s+=i?g:l;for(o=0;o<t;o+=1)h+=s+"\n"}return h.substring(0,h.length-1)},f.renderTo2dContext=function(t,r){r=r||2;for(var e=f.getModuleCount(),n=0;n<e;n++)for(var o=0;o<e;o++)t.fillStyle=f.isDark(n,o)?"black":"white",t.fillRect(o*r,n*r,r,r)},f};t.stringToBytes=(t.stringToBytesFuncs={default:function(t){for(var r=[],e=0;e<t.length;e+=1){var n=t.charCodeAt(e);r.push(255&n)}return r}}).default,t.createStringToBytes=function(t,r){var e=function(){for(var e=S(t),n=function(){var t=e.read();if(-1==t)throw"eof";return t},o=0,i={};;){var a=e.read();if(-1==a)break;var u=n(),f=n()<<8|n();i[String.fromCharCode(a<<8|u)]=f,o+=1}if(o!=r)throw o+" != "+r;return i}(),n="?".charCodeAt(0);return function(t){for(var r=[],o=0;o<t.length;o+=1){var i=t.charCodeAt(o);if(i<128)r.push(i);else{var a=e[t.charAt(o)];"number"==typeof a?(255&a)==a?r.push(a):(r.push(a>>>8),r.push(255&a)):r.push(n)}}return r}};var r,e,n,o,i,a=1,u=2,f=4,c=8,g={L:1,M:0,Q:3,H:2},l=0,h=1,s=2,v=3,d=4,w=5,p=6,y=7,B=(r=[[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50],[6,30,54],[6,32,58],[6,34,62],[6,26,46,66],[6,26,48,70],[6,26,50,74],[6,30,54,78],[6,30,56,82],[6,30,58,86],[6,34,62,90],[6,28,50,72,94],[6,26,50,74,98],[6,30,54,78,102],[6,28,54,80,106],[6,32,58,84,110],[6,30,58,86,114],[6,34,62,90,118],[6,26,50,74,98,122],[6,30,54,78,102,126],[6,26,52,78,104,130],[6,30,56,82,108,134],[6,34,60,86,112,138],[6,30,58,86,114,142],[6,34,62,90,118,146],[6,30,54,78,102,126,150],[6,24,50,76,102,128,154],[6,28,54,80,106,132,158],[6,32,58,84,110,136,162],[6,26,54,82,110,138,166],[6,30,58,86,114,142,170]],e=1335,n=7973,i=function(t){for(var r=0;0!=t;)r+=1,t>>>=1;return r},(o={}).getBCHTypeInfo=function(t){for(var r=t<<10;i(r)-i(e)>=0;)r^=e<<i(r)-i(e);return 21522^(t<<10|r)},o.getBCHTypeNumber=function(t){for(var r=t<<12;i(r)-i(n)>=0;)r^=n<<i(r)-i(n);return t<<12|r},o.getPatternPosition=function(t){return r[t-1]},o.getMaskFunction=function(t){switch(t){case l:return function(t,r){return(t+r)%2==0};case h:return function(t,r){return t%2==0};case s:return function(t,r){return r%3==0};case v:return function(t,r){return(t+r)%3==0};case d:return function(t,r){return(Math.floor(t/2)+Math.floor(r/3))%2==0};case w:return function(t,r){return t*r%2+t*r%3==0};case p:return function(t,r){return(t*r%2+t*r%3)%2==0};case y:return function(t,r){return(t*r%3+(t+r)%2)%2==0};default:throw"bad maskPattern:"+t}},o.getErrorCorrectPolynomial=function(t){for(var r=k([1],0),e=0;e<t;e+=1)r=r.multiply(k([1,C.gexp(e)],0));return r},o.getLengthInBits=function(t,r){if(1<=r&&r<10)switch(t){case a:return 10;case u:return 9;case f:case c:return 8;default:throw"mode:"+t}else if(r<27)switch(t){case a:return 12;case u:return 11;case f:return 16;case c:return 10;default:throw"mode:"+t}else{if(!(r<41))throw"type:"+r;switch(t){case a:return 14;case u:return 13;case f:return 16;case c:return 12;default:throw"mode:"+t}}},o.getLostPoint=function(t){for(var r=t.getModuleCount(),e=0,n=0;n<r;n+=1)for(var o=0;o<r;o+=1){for(var i=0,a=t.isDark(n,o),u=-1;u<=1;u+=1)if(!(n+u<0||r<=n+u))for(var f=-1;f<=1;f+=1)o+f<0||r<=o+f||0==u&&0==f||a==t.isDark(n+u,o+f)&&(i+=1);i>5&&(e+=3+i-5)}for(n=0;n<r-1;n+=1)for(o=0;o<r-1;o+=1){var c=0;t.isDark(n,o)&&(c+=1),t.isDark(n+1,o)&&(c+=1),t.isDark(n,o+1)&&(c+=1),t.isDark(n+1,o+1)&&(c+=1),0!=c&&4!=c||(e+=3)}for(n=0;n<r;n+=1)for(o=0;o<r-6;o+=1)t.isDark(n,o)&&!t.isDark(n,o+1)&&t.isDark(n,o+2)&&t.isDark(n,o+3)&&t.isDark(n,o+4)&&!t.isDark(n,o+5)&&t.isDark(n,o+6)&&(e+=40);for(o=0;o<r;o+=1)for(n=0;n<r-6;n+=1)t.isDark(n,o)&&!t.isDark(n+1,o)&&t.isDark(n+2,o)&&t.isDark(n+3,o)&&t.isDark(n+4,o)&&!t.isDark(n+5,o)&&t.isDark(n+6,o)&&(e+=40);var g=0;for(o=0;o<r;o+=1)for(n=0;n<r;n+=1)t.isDark(n,o)&&(g+=1);return e+=Math.abs(100*g/r/r-50)/5*10},o),C=function(){for(var t=new Array(256),r=new Array(256),e=0;e<8;e+=1)t[e]=1<<e;for(e=8;e<256;e+=1)t[e]=t[e-4]^t[e-5]^t[e-6]^t[e-8];for(e=0;e<255;e+=1)r[t[e]]=e;var n={glog:function(t){if(t<1)throw"glog("+t+")";return r[t]},gexp:function(r){for(;r<0;)r+=255;for(;r>=256;)r-=255;return t[r]}};return n}();function k(t,r){if(void 0===t.length)throw t.length+"/"+r;var e=function(){for(var e=0;e<t.length&&0==t[e];)e+=1;for(var n=new Array(t.length-e+r),o=0;o<t.length-e;o+=1)n[o]=t[o+e];return n}(),n={getAt:function(t){return e[t]},getLength:function(){return e.length},multiply:function(t){for(var r=new Array(n.getLength()+t.getLength()-1),e=0;e<n.getLength();e+=1)for(var o=0;o<t.getLength();o+=1)r[e+o]^=C.gexp(C.glog(n.getAt(e))+C.glog(t.getAt(o)));return k(r,0)},mod:function(t){if(n.getLength()-t.getLength()<0)return n;for(var r=C.glog(n.getAt(0))-C.glog(t.getAt(0)),e=new Array(n.getLength()),o=0;o<n.getLength();o+=1)e[o]=n.getAt(o);for(o=0;o<t.getLength();o+=1)e[o]^=C.gexp(C.glog(t.getAt(o))+r);return k(e,0).mod(t)}};return n}var A=function(){var t=[[1,26,19],[1,26,16],[1,26,13],[1,26,9],[1,44,34],[1,44,28],[1,44,22],[1,44,16],[1,70,55],[1,70,44],[2,35,17],[2,35,13],[1,100,80],[2,50,32],[2,50,24],[4,25,9],[1,134,108],[2,67,43],[2,33,15,2,34,16],[2,33,11,2,34,12],[2,86,68],[4,43,27],[4,43,19],[4,43,15],[2,98,78],[4,49,31],[2,32,14,4,33,15],[4,39,13,1,40,14],[2,121,97],[2,60,38,2,61,39],[4,40,18,2,41,19],[4,40,14,2,41,15],[2,146,116],[3,58,36,2,59,37],[4,36,16,4,37,17],[4,36,12,4,37,13],[2,86,68,2,87,69],[4,69,43,1,70,44],[6,43,19,2,44,20],[6,43,15,2,44,16],[4,101,81],[1,80,50,4,81,51],[4,50,22,4,51,23],[3,36,12,8,37,13],[2,116,92,2,117,93],[6,58,36,2,59,37],[4,46,20,6,47,21],[7,42,14,4,43,15],[4,133,107],[8,59,37,1,60,38],[8,44,20,4,45,21],[12,33,11,4,34,12],[3,145,115,1,146,116],[4,64,40,5,65,41],[11,36,16,5,37,17],[11,36,12,5,37,13],[5,109,87,1,110,88],[5,65,41,5,66,42],[5,54,24,7,55,25],[11,36,12,7,37,13],[5,122,98,1,123,99],[7,73,45,3,74,46],[15,43,19,2,44,20],[3,45,15,13,46,16],[1,135,107,5,136,108],[10,74,46,1,75,47],[1,50,22,15,51,23],[2,42,14,17,43,15],[5,150,120,1,151,121],[9,69,43,4,70,44],[17,50,22,1,51,23],[2,42,14,19,43,15],[3,141,113,4,142,114],[3,70,44,11,71,45],[17,47,21,4,48,22],[9,39,13,16,40,14],[3,135,107,5,136,108],[3,67,41,13,68,42],[15,54,24,5,55,25],[15,43,15,10,44,16],[4,144,116,4,145,117],[17,68,42],[17,50,22,6,51,23],[19,46,16,6,47,17],[2,139,111,7,140,112],[17,74,46],[7,54,24,16,55,25],[34,37,13],[4,151,121,5,152,122],[4,75,47,14,76,48],[11,54,24,14,55,25],[16,45,15,14,46,16],[6,147,117,4,148,118],[6,73,45,14,74,46],[11,54,24,16,55,25],[30,46,16,2,47,17],[8,132,106,4,133,107],[8,75,47,13,76,48],[7,54,24,22,55,25],[22,45,15,13,46,16],[10,142,114,2,143,115],[19,74,46,4,75,47],[28,50,22,6,51,23],[33,46,16,4,47,17],[8,152,122,4,153,123],[22,73,45,3,74,46],[8,53,23,26,54,24],[12,45,15,28,46,16],[3,147,117,10,148,118],[3,73,45,23,74,46],[4,54,24,31,55,25],[11,45,15,31,46,16],[7,146,116,7,147,117],[21,73,45,7,74,46],[1,53,23,37,54,24],[19,45,15,26,46,16],[5,145,115,10,146,116],[19,75,47,10,76,48],[15,54,24,25,55,25],[23,45,15,25,46,16],[13,145,115,3,146,116],[2,74,46,29,75,47],[42,54,24,1,55,25],[23,45,15,28,46,16],[17,145,115],[10,74,46,23,75,47],[10,54,24,35,55,25],[19,45,15,35,46,16],[17,145,115,1,146,116],[14,74,46,21,75,47],[29,54,24,19,55,25],[11,45,15,46,46,16],[13,145,115,6,146,116],[14,74,46,23,75,47],[44,54,24,7,55,25],[59,46,16,1,47,17],[12,151,121,7,152,122],[12,75,47,26,76,48],[39,54,24,14,55,25],[22,45,15,41,46,16],[6,151,121,14,152,122],[6,75,47,34,76,48],[46,54,24,10,55,25],[2,45,15,64,46,16],[17,152,122,4,153,123],[29,74,46,14,75,47],[49,54,24,10,55,25],[24,45,15,46,46,16],[4,152,122,18,153,123],[13,74,46,32,75,47],[48,54,24,14,55,25],[42,45,15,32,46,16],[20,147,117,4,148,118],[40,75,47,7,76,48],[43,54,24,22,55,25],[10,45,15,67,46,16],[19,148,118,6,149,119],[18,75,47,31,76,48],[34,54,24,34,55,25],[20,45,15,61,46,16]],r=function(t,r){var e={};return e.totalCount=t,e.dataCount=r,e},e={};return e.getRSBlocks=function(e,n){var o=function(r,e){switch(e){case g.L:return t[4*(r-1)+0];case g.M:return t[4*(r-1)+1];case g.Q:return t[4*(r-1)+2];case g.H:return t[4*(r-1)+3];default:return}}(e,n);if(void 0===o)throw"bad rs block @ typeNumber:"+e+"/errorCorrectionLevel:"+n;for(var i=o.length/3,a=[],u=0;u<i;u+=1)for(var f=o[3*u+0],c=o[3*u+1],l=o[3*u+2],h=0;h<f;h+=1)a.push(r(c,l));return a},e}(),b=function(){var t=[],r=0,e={getBuffer:function(){return t},getAt:function(r){var e=Math.floor(r/8);return 1==(t[e]>>>7-r%8&1)},put:function(t,r){for(var n=0;n<r;n+=1)e.putBit(1==(t>>>r-n-1&1))},getLengthInBits:function(){return r},putBit:function(e){var n=Math.floor(r/8);t.length<=n&&t.push(0),e&&(t[n]|=128>>>r%8),r+=1}};return e},M=function(t){var r=a,e=t,n={getMode:function(){return r},getLength:function(t){return e.length},write:function(t){for(var r=e,n=0;n+2<r.length;)t.put(o(r.substring(n,n+3)),10),n+=3;n<r.length&&(r.length-n==1?t.put(o(r.substring(n,n+1)),4):r.length-n==2&&t.put(o(r.substring(n,n+2)),7))}},o=function(t){for(var r=0,e=0;e<t.length;e+=1)r=10*r+i(t.charAt(e));return r},i=function(t){if("0"<=t&&t<="9")return t.charCodeAt(0)-"0".charCodeAt(0);throw"illegal char :"+t};return n},x=function(t){var r=u,e=t,n={getMode:function(){return r},getLength:function(t){return e.length},write:function(t){for(var r=e,n=0;n+1<r.length;)t.put(45*o(r.charAt(n))+o(r.charAt(n+1)),11),n+=2;n<r.length&&t.put(o(r.charAt(n)),6)}},o=function(t){if("0"<=t&&t<="9")return t.charCodeAt(0)-"0".charCodeAt(0);if("A"<=t&&t<="Z")return t.charCodeAt(0)-"A".charCodeAt(0)+10;switch(t){case" ":return 36;case"$":return 37;case"%":return 38;case"*":return 39;case"+":return 40;case"-":return 41;case".":return 42;case"/":return 43;case":":return 44;default:throw"illegal char :"+t}};return n},m=function(r){var e=f,n=t.stringToBytes(r),o={getMode:function(){return e},getLength:function(t){return n.length},write:function(t){for(var r=0;r<n.length;r+=1)t.put(n[r],8)}};return o},L=function(r){var e=c,n=t.stringToBytesFuncs.SJIS;if(!n)throw"sjis not supported.";!function(){var t=n("友");if(2!=t.length||38726!=(t[0]<<8|t[1]))throw"sjis not supported."}();var o=n(r),i={getMode:function(){return e},getLength:function(t){return~~(o.length/2)},write:function(t){for(var r=o,e=0;e+1<r.length;){var n=(255&r[e])<<8|255&r[e+1];if(33088<=n&&n<=40956)n-=33088;else{if(!(57408<=n&&n<=60351))throw"illegal char at "+(e+1)+"/"+n;n-=49472}n=192*(n>>>8&255)+(255&n),t.put(n,13),e+=2}if(e<r.length)throw"illegal char at "+(e+1)}};return i},D=function(){var t=[],r={writeByte:function(r){t.push(255&r)},writeShort:function(t){r.writeByte(t),r.writeByte(t>>>8)},writeBytes:function(t,e,n){e=e||0,n=n||t.length;for(var o=0;o<n;o+=1)r.writeByte(t[o+e])},writeString:function(t){for(var e=0;e<t.length;e+=1)r.writeByte(t.charCodeAt(e))},toByteArray:function(){return t},toString:function(){var r="";r+="[";for(var e=0;e<t.length;e+=1)e>0&&(r+=","),r+=t[e];return r+="]"}};return r},S=function(t){var r=t,e=0,n=0,o=0,i={read:function(){for(;o<8;){if(e>=r.length){if(0==o)return-1;throw"unexpected end of file./"+o}var t=r.charAt(e);if(e+=1,"="==t)return o=0,-1;t.match(/^\s$/)||(n=n<<6|a(t.charCodeAt(0)),o+=6)}var i=n>>>o-8&255;return o-=8,i}},a=function(t){if(65<=t&&t<=90)return t-65;if(97<=t&&t<=122)return t-97+26;if(48<=t&&t<=57)return t-48+52;if(43==t)return 62;if(47==t)return 63;throw"c:"+t};return i},I=function(t,r,e){for(var n=function(t,r){var e=t,n=r,o=new Array(t*r),i={setPixel:function(t,r,n){o[r*e+t]=n},write:function(t){t.writeString("GIF87a"),t.writeShort(e),t.writeShort(n),t.writeByte(128),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(255),t.writeByte(255),t.writeByte(255),t.writeString(","),t.writeShort(0),t.writeShort(0),t.writeShort(e),t.writeShort(n),t.writeByte(0);var r=a(2);t.writeByte(2);for(var o=0;r.length-o>255;)t.writeByte(255),t.writeBytes(r,o,255),o+=255;t.writeByte(r.length-o),t.writeBytes(r,o,r.length-o),t.writeByte(0),t.writeString(";")}},a=function(t){for(var r=1<<t,e=1+(1<<t),n=t+1,i=u(),a=0;a<r;a+=1)i.add(String.fromCharCode(a));i.add(String.fromCharCode(r)),i.add(String.fromCharCode(e));var f,c,g,l=D(),h=(f=l,c=0,g=0,{write:function(t,r){if(t>>>r!=0)throw"length over";for(;c+r>=8;)f.writeByte(255&(t<<c|g)),r-=8-c,t>>>=8-c,g=0,c=0;g|=t<<c,c+=r},flush:function(){c>0&&f.writeByte(g)}});h.write(r,n);var s=0,v=String.fromCharCode(o[s]);for(s+=1;s<o.length;){var d=String.fromCharCode(o[s]);s+=1,i.contains(v+d)?v+=d:(h.write(i.indexOf(v),n),i.size()<4095&&(i.size()==1<<n&&(n+=1),i.add(v+d)),v=d)}return h.write(i.indexOf(v),n),h.write(e,n),h.flush(),l.toByteArray()},u=function(){var t={},r=0,e={add:function(n){if(e.contains(n))throw"dup key:"+n;t[n]=r,r+=1},size:function(){return r},indexOf:function(r){return t[r]},contains:function(r){return void 0!==t[r]}};return e};return i}(t,r),o=0;o<r;o+=1)for(var i=0;i<t;i+=1)n.setPixel(i,o,e(i,o));var a=D();n.write(a);for(var u=function(){var t=0,r=0,e=0,n="",o={},i=function(t){n+=String.fromCharCode(a(63&t))},a=function(t){if(t<0);else{if(t<26)return 65+t;if(t<52)return t-26+97;if(t<62)return t-52+48;if(62==t)return 43;if(63==t)return 47}throw"n:"+t};return o.writeByte=function(n){for(t=t<<8|255&n,r+=8,e+=1;r>=6;)i(t>>>r-6),r-=6},o.flush=function(){if(r>0&&(i(t<<6-r),t=0,r=0),e%3!=0)for(var o=3-e%3,a=0;a<o;a+=1)n+="="},o.toString=function(){return n},o}(),f=a.toByteArray(),c=0;c<f.length;c+=1)u.writeByte(f[c]);return u.flush(),"data:image/gif;base64,"+u};return t}();qrcode.stringToBytesFuncs["UTF-8"]=function(t){return function(t){for(var r=[],e=0;e<t.length;e++){var n=t.charCodeAt(e);n<128?r.push(n):n<2048?r.push(192|n>>6,128|63&n):n<55296||n>=57344?r.push(224|n>>12,128|n>>6&63,128|63&n):(e++,n=65536+((1023&n)<<10|1023&t.charCodeAt(e)),r.push(240|n>>18,128|n>>12&63,128|n>>6&63,128|63&n))}return r}(t)},function(t){"function"==typeof define&&define.amd?define([],t):"object"==typeof exports&&(module.exports=t())}(function(){return qrcode});
+</script>
+<script>
+(() => {
+'use strict';
+const app = document.getElementById('app');
+const $ = (id) => document.getElementById(id);
+const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+const W = () => app.clientWidth;
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+document.addEventListener('touchstart', () => {}, { passive: true }); // iOS :active
+
+/* ================= i18n ================= */
+const STR = {
+  es: {
+    doc_title_tag:'SecurPro · Verificación de identidad',
+    cancel:'Cancelar', back:'Atrás', continue:'Continuar',
+    welcome_title:'Verifica tu identidad', welcome_sub:'Toma unos dos minutos y solo necesitas tu cédula.',
+    f1_t:'Tu documento', f1_d:'Toma una foto del frente y otra del reverso.',
+    f2_t:'Una selfie', f2_d:'Para confirmar que eres la persona del documento.',
+    f3_t:'Privada por diseño', f3_d:'Tus imágenes se eliminan en cuanto termina la verificación.',
+    welcome_foot_a:'Solicitada por Banco Ejemplo. Al continuar, aceptas el ', privacy_link:'Aviso de privacidad', welcome_foot_b:'.',
+    handoff_btn:'Continuar en otro dispositivo', protected_by:'Protegido por',
+    step1:'Paso 1 de 3', step2:'Paso 2 de 3',
+    doc_title:'Elige un documento', doc_sub:'Debe ser el original y estar vigente.',
+    country_label:'País emisor', doc_group:'Documento',
+    doc_cedula:'Cédula de identidad', doc_pasaporte:'Pasaporte', doc_licencia:'Licencia de conducir',
+    sub_two_sides:'Frente y reverso', sub_passport:'Página con tu foto',
+    doc_foot:'No se aceptan fotocopias ni fotos de una pantalla.',
+    side_front:'Frente', side_back:'Reverso', cap_front_c:'Frente', cap_back_c:'Reverso',
+    retake:'Repetir', use_photo:'Usar foto',
+    aria_handoff:'Continuar en otro dispositivo', aria_shutter:'Tomar foto', aria_torch:'Linterna', aria_face_shutter:'Tomar selfie',
+    rev_title:'Confirma tus datos', rev_sub:'Revisa que las fotos se vean bien y que tus datos coincidan.',
+    f_name:'Nombre', f_number:'Número', f_birth:'Nacimiento', f_expiry:'Vencimiento',
+    rev_foot:'Datos de ejemplo: la lectura automática del documento aún no está conectada.', retake_all:'Volver a tomar las fotos',
+    selfie_title:'Ahora, una selfie', selfie_sub:'Coloca tu rostro dentro del círculo.',
+    res_title:'Identidad verificada', res_sub:'Listo, María José. Ya puedes continuar con tu solicitud.',
+    res_1:'Documento auténtico', res_2:'Datos coherentes', res_3:'El rostro coincide',
+    res_foot:'Tus imágenes ya se eliminaron de este dispositivo. Referencia VRF-', finish:'Terminar',
+    err_tips:'Sugerencias', err_1:'Busca luz pareja, sin reflejos', err_2:'Apóyala en una superficie oscura', err_3:'Que se vean los cuatro bordes', try_again:'Intentar de nuevo',
+    cancel_title:'Verificación cancelada', cancel_sub:'No guardamos ninguna foto. Puedes retomarla cuando quieras.', resume_btn:'Retomar verificación',
+    privacy_title:'Aviso de privacidad', privacy_updated:'Última actualización: [fecha]',
+    privacy_body: "<p><b>Resumen:</b> SecurPro es una demostración de verificación de identidad. Tratamos tus fotos y datos solo para confirmar quién eres, los conservamos el mínimo tiempo necesario, no los vendemos ni entrenamos IA con ellos, y puedes ejercer tus derechos escribiendo a [correo de privacidad].</p>\n<h2>1. Qué es esta aplicación</h2>\n<p><b>SecurPro</b> es una herramienta de verificación de identidad. Esta versión es una <b>demostración</b> con fines de prueba: puede contener errores y no debe usarse para decisiones reales ni con datos de terceros sin autorización.</p>\n<h2>2. Responsable del tratamiento y contacto</h2>\n<p>[Razón social de SecurPro], con domicilio en [dirección], correo [correo de privacidad]. Para asuntos de protección de datos puedes escribir a nuestro responsable/DPO en [correo del DPO]. La verificación se realiza por encargo de <b>Banco Ejemplo</b>, que fue quien la solicitó y actúa como responsable respecto de su relación contigo.</p>\n<h2>3. Ámbito</h2>\n<p>Este aviso aplica a cualquier persona que use la aplicación, sin importar su país. Según dónde residas, se te aplicarán además las leyes locales descritas más abajo.</p>\n<h2>4. Tu consentimiento</h2>\n<p>El uso es voluntario. Al continuar, confirmas que leíste este aviso y <b>otorgas tu consentimiento libre, previo, expreso e informado</b>. Como tratamos datos biométricos (tu rostro), este consentimiento es <b>explícito</b>. Puedes retirarlo en cualquier momento antes de finalizar cerrando la verificación, sin que ello afecte lo ya tratado.</p>\n<h2>5. Qué datos tratamos</h2>\n<ul><li>Fotos de tu documento de identidad (frente y, si aplica, reverso).</li><li>Datos impresos en él: nombre, número, fecha de nacimiento y vencimiento.</li><li>Una selfie y una breve secuencia de movimiento (datos biométricos, categoría especial / sensible).</li><li>Datos técnicos mínimos del dispositivo: tipo de equipo, navegador, zona horaria y hora, para prevenir fraude.</li></ul>\n<h2>6. Para qué los usamos (finalidad)</h2>\n<p>Únicamente para confirmar tu identidad y comunicar el resultado a Banco Ejemplo, y para prevenir fraude y cumplir obligaciones legales. No tomamos ninguna otra decisión sobre ti con estos datos.</p>\n<h2>7. Qué NO hacemos con tu información</h2>\n<p>No vendemos ni alquilamos tus datos. No los compartimos con terceros con fines comerciales o publicitarios. <b>No los usamos para entrenar modelos de inteligencia artificial.</b></p>\n<h2>8. Bases legales</h2>\n<p>Tratamos tus datos con base en: tu <b>consentimiento explícito</b>; nuestro <b>interés legítimo</b> en prevenir el fraude; y el <b>cumplimiento de obligaciones legales</b> (por ejemplo, prevención de lavado de dinero). En la Unión Europea/Reino Unido aplicamos el RGPD/UK GDPR (arts. 6 y 9); en EE. UU., la CCPA/CPRA de California y normas equivalentes; en Brasil, la LGPD; en Nicaragua, la Ley n.º 787; y leyes análogas en otros países.</p>\n<h2>9. Datos biométricos</h2>\n<p>Tu rostro y la prueba de vida son datos biométricos, considerados sensibles. Solo los tratamos con tu consentimiento explícito, por el tiempo mínimo, y con medidas de seguridad reforzadas. Si no deseas aportarlos, no podrás completar la verificación por este medio.</p>\n<h2>10. Cómo funciona</h2>\n<p>La captura ocurre en tu dispositivo. Al continuar en otro dispositivo, las imágenes viajan cifradas y se sincronizan de forma temporal mediante Google Firebase para mostrarlas en el dispositivo principal, donde se aprueba el envío. Las imágenes se eliminan en cuanto termina ese paso.</p>\n<h2>11. Cuánto tiempo conservamos tu información</h2>\n<ul><li><b>Imágenes del documento y selfie:</b> se eliminan en cuanto finaliza la verificación (o como máximo [24 horas]).</li><li><b>Resultado e identificador de referencia:</b> [12 meses], para atender reclamos, auditorías o requerimientos legales.</li><li><b>Registros técnicos y de seguridad:</b> [90 días].</li></ul>\n<p>Cumplidos esos plazos, los datos se eliminan de forma segura o se anonimizan. Si una ley exige conservarlos más tiempo, lo haremos solo por ese período y con ese fin.</p>\n<h2>12. Encargados y proveedores</h2>\n<p>Usamos proveedores de infraestructura que actúan como encargados y tratan datos siguiendo nuestras instrucciones, entre ellos <b>Google Firebase (Google Cloud)</b> y, en su caso, proveedores de verificación biométrica. Están obligados por contrato a proteger tus datos.</p>\n<h2>13. Transferencias internacionales</h2>\n<p>Tus datos pueden procesarse en servidores fuera de tu país (por ejemplo, en EE. UU. o la UE). Cuando transferimos datos fuera del Espacio Económico Europeo u otras regiones protegidas, usamos garantías adecuadas como las <b>Cláusulas Contractuales Tipo</b> de la Comisión Europea u otros mecanismos válidos. Al continuar, aceptas esta transferencia.</p>\n<h2>14. Tus derechos</h2>\n<p>Según tu país, puedes ejercer los derechos de <b>acceso, rectificación, supresión, oposición, limitación, portabilidad</b> y a <b>retirar tu consentimiento</b>. También tienes derecho a <b>no ser objeto de decisiones totalmente automatizadas</b> con efectos significativos sin revisión humana (art. 22 RGPD). Los residentes de California pueden ejercer sus derechos CCPA/CPRA, incluido el de no venta de su información (no la vendemos). Para ejercerlos, escribe a [correo de privacidad]; responderemos en los plazos legales.</p>\n<h2>15. Reclamaciones</h2>\n<p>Si consideras que tratamos mal tus datos, puedes reclamar ante la autoridad de control de tu país (por ejemplo, tu Autoridad de Protección de Datos en la UE, o la autoridad competente en tu jurisdicción).</p>\n<h2>16. Seguridad</h2>\n<p>Aplicamos medidas razonables: cifrado en tránsito, acceso restringido y registrado, y minimización de datos. Ningún sistema es 100% infalible; no garantizamos seguridad absoluta, pero trabajamos para protegerte y notificaremos las brechas que lo requieran conforme a la ley.</p>\n<h2>17. Almacenamiento local</h2>\n<p>Guardamos en tu navegador datos mínimos para que la app funcione (idioma elegido y acceso de la demo). No son cookies de rastreo ni publicidad.</p>\n<h2>18. Tu responsabilidad</h2>\n<p>Declaras que el documento que presentas <b>es tuyo, es auténtico y está vigente</b>, y que tienes derecho a usarlo. El uso de documentos ajenos, falsos o sin autorización es tu entera responsabilidad y puede constituir un delito.</p>\n<h2>19. Limitación de responsabilidad</h2>\n<p>Esta demostración se ofrece <b>\"tal cual\" y \"según disponibilidad\"</b>, sin garantías de disponibilidad, exactitud o idoneidad para un fin específico. En la máxima medida permitida por la ley, [Razón social de SecurPro] no será responsable por daños indirectos, incidentales, especiales o derivados del uso de esta demostración. Nada en este aviso limita responsabilidades que la ley no permita excluir.</p>\n<h2>20. Menores de edad</h2>\n<p>Esta aplicación no está dirigida a menores de 18 años (ni a menores de 16 en la UE) y no recopilamos sus datos de forma intencional.</p>\n<h2>21. Cambios a este aviso</h2>\n<p>Podemos actualizar este aviso. La versión vigente estará siempre disponible en esta pantalla, con su fecha de actualización.</p>\n<h2>22. Contacto</h2>\n<p>Dudas o ejercicio de derechos: [correo de privacidad].</p>",
+    pv_h1:'Quiénes somos', pv_p1:'<b>SecurPro</b> verifica tu identidad por encargo de <b>Banco Ejemplo</b>, que es quien te pidió esta verificación. [Razón social de SecurPro], con domicilio en [dirección], Nicaragua, es responsable del tratamiento de tus datos durante el proceso.',
+    pv_h2:'Qué datos usamos', pv_l1:'Fotos de tu documento de identidad (frente y, si aplica, reverso).', pv_l2:'Los datos impresos en él: nombre, número, fecha de nacimiento y vencimiento.', pv_l3:'Una selfie, para compararla con la foto del documento.', pv_l4:'Datos técnicos mínimos del dispositivo, para prevenir fraude.',
+    pv_h3:'Para qué los usamos', pv_p3:'Solo para confirmar que eres quien dices ser y comunicar el resultado a Banco Ejemplo. No los usamos para publicidad ni los vendemos.',
+    pv_h4:'Cuánto tiempo los guardamos', pv_p4:'Las imágenes se eliminan en cuanto termina la verificación. Conservamos únicamente el resultado y un número de referencia durante [plazo], para atender reclamos o requerimientos legales.',
+    pv_h5:'Con quién los compartimos', pv_p5:'Con Banco Ejemplo (solo el resultado y los datos necesarios) y con autoridades cuando una ley lo exija.',
+    pv_h6:'Tus derechos', pv_p6:'Puedes pedir acceso, rectificación, cancelación u oposición sobre tus datos, conforme a la Ley de Protección de Datos Personales de Nicaragua (Ley n.º 787). Escríbenos a <b>[correo de privacidad]</b>.',
+    pv_h7:'Seguridad', pv_p7:'Toda la información viaja cifrada y el acceso interno está restringido y registrado.',
+    pv_foot:'Borrador de referencia. Debe revisarlo un abogado antes de usarse con clientes reales.', understood:'Entendido',
+    exit_title:'¿Salir de la verificación?', exit_body:'Puedes retomarla cuando quieras desde la app de Banco Ejemplo.', exit_yes:'Salir', exit_no:'Seguir verificando',
+    handoff_title:'Continuar en otro dispositivo', handoff_sub:'Escanea el código con la cámara de tu teléfono o envíate el enlace.', handoff_noqr:'No se pudo generar el código.',
+    handoff_local:'Este enlace solo funciona en este dispositivo. Publica la página (por ejemplo, en Netlify) para abrirla en otro dispositivo.', handoff_lan:'El otro dispositivo debe estar en la misma red Wi-Fi.',
+    share_link:'Compartir enlace', copy_link:'Copiar enlace', wa_send:'Enviar por WhatsApp', copied:'Enlace copiado', copy_fail:'No se pudo copiar',
+    wa_text:'Continúa tu verificación de identidad aquí: ', share_title:'SecurPro · Verificación', share_text:'Continúa tu verificación de identidad',
+    done_front:'Frente listo', done_back:'Reverso listo', torch_na:'Linterna no disponible',
+    what_page:'la página de tu foto', what_front:'el frente', what_back:'el reverso',
+    st_aim:'Coloca {what} dentro del marco', st_aim_sub:'Con buena luz, sin reflejos y con los cuatro bordes visibles.',
+    st_native:'Toca el botón para abrir la cámara', st_native_sub:'Fotografía {what} con la cámara de este teléfono.',
+    st_review:'Revisa la foto', st_review_sub:'¿Se leen bien todos los datos y no hay reflejos?', cam_loading:'Abriendo la cámara…',
+    cap_passport:'Página de tu foto', cap_front_pre:'Frente de la ', cap_back_pre:'Reverso de la ',
+    short_cedula:'cédula', short_passport:'pasaporte', short_licencia:'licencia',
+    selfie_look:'Mira de frente a la cámara', selfie_left:'Gira la cabeza despacio a la izquierda', selfie_right:'Ahora, despacio a la derecha', selfie_tap:'Toca el botón para tomar tu selfie', selfie_tip:'Quítate los lentes y la gorra.',
+    selfie_review:'¿Se ve bien tu rostro?', selfie_review_sub:'Debe verse completo, sin sombras fuertes.',
+    verifying:'Verificando…', verifying_sub:'Esto toma unos segundos.', done_word:'Listo',
+    vf_match:'Coincidencia facial', vf_live:'Prueba de vida', vf_ced:'N.º leído', vf_models:'Cargando verificación…', vf_nomatch:'Sin coincidencia',
+    err_dark_t:'La foto está muy oscura', err_dark_b:'No alcanzamos a ver los datos. Busca más luz y prueba otra vez.',
+    err_bright_t:'Hay demasiado brillo', err_bright_b:'Un reflejo tapa los datos. Cambia el ángulo y prueba otra vez.',
+    handoff_code_label:'Código de verificación', handoff_preview:'Ver la pantalla del dispositivo principal',
+    ap_title:'Un dispositivo quiere continuar tu verificación', ap_sub:'Acéptalo solo si fuiste tú quien abrió el enlace en el otro dispositivo.',
+    ap_device:'Dispositivo', ap_location:'Ubicación aproximada', ap_time:'Hora', ap_code:'ID de verificación',
+    ap_code_hint:'Verifica que el código coincida con el del otro dispositivo.', ap_accept:'Aceptar', ap_reject:'Rechazar',
+    ap_accepted:'Solicitud aceptada', ap_rejected:'Solicitud rechazada', loc_unknown:'Desconocida',
+    fb_note:'Traspaso en tiempo real activo. Escanea el código en el otro dispositivo.',
+    wait_title:'Esperando aprobación', wait_sub:'Confirma en el dispositivo principal para continuar aquí.', ses_notfound:'La sesión ya no está disponible.',
+    demo_badge:'DEMO', gate_title:'Acceso a la demo', gate_sub:'Ingresa el PIN para continuar.', gate_wrong:'PIN incorrecto', lang_title:'Idioma', verif_id:'ID de verificación', pr_photos:'Capturas recibidas', pr_photos_note:'Las fotos del otro dispositivo aparecerán aquí.', cap_front_c2:'Frente', cap_back_c2:'Reverso', cap_face_c:'Selfie',
+    desk_h:'Verificación de identidad', desk_p:'Confirma quién es tu cliente en minutos, desde cualquier dispositivo.',
+    desk_b1_t:'Documento + selfie', desk_b1_d:'Lectura del documento y comparación con tu rostro.',
+    desk_b2_t:'Traspaso entre dispositivos', desk_b2_d:'Empieza en la computadora, termina en el teléfono.',
+    desk_b3_t:'Privado por diseño', desk_b3_d:'Las imágenes se procesan y se eliminan al terminar.',
+    desk_badge:'Demostración — no ingreses datos reales.',
+    pr_title:'Continuando en otro dispositivo', pr_wait:'El otro dispositivo está completando la verificación…', pr_ready:'Terminó. Revisa y envía los datos.', pr_send:'Aceptar y enviar', pr_hint_wait:'No cierres esta pantalla.', pr_hint_ready:'Al enviar, se completa la verificación con Banco Ejemplo.',
+  },
+  en: {
+    doc_title_tag:'SecurPro · Identity verification',
+    cancel:'Cancel', back:'Back', continue:'Continue',
+    welcome_title:'Verify your identity', welcome_sub:'It takes about two minutes and you only need your ID.',
+    f1_t:'Your ID', f1_d:'Take a photo of the front and one of the back.',
+    f2_t:'A selfie', f2_d:"To confirm you're the person on the ID.",
+    f3_t:'Private by design', f3_d:'Your images are deleted as soon as verification ends.',
+    welcome_foot_a:'Requested by Banco Ejemplo. By continuing, you accept the ', privacy_link:'Privacy notice', welcome_foot_b:'.',
+    handoff_btn:'Continue on another device', protected_by:'Protected by',
+    step1:'Step 1 of 3', step2:'Step 2 of 3',
+    doc_title:'Choose a document', doc_sub:'It must be the original and valid.',
+    country_label:'Issuing country', doc_group:'Document',
+    doc_cedula:'ID card', doc_pasaporte:'Passport', doc_licencia:"Driver's license",
+    sub_two_sides:'Front and back', sub_passport:'Photo page',
+    doc_foot:"Photocopies and photos of a screen aren't accepted.",
+    side_front:'Front', side_back:'Back', cap_front_c:'Front', cap_back_c:'Back',
+    retake:'Retake', use_photo:'Use photo',
+    aria_handoff:'Continue on another device', aria_shutter:'Take photo', aria_torch:'Flashlight', aria_face_shutter:'Take selfie',
+    rev_title:'Confirm your details', rev_sub:'Check that the photos look good and your details match.',
+    f_name:'Name', f_number:'Number', f_birth:'Date of birth', f_expiry:'Expiry',
+    rev_foot:"Sample data: automatic document reading isn't connected yet.", retake_all:'Retake the photos',
+    selfie_title:'Now, a selfie', selfie_sub:'Place your face inside the circle.',
+    res_title:'Identity verified', res_sub:'Done, María José. You can now continue with your request.',
+    res_1:'Authentic document', res_2:'Consistent data', res_3:'Face matches',
+    res_foot:'Your images have already been deleted from this device. Reference VRF-', finish:'Finish',
+    err_tips:'Tips', err_1:'Find even light, no glare', err_2:'Rest it on a dark surface', err_3:'Make sure all four edges show', try_again:'Try again',
+    cancel_title:'Verification canceled', cancel_sub:"We didn't save any photos. You can resume whenever you want.", resume_btn:'Resume verification',
+    privacy_title:'Privacy notice', privacy_updated:'Last updated: [date]',
+    privacy_body: "<p><b>Summary:</b> SecurPro is an identity verification demo. We process your photos and data only to confirm who you are, keep them for the minimum time needed, do not sell them or train AI with them, and you can exercise your rights by writing to [privacy email].</p>\n<h2>1. What this app is</h2>\n<p><b>SecurPro</b> is an identity verification tool. This version is a <b>demonstration</b> for testing purposes: it may contain errors and must not be used for real decisions or with third-party data without authorization.</p>\n<h2>2. Data controller and contact</h2>\n<p>[SecurPro legal name], located at [address], email [privacy email]. For data protection matters, contact our controller/DPO at [DPO email]. The verification is carried out on behalf of <b>Banco Ejemplo</b>, which requested it and acts as controller regarding its relationship with you.</p>\n<h2>3. Scope</h2>\n<p>This notice applies to anyone who uses the app, regardless of country. Depending on where you live, the local laws described below also apply to you.</p>\n<h2>4. Your consent</h2>\n<p>Use is voluntary. By continuing, you confirm you have read this notice and give your <b>free, prior, express and informed consent</b>. Because we process biometric data (your face), this consent is <b>explicit</b>. You may withdraw it at any time before finishing by closing the verification, without affecting prior processing.</p>\n<h2>5. Data we process</h2>\n<ul><li>Photos of your ID document (front and, if applicable, back).</li><li>Data printed on it: name, number, date of birth and expiry.</li><li>A selfie and a short motion sequence (biometric data, a special/sensitive category).</li><li>Minimal technical device data: device type, browser, time zone and time, to prevent fraud.</li></ul>\n<h2>6. What we use it for (purpose)</h2>\n<p>Only to confirm your identity and report the result to Banco Ejemplo, to prevent fraud and to comply with legal obligations. We make no other decisions about you with this data.</p>\n<h2>7. What we do NOT do with your information</h2>\n<p>We do not sell or rent your data. We do not share it with third parties for commercial or advertising purposes. <b>We do not use it to train artificial intelligence models.</b></p>\n<h2>8. Legal bases</h2>\n<p>We process your data based on: your <b>explicit consent</b>; our <b>legitimate interest</b> in preventing fraud; and <b>compliance with legal obligations</b> (for example, anti-money-laundering). In the EU/UK we apply the GDPR/UK GDPR (arts. 6 and 9); in the US, California's CCPA/CPRA and equivalent rules; in Brazil, the LGPD; in Nicaragua, Law No. 787; and analogous laws elsewhere.</p>\n<h2>9. Biometric data</h2>\n<p>Your face and the liveness check are biometric data, considered sensitive. We process them only with your explicit consent, for the minimum time, and with reinforced security. If you do not wish to provide them, you cannot complete verification this way.</p>\n<h2>10. How it works</h2>\n<p>Capture happens on your device. When you continue on another device, images travel encrypted and are temporarily synced through Google Firebase to display them on the main device, where sending is approved. Images are deleted as soon as that step ends.</p>\n<h2>11. How long we keep your information</h2>\n<ul><li><b>Document and selfie images:</b> deleted as soon as verification ends (at most [24 hours]).</li><li><b>Result and reference identifier:</b> [12 months], to handle claims, audits or legal requirements.</li><li><b>Technical and security logs:</b> [90 days].</li></ul>\n<p>After those periods, data is securely deleted or anonymized. If a law requires longer retention, we will keep it only for that period and purpose.</p>\n<h2>12. Processors and providers</h2>\n<p>We use infrastructure providers acting as processors under our instructions, including <b>Google Firebase (Google Cloud)</b> and, where applicable, biometric verification providers. They are contractually bound to protect your data.</p>\n<h2>13. International transfers</h2>\n<p>Your data may be processed on servers outside your country (for example, in the US or the EU). When we transfer data outside the European Economic Area or other protected regions, we use appropriate safeguards such as the European Commission's <b>Standard Contractual Clauses</b> or other valid mechanisms. By continuing, you accept this transfer.</p>\n<h2>14. Your rights</h2>\n<p>Depending on your country, you may exercise the rights of <b>access, rectification, erasure, objection, restriction, portability</b> and to <b>withdraw consent</b>. You also have the right <b>not to be subject to solely automated decisions</b> with significant effects without human review (GDPR art. 22). California residents may exercise CCPA/CPRA rights, including the right to opt out of the sale of their information (we do not sell it). To exercise them, write to [privacy email]; we will respond within legal timeframes.</p>\n<h2>15. Complaints</h2>\n<p>If you believe we mishandle your data, you may complain to your country's supervisory authority (for example, your Data Protection Authority in the EU, or the competent authority in your jurisdiction).</p>\n<h2>16. Security</h2>\n<p>We apply reasonable measures: encryption in transit, restricted and logged access, and data minimization. No system is 100% infallible; we do not guarantee absolute security, but we work to protect you and will notify breaches where required by law.</p>\n<h2>17. Local storage</h2>\n<p>We store minimal data in your browser so the app works (chosen language and demo access). These are not tracking or advertising cookies.</p>\n<h2>18. Your responsibility</h2>\n<p>You declare that the document you present <b>is yours, authentic and valid</b>, and that you have the right to use it. Using someone else's, false or unauthorized documents is your sole responsibility and may be a crime.</p>\n<h2>19. Limitation of liability</h2>\n<p>This demonstration is provided <b>\"as is\" and \"as available\"</b>, without warranties of availability, accuracy or fitness for a particular purpose. To the maximum extent permitted by law, [SecurPro legal name] shall not be liable for indirect, incidental, special or consequential damages arising from the use of this demonstration. Nothing here limits liabilities that the law does not allow to exclude.</p>\n<h2>20. Minors</h2>\n<p>This app is not directed to people under 18 (or under 16 in the EU) and we do not intentionally collect their data.</p>\n<h2>21. Changes to this notice</h2>\n<p>We may update this notice. The current version will always be available on this screen, with its update date.</p>\n<h2>22. Contact</h2>\n<p>Questions or to exercise rights: [privacy email].</p>",
+    pv_h1:'Who we are', pv_p1:'<b>SecurPro</b> verifies your identity on behalf of <b>Banco Ejemplo</b>, who requested this verification. [SecurPro legal name], located at [address], Nicaragua, is responsible for processing your data during the process.',
+    pv_h2:'What data we use', pv_l1:'Photos of your ID document (front and, if applicable, back).', pv_l2:'The data printed on it: name, number, date of birth and expiry.', pv_l3:'A selfie, to compare it with the document photo.', pv_l4:'Minimal technical data from the device, to prevent fraud.',
+    pv_h3:'What we use them for', pv_p3:"Only to confirm you are who you say you are and report the result to Banco Ejemplo. We don't use them for advertising or sell them.",
+    pv_h4:'How long we keep them', pv_p4:'Images are deleted as soon as verification ends. We keep only the result and a reference number for [period], to handle claims or legal requirements.',
+    pv_h5:'Who we share them with', pv_p5:'With Banco Ejemplo (only the result and necessary data) and with authorities when required by law.',
+    pv_h6:'Your rights', pv_p6:"You can request access, rectification, cancellation or objection regarding your data, under Nicaragua's Personal Data Protection Law (Law No. 787). Write to us at <b>[privacy email]</b>.",
+    pv_h7:'Security', pv_p7:'All information travels encrypted and internal access is restricted and logged.',
+    pv_foot:'Reference draft. A lawyer must review it before use with real clients.', understood:'Understood',
+    exit_title:'Leave verification?', exit_body:'You can resume whenever you want from the Banco Ejemplo app.', exit_yes:'Leave', exit_no:'Keep verifying',
+    handoff_title:'Continue on another device', handoff_sub:"Scan the code with your phone's camera or send yourself the link.", handoff_noqr:"Couldn't generate the code.",
+    handoff_local:'This link only works on this device. Publish the page (for example, on Netlify) to open it on another device.', handoff_lan:'The other device must be on the same Wi-Fi network.',
+    share_link:'Share link', copy_link:'Copy link', wa_send:'Send via WhatsApp', copied:'Link copied', copy_fail:"Couldn't copy",
+    wa_text:'Continue your identity verification here: ', share_title:'SecurPro · Verification', share_text:'Continue your identity verification',
+    done_front:'Front done', done_back:'Back done', torch_na:'Flashlight unavailable',
+    what_page:'your photo page', what_front:'the front', what_back:'the back',
+    st_aim:'Place {what} inside the frame', st_aim_sub:'With good light, no glare and all four edges visible.',
+    st_native:'Tap the button to open the camera', st_native_sub:"Photograph {what} with this phone's camera.",
+    st_review:'Review the photo', st_review_sub:'Can you read all the data clearly, with no glare?', cam_loading:'Opening the camera…',
+    cap_passport:'Photo page', cap_front_pre:'Front of your ', cap_back_pre:'Back of your ',
+    short_cedula:'ID card', short_passport:'passport', short_licencia:'license',
+    selfie_look:'Look straight at the camera', selfie_left:'Slowly turn your head left', selfie_right:'Now, slowly to the right', selfie_tap:'Tap the button to take your selfie', selfie_tip:'Take off glasses and hat.',
+    selfie_review:'Does your face look good?', selfie_review_sub:'It should show fully, with no harsh shadows.',
+    verifying:'Verifying…', verifying_sub:'This takes a few seconds.', done_word:'Done',
+    vf_match:'Face match', vf_live:'Liveness', vf_ced:'Read no.', vf_models:'Loading verification…', vf_nomatch:'No match',
+    err_dark_t:'The photo is too dark', err_dark_b:"We can't see the data. Find more light and try again.",
+    err_bright_t:"There's too much glare", err_bright_b:'A reflection covers the data. Change the angle and try again.',
+    handoff_code_label:'Verification code', handoff_preview:"See the main device's screen",
+    ap_title:'A device wants to continue your verification', ap_sub:'Only accept if you opened the link on the other device.',
+    ap_device:'Device', ap_location:'Approximate location', ap_time:'Time', ap_code:'Verification ID',
+    ap_code_hint:'Check that the code matches the one on the other device.', ap_accept:'Accept', ap_reject:'Reject',
+    ap_accepted:'Request accepted', ap_rejected:'Request rejected', loc_unknown:'Unknown',
+    fb_note:'Real-time handoff active. Scan the code on the other device.',
+    wait_title:'Waiting for approval', wait_sub:'Confirm on the main device to continue here.', ses_notfound:'The session is no longer available.',
+    demo_badge:'DEMO', gate_title:'Demo access', gate_sub:'Enter the PIN to continue.', gate_wrong:'Wrong PIN', lang_title:'Language', verif_id:'Verification ID', pr_photos:'Captures received', pr_photos_note:"The other device's photos will appear here.", cap_front_c2:'Front', cap_back_c2:'Back', cap_face_c:'Selfie',
+    desk_h:'Identity verification', desk_p:'Confirm who your customer is in minutes, from any device.',
+    desk_b1_t:'Document + selfie', desk_b1_d:'Document reading and a match against your face.',
+    desk_b2_t:'Device handoff', desk_b2_d:'Start on the computer, finish on the phone.',
+    desk_b3_t:'Private by design', desk_b3_d:'Images are processed and deleted when done.',
+    desk_badge:"Demo — don't enter real data.",
+    pr_title:'Continuing on another device', pr_wait:'The other device is completing the verification…', pr_ready:'Done. Review and send the data.', pr_send:'Accept and send', pr_hint_wait:"Don't close this screen.", pr_hint_ready:'When you send, verification completes with Banco Ejemplo.',
+  },
+};
+let lang = 'es';
+try { const sv = localStorage.getItem('securpro_lang'); if (sv === 'en' || sv === 'es') lang = sv; } catch (_) {}
+function t(k, v) { let str = (STR[lang] && STR[lang][k] != null) ? STR[lang][k] : (STR.es[k] != null ? STR.es[k] : k); if (v) for (const pk in v) str = str.replace('{' + pk + '}', v[pk]); return str; }
+const FLAG_EN = '<svg viewBox="0 0 60 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="60" height="32" fill="#B22234"/><g fill="#fff"><rect y="2.46" width="60" height="2.46"/><rect y="7.38" width="60" height="2.46"/><rect y="12.31" width="60" height="2.46"/><rect y="17.23" width="60" height="2.46"/><rect y="22.15" width="60" height="2.46"/><rect y="27.08" width="60" height="2.46"/></g><rect width="26" height="17.23" fill="#3C3B6E"/><g fill="#fff"><circle cx="3" cy="2.6" r="0.9"/><circle cx="7" cy="2.6" r="0.9"/><circle cx="11" cy="2.6" r="0.9"/><circle cx="15" cy="2.6" r="0.9"/><circle cx="19" cy="2.6" r="0.9"/><circle cx="23" cy="2.6" r="0.9"/><circle cx="3" cy="5.6" r="0.9"/><circle cx="7" cy="5.6" r="0.9"/><circle cx="11" cy="5.6" r="0.9"/><circle cx="15" cy="5.6" r="0.9"/><circle cx="19" cy="5.6" r="0.9"/><circle cx="23" cy="5.6" r="0.9"/><circle cx="3" cy="8.6" r="0.9"/><circle cx="7" cy="8.6" r="0.9"/><circle cx="11" cy="8.6" r="0.9"/><circle cx="15" cy="8.6" r="0.9"/><circle cx="19" cy="8.6" r="0.9"/><circle cx="23" cy="8.6" r="0.9"/><circle cx="3" cy="11.6" r="0.9"/><circle cx="7" cy="11.6" r="0.9"/><circle cx="11" cy="11.6" r="0.9"/><circle cx="15" cy="11.6" r="0.9"/><circle cx="19" cy="11.6" r="0.9"/><circle cx="23" cy="11.6" r="0.9"/><circle cx="3" cy="14.6" r="0.9"/><circle cx="7" cy="14.6" r="0.9"/><circle cx="11" cy="14.6" r="0.9"/><circle cx="15" cy="14.6" r="0.9"/><circle cx="19" cy="14.6" r="0.9"/><circle cx="23" cy="14.6" r="0.9"/></g></svg>';
+const FLAG_ES = '<svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="60" height="40" fill="#C60B1E"/><rect y="10" width="60" height="20" fill="#FFC400"/></svg>';
+function applyLang(l) {
+  lang = l;
+  try { localStorage.setItem('securpro_lang', l); } catch (_) {}
+  document.documentElement.lang = l;
+  document.title = t('doc_title_tag');
+  document.querySelectorAll('[data-i18n]').forEach((e) => { e.textContent = t(e.dataset.i18n); });
+  document.querySelectorAll('[data-i18n-html]').forEach((e) => { e.innerHTML = t(e.dataset.i18nHtml); });
+  document.querySelectorAll('[data-i18n-aria]').forEach((e) => { e.setAttribute('aria-label', t(e.dataset.i18nAria)); });
+  const curFlag = l === 'es' ? FLAG_ES : FLAG_EN;
+  const flagHtml = `<span class="flag">${curFlag}</span><span>${l === 'es' ? 'Español' : 'English'}</span>`;
+  const al = l === 'es' ? 'Cambiar idioma' : 'Change language';
+  [$('langBtn'), $('langBtnDesk')].forEach((lb) => { if (lb) { lb.innerHTML = flagHtml; lb.setAttribute('aria-label', al); } });
+  document.querySelectorAll('.lang-mini').forEach((el) => { el.innerHTML = `<span class="flag">${curFlag}</span>`; el.setAttribute('aria-label', al); });
+}
+
+
+/* ================= Spring (damping ratio + response, Apple-style) ================= */
+const makeSpring = () => ({ x: 0, v: 0, raf: 0, target: 0, done: null });
+function springTo(s, target, opts, onFrame, onDone) {
+  cancelAnimationFrame(s.raf);
+  const damping = opts.damping ?? 1, response = opts.response ?? 0.4;
+  if (opts.velocity !== undefined) s.v = opts.velocity;
+  const k = Math.pow(2 * Math.PI / response, 2), c = 4 * Math.PI * damping / response;
+  s.target = target; s.done = onDone || null;
+  let last = performance.now();
+  const step = (t) => {
+    const dt = Math.min(0.034, (t - last) / 1000); last = t;
+    for (let i = 0, h = dt / 4; i < 4; i++) { const a = -k * (s.x - target) - c * s.v; s.v += a * h; s.x += s.v * h; }
+    if (Math.abs(s.v) < 0.002 && Math.abs(s.x - target) < 0.0008) {
+      s.x = target; s.v = 0; s.raf = 0; onFrame(s.x);
+      const d = s.done; s.done = null; d && d(); return;
+    }
+    onFrame(s.x); s.raf = requestAnimationFrame(step);
+  };
+  s.raf = requestAnimationFrame(step);
+}
+function settle(s, onFrame) {
+  if (!s.raf && !s.done) return;
+  cancelAnimationFrame(s.raf); s.raf = 0; s.x = s.target; s.v = 0; onFrame && onFrame(s.x);
+  const d = s.done; s.done = null; d && d();
+}
+const project = (v, d = 0.998) => (v / 1000) * d / (1 - d); // Apple momentum projection
+
+/* ================= Navigation stack ================= */
+const stack = ['main'];
+const nav = makeSpring();
+let pair = null;
+const el = (id) => $(id);
+function render(p) {
+  if (!pair) return;
+  const { top, under } = pair;
+  if (reduced.matches) { top.style.transform = under.style.transform = 'none'; top.style.opacity = String(clamp(p, 0, 1)); return; }
+  top.style.opacity = '';
+  top.style.transform = `translate3d(${(1 - p) * W()}px,0,0)`;
+  under.style.transform = `translate3d(${-0.3 * W() * clamp(p, 0, 1)}px,0,0)`;
+}
+const clean = (e) => { e.style.transform = ''; e.style.opacity = ''; e.classList.remove('top'); };
+function push(id) {
+  settle(nav, render);
+  const fromId = stack[stack.length - 1];
+  const under = el(fromId), top = el(id);
+  stack.push(id); pair = { top, under };
+  top.scrollTop = 0; top.classList.add('visible', 'top'); under.classList.add('visible');
+  nav.x = 0; nav.v = 0; render(0);
+  onLeave(fromId); onEnter(id);
+  springTo(nav, 1, { damping: 1, response: 0.42 }, render, () => { under.classList.remove('visible'); clean(under); clean(top); pair = null; });
+}
+function beginPop() {
+  const top = el(stack[stack.length - 1]), under = el(stack[stack.length - 2]);
+  pair = { top, under }; under.classList.add('visible'); top.classList.add('top');
+}
+function finishPop() {
+  const { top, under } = pair;
+  top.classList.remove('visible'); clean(top); clean(under);
+  const leaving = stack.pop(); pair = null;
+  onLeave(leaving); onEnter(stack[stack.length - 1], true);
+}
+function cancelPop() { const { top, under } = pair; under.classList.remove('visible'); clean(under); clean(top); pair = null; }
+function pop(velocity = 0) {
+  if (stack.length < 2) return;
+  settle(nav, render); beginPop(); nav.x = 1; render(1);
+  springTo(nav, 0, { damping: 1, response: 0.4, velocity }, render, finishPop);
+}
+function popTo(id) {
+  settle(nav, render);
+  const idx = stack.indexOf(id); if (idx < 0) return;
+  for (const s of stack.slice(idx + 1, -1)) { el(s).classList.remove('visible'); onLeave(s); }
+  stack.splice(idx + 1, stack.length - idx - 2);
+  pop();
+}
+
+/* Edge swipe back: 1:1 tracking, interrupt from live value, velocity handoff + projection */
+let drag = null;
+app.addEventListener('pointerdown', (e) => {
+  if (sheetOpen || stack.length < 2 || e.clientX - app.getBoundingClientRect().left > 28) return;
+  if (['resultado'].includes(stack[stack.length - 1])) return;
+  cancelAnimationFrame(nav.raf); nav.raf = 0;
+  if (!pair) { beginPop(); nav.x = 1; } nav.done = null;
+  drag = { id: e.pointerId, x0: e.clientX, p0: nav.x, hist: [{ x: e.clientX, t: e.timeStamp }], moved: false };
+});
+app.addEventListener('pointermove', (e) => {
+  if (!drag || e.pointerId !== drag.id) return;
+  const dx = e.clientX - drag.x0;
+  if (!drag.moved && Math.abs(dx) < 8) return;
+  if (!drag.moved) { drag.moved = true; try { app.setPointerCapture(e.pointerId); } catch (_) {} }
+  nav.x = clamp(drag.p0 - dx / W(), 0, 1); render(nav.x);
+  drag.hist.push({ x: e.clientX, t: e.timeStamp }); if (drag.hist.length > 6) drag.hist.shift();
+});
+function endDrag(e) {
+  if (!drag || (e && e.pointerId !== drag.id)) return;
+  const h = drag.hist, a = h[0], b = h[h.length - 1];
+  const vx = drag.moved ? (b.x - a.x) / (Math.max(1, b.t - a.t) / 1000) : 0;
+  drag = null;
+  const goBack = nav.x - project(vx) / W() < 0.5;
+  springTo(nav, goBack ? 0 : 1, { damping: 1, response: 0.38, velocity: -vx / W() }, render, goBack ? finishPop : cancelPop);
+}
+app.addEventListener('pointerup', endDrag);
+app.addEventListener('pointercancel', endDrag);
+
+/* ================= Sheet (spring, drag-to-dismiss) ================= */
+const sheet = $('sheet'), scrim = $('scrim');
+const sh = makeSpring(); let sheetOpen = false, sheetH = 0;
+function renderSheet(p) {
+  const y = (1 - p) * (sheetH + 40);
+  sheet.style.transform = `translate3d(0,${Math.max(-12, y)}px,0)`;
+  scrim.style.opacity = String(0.32 * clamp(p, 0, 1));
+}
+function openSheet(title, html, after) {
+  $('sheetTitle').textContent = title; $('sheetBody').innerHTML = html;
+  sheetOpen = true; scrim.classList.add('on'); sheet.style.visibility = 'visible';
+  sheetH = sheet.offsetHeight;
+  if (sh.x <= 0) sh.x = 0;
+  springTo(sh, 1, { damping: 1, response: 0.38 }, renderSheet);
+  after && after($('sheetBody'));
+}
+function closeSheet(velocity) {
+  sheetOpen = false; scrim.classList.remove('on');
+  springTo(sh, 0, { damping: 1, response: 0.36, velocity }, renderSheet, () => { if (!sheetOpen) sheet.style.visibility = 'hidden'; });
+}
+scrim.addEventListener('click', () => closeSheet());
+let sdrag = null;
+$('grab').addEventListener('pointerdown', (e) => { cancelAnimationFrame(sh.raf); sh.raf = 0; sdrag = { y0: e.clientY, p0: sh.x, hist: [{ y: e.clientY, t: e.timeStamp }] }; $('grab').setPointerCapture(e.pointerId); });
+$('grab').addEventListener('pointermove', (e) => {
+  if (!sdrag) return;
+  const dy = e.clientY - sdrag.y0;
+  let p = sdrag.p0 - dy / (sheetH + 40);
+  if (p > 1) p = 1 + (p - 1) * 0.15; // rubber-band past the top
+  sh.x = p; renderSheet(p);
+  sdrag.hist.push({ y: e.clientY, t: e.timeStamp }); if (sdrag.hist.length > 6) sdrag.hist.shift();
+});
+const endSheetDrag = (e) => {
+  if (!sdrag) return;
+  const h = sdrag.hist, a = h[0], b = h[h.length - 1];
+  const vy = (b.y - a.y) / (Math.max(1, b.t - a.t) / 1000); sdrag = null;
+  const projected = sh.x - project(vy) / (sheetH + 40);
+  if (projected < 0.5) closeSheet(-vy / (sheetH + 40));
+  else springTo(sh, 1, { damping: 1, response: 0.38, velocity: -vy / (sheetH + 40) }, renderSheet);
+};
+$('grab').addEventListener('pointerup', endSheetDrag);
+$('grab').addEventListener('pointercancel', endSheetDrag);
+
+let toastT = 0;
+function toast(msg) { const t = $('toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), 2200); }
+
+/* ================= State ================= */
+const DOCS = {
+  cedula: { nameKey: 'doc_cedula', shortKey: 'short_cedula', sides: 2 },
+  pasaporte: { nameKey: 'doc_pasaporte', shortKey: 'short_passport', sides: 1 },
+  licencia: { nameKey: 'doc_licencia', shortKey: 'short_licencia', sides: 2 },
+};
+const state = { country: 'Nicaragua', doc: 'cedula', photos: { front: null, back: null, face: null }, verify: { score: null, pass: null, live: null, ced: null } };
+function resetPhotos() {
+  for (const k of Object.keys(state.photos)) { if (state.photos[k]) URL.revokeObjectURL(state.photos[k]); state.photos[k] = null; }
+}
+
+/* ================= Welcome actions ================= */
+$('notNow').addEventListener('click', () => openSheet(t('exit_title'),
+  '<p class="body" style="margin-top:8px">' + t('exit_body') + '</p>' +
+  '<div style="padding:20px 24px 0;display:flex;flex-direction:column;gap:4px"><button class="btn-plain destructive" data-exit style="font-weight:600">' + t('exit_yes') + '</button><button class="btn-plain" data-close>' + t('exit_no') + '</button></div>',
+  (body) => {
+    body.querySelector('[data-close]').addEventListener('click', () => closeSheet());
+    body.querySelector('[data-exit]').addEventListener('click', () => { closeSheet(); resetPhotos(); push('cancelado'); });
+  }));
+$('resume').addEventListener('click', () => { freshCapture = true; popTo('main'); });
+
+/* ================= Continuar en otro dispositivo ================= */
+function qrSvg(text) {
+  if (typeof qrcode !== 'function') return '';
+  const q = qrcode(0, 'M'); q.addData(text); q.make();
+  const n = q.getModuleCount(); let d = '';
+  for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) if (q.isDark(r, c)) d += `M${c} ${r}h1v1h-1z`;
+  return `<svg viewBox="0 0 ${n} ${n}" shape-rendering="crispEdges" role="img" aria-label="Código QR del enlace"><path d="${d}" fill="#1D1D1F"/></svg>`;
+}
+function copyText(text) {
+  if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text);
+  return new Promise((res, rej) => {
+    const t = document.createElement('textarea'); t.value = text; t.setAttribute('readonly', ''); t.style.position = 'fixed'; t.style.opacity = '0';
+    document.body.appendChild(t); t.select(); t.setSelectionRange(0, text.length);
+    const ok = document.execCommand && document.execCommand('copy'); t.remove(); ok ? res() : rej();
+  });
+}
+const firebaseConfig = {
+  apiKey: "AIzaSyB89qbGNE3ET-UfkT1rvogqoDWa4qYfjVc",
+  authDomain: "securpro-demo.firebaseapp.com",
+  projectId: "securpro-demo",
+  storageBucket: "securpro-demo.firebasestorage.app",
+  messagingSenderId: "979047240661",
+  appId: "1:979047240661:web:56af4e886d422aebf9235c"
+};
+let FB = null, mainUnsub = null, scanUnsub = null;
+let approvalMode = 'local', approvalSession = null, remoteDevice = null, remoteCode = '';
+let isSecondary = false, secondarySession = null, principalLocal = false, mainData = null;
+let handoffCode = '';
+async function initFirebase() {
+  try {
+    const a = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js');
+    const f = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js');
+    const app = a.initializeApp(firebaseConfig);
+    FB = { db: f.getFirestore(app), doc: f.doc, setDoc: f.setDoc, getDoc: f.getDoc, updateDoc: f.updateDoc, onSnapshot: f.onSnapshot, serverTimestamp: f.serverTimestamp, deleteField: f.deleteField, deleteDoc: f.deleteDoc };
+    return true;
+  } catch (e) { FB = null; return false; }
+}
+const sesRef = (id) => FB.doc(FB.db, 'sesiones', id);
+function stopMainListen() { if (mainUnsub) { try { mainUnsub(); } catch (_) {} mainUnsub = null; } }
+function stopScan() { if (scanUnsub) { try { scanUnsub(); } catch (_) {} scanUnsub = null; } }
+const genCode = () => String(Math.floor(100000 + Math.random() * 900000));
+async function genToken() {
+  const seed = Date.now().toString(36) + Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2);
+  try {
+    if (window.crypto && crypto.subtle) {
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(seed));
+      return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, '0')).join('');
+    }
+  } catch (_) {}
+  const a = new Uint8Array(32);
+  if (window.crypto && crypto.getRandomValues) crypto.getRandomValues(a); else for (let i = 0; i < 32; i++) a[i] = Math.floor(Math.random() * 256);
+  return [...a].map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+const shortId = (h) => h ? h.slice(0, 10) + '…' + h.slice(-6) : '—';
+function deviceInfo() {
+  const ua = navigator.userAgent;
+  let os = 'Dispositivo';
+  if (/iPhone/.test(ua)) os = 'iPhone'; else if (/iPad/.test(ua)) os = 'iPad';
+  else if (/Android/.test(ua)) os = 'Android'; else if (/Windows/.test(ua)) os = 'Windows';
+  else if (/Mac OS X|Macintosh/.test(ua)) os = 'Mac'; else if (/CrOS/.test(ua)) os = 'ChromeOS';
+  else if (/Linux/.test(ua)) os = 'Linux';
+  let br = 'Navegador';
+  if (/Edg\//.test(ua)) br = 'Edge'; else if (/OPR\/|Opera/.test(ua)) br = 'Opera';
+  else if (/Firefox\//.test(ua)) br = 'Firefox'; else if (/Chrome\//.test(ua)) br = 'Chrome';
+  else if (/Safari\//.test(ua)) br = 'Safari';
+  let tz = ''; try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (_) {}
+  const loc = tz ? tz.split('/').pop().replace(/_/g, ' ') : '';
+  return { os, br, loc };
+}
+function enterApprove() {
+  const d = (approvalMode === 'remote' && remoteDevice) ? remoteDevice : deviceInfo();
+  let time = ''; try { time = new Date().toLocaleTimeString(lang === 'es' ? 'es-NI' : 'en-US', { hour: '2-digit', minute: '2-digit' }); } catch (_) { time = new Date().toTimeString().slice(0, 5); }
+  const code = approvalMode === 'remote' ? remoteCode : (handoffCode || (handoffCode = genCode()));
+  $('apDeviceVal').textContent = (d.os || '—') + ' · ' + (d.br || '—');
+  $('apLocVal').textContent = d.loc || t('loc_unknown');
+  $('apTimeVal').textContent = time;
+  $('apCodeVal').textContent = code || '—';
+}
+async function decideApproval(estado) {
+  if (approvalMode === 'remote' && FB && approvalSession) { try { await FB.updateDoc(sesRef(approvalSession), { estado }); } catch (_) {} }
+  approvalMode = 'local'; approvalSession = null; remoteDevice = null;
+  pop(); toast(t(estado === 'aprobado' ? 'ap_accepted' : 'ap_rejected'));
+}
+$('apAccept').addEventListener('click', () => decideApproval('aprobado'));
+$('apReject').addEventListener('click', () => decideApproval('rechazado'));
+function renderPrincipal(data) {
+  const d = (data && data.device) ? data.device : deviceInfo();
+  let time = ''; try { time = new Date().toLocaleTimeString(lang === 'es' ? 'es-NI' : 'en-US', { hour: '2-digit', minute: '2-digit' }); } catch (_) { time = new Date().toTimeString().slice(0, 5); }
+  $('prDeviceVal').textContent = (d.os || '—') + ' · ' + (d.br || '—');
+  $('prLocVal').textContent = d.loc || t('loc_unknown');
+  $('prTimeVal').textContent = time;
+  $('prCodeVal').textContent = shortId(handoffCode); $('prCodeVal').style.fontFamily = 'ui-monospace,SFMono-Regular,Menlo,monospace';
+  const ready = principalLocal || !!(data && data.listo);
+  renderPhotos(ready ? data : null);
+  if (!ready) $('prPhotos').innerHTML = '';
+  $('prStatus').textContent = ready ? t('pr_ready') : t('pr_wait');
+  $('prHint').textContent = ready ? t('pr_hint_ready') : t('pr_hint_wait');
+  const btns = $('prButtons');
+  if (ready) {
+    btns.innerHTML = `<button class="btn" id="prSend">${t('pr_send')}</button><button class="btn-plain destructive" id="prReject">${t('ap_reject')}</button>`;
+    $('prSend').onclick = () => decidePrincipal('aprobado');
+    $('prReject').onclick = () => decidePrincipal('rechazado');
+  } else {
+    btns.innerHTML = `<div style="display:flex;justify-content:center;padding:8px 0 4px"><svg class="spinner" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 3a9 9 0 019 9"/></svg></div><button class="btn-plain" id="prCancel">${t('cancel')}</button>`;
+    $('prCancel').onclick = () => { stopMainListen(); pop(); };
+  }
+}
+function photoCell(src, label, square) {
+  return src ? `<figure style="margin:0;position:relative;${square ? 'aspect-ratio:1/1;' : 'aspect-ratio:3/2;'}border-radius:12px;overflow:hidden;background:var(--group)"><img src="${src}" alt="" style="width:100%;height:100%;object-fit:cover;display:block"><figcaption style="position:absolute;left:8px;bottom:8px;padding:3px 8px;border-radius:999px;background:rgba(255,255,255,.88);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);font-size:11px;font-weight:600">${label}</figcaption></figure>` : '';
+}
+function renderPhotos(data) {
+  const box = $('prPhotos');
+  if (principalLocal) { box.innerHTML = `<p class="footnote" style="margin:0;text-align:center">${t('pr_photos_note')}</p>`; return; }
+  const hasDoc = data && (data.imgFront || data.imgBack);
+  if (!hasDoc && !(data && data.imgFace)) { box.innerHTML = ''; return; }
+  const docCells = [photoCell(data.imgFront, t('cap_front_c2'), false), photoCell(data.imgBack, t('cap_back_c2'), false)].filter(Boolean).join('');
+  let vf = '';
+  if (data.match != null) {
+    const col = data.matchPass === false ? '#C2410C' : '#15803D';
+    const bits = [`<b style="color:${col}">${t('vf_match')}: ${data.match}%</b>`];
+    if (data.live != null) bits.push(`${t('vf_live')}: ${data.live ? '✓' : '—'}`);
+    if (data.ced) bits.push(`${t('vf_ced')}: ${data.ced}`);
+    vf = `<div style="margin:0 20px 10px;font-size:13.5px;color:var(--ink);line-height:1.5">${bits.join(' · ')}</div>`;
+  }
+  box.innerHTML =
+    `<span class="group-label" style="margin:0 20px 8px;display:block">${t('pr_photos')}</span>` + vf +
+    `<div style="display:grid;grid-template-columns:${data.imgFront && data.imgBack ? 'repeat(2,minmax(0,1fr))' : '1fr'};gap:10px">${docCells}</div>` +
+    (data.imgFace ? `<div style="display:grid;grid-template-columns:1fr;gap:10px;margin-top:10px;max-width:60%">${photoCell(data.imgFace, t('cap_face_c'), true)}</div>` : '');
+}
+function enterPrincipal() { renderPrincipal(mainData || {}); }
+async function decidePrincipal(estado) {
+  if (!principalLocal && FB && approvalSession) {
+    const id = approvalSession;
+    try { await FB.updateDoc(sesRef(id), { estado, imgFront: FB.deleteField(), imgBack: FB.deleteField(), imgFace: FB.deleteField() }); } catch (_) {}
+    setTimeout(async () => { try { await FB.deleteDoc(sesRef(id)); } catch (_) {} }, 5000);
+  }
+  stopMainListen();
+  if (estado === 'aprobado') { if (principalLocal) { pop(); toast(t('ap_accepted')); } else { push('resultado'); } }
+  else { pop(); toast(t('ap_rejected')); }
+  principalLocal = false;
+}
+function shareUrl() {
+  // Prefer a canonical URL if declared; otherwise the live page URL without hash.
+  const can = document.querySelector('link[rel="canonical"]');
+  let u = (can && can.href) || location.href;
+  return u.split('#')[0];
+}
+async function openHandoff() {
+  const base = shareUrl();
+  handoffCode = await genToken();
+  const sessionActive = !!FB;
+  if (FB) { FB.setDoc(sesRef(handoffCode), { estado: 'pendiente', code: handoffCode, creado: FB.serverTimestamp() }).catch(() => {}); }
+  const url = sessionActive ? base + '#/api/verify/' + handoffCode : base;
+  const proto = location.protocol;
+  const nonShareable = proto === 'file:' || proto === 'blob:' || proto === 'about:' || /^(localhost|127\.|0\.0\.0\.0)/.test(location.hostname) || location.ancestorOrigins && location.ancestorOrigins.length;
+  const lan = /^(192\.168\.|10\.|172\.(1[6-9]|2\d|3[01])\.)/.test(location.hostname);
+  const note = sessionActive ? `<p class="footnote" style="margin:12px 24px 0;text-align:center">${t('fb_note')}</p>`
+    : nonShareable ? `<p class="footnote" style="margin:12px 24px 0;text-align:center;color:var(--orange)">${t('handoff_local')}</p>`
+    : lan ? `<p class="footnote" style="margin:12px 24px 0;text-align:center">${t('handoff_lan')}</p>` : '';
+  const wa = 'https://wa.me/?text=' + encodeURIComponent(t('wa_text') + url);
+  openSheet(t('handoff_title'),
+    `<p class="body" style="margin-top:6px">${t('handoff_sub')}</p>` +
+    `<div class="qr">${qrSvg(url) || '<span class="footnote">' + t('handoff_noqr') + '</span>'}</div>` +
+    `<div class="urlbox">${url.replace(/&/g, '&amp;').replace(/</g, '&lt;')}</div>` +
+    `<div class="urlbox" style="margin-top:8px;color:var(--ink);text-align:left">${t('verif_id')}<br><b style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;font-weight:600;word-break:break-all;line-height:1.4">${handoffCode}</b></div>` + note +
+    '<div style="padding:18px 24px 4px;display:flex;flex-direction:column;gap:4px">' +
+    (navigator.share ? `<button class="btn" data-share>${t('share_link')}</button>` : '') +
+    `<button class="${navigator.share ? 'btn-plain' : 'btn'}" data-copy>${t('copy_link')}</button>` +
+    `<a class="btn-plain" href="${wa}" target="_blank" rel="noopener">${t('wa_send')}</a>` +
+    `<button class="btn-plain" data-preview>${t('handoff_preview')}</button>` +
+    '</div>',
+    (body) => {
+      const sh = body.querySelector('[data-share]');
+      if (sh) sh.addEventListener('click', async () => { try { await navigator.share({ title: t('share_title'), text: t('share_text'), url }); } catch (_) {} });
+      body.querySelector('[data-copy]').addEventListener('click', () => copyText(url).then(() => toast(t('copied')), () => toast(t('copy_fail'))));
+      body.querySelector('[data-preview]').addEventListener('click', () => { principalLocal = true; mainData = { device: deviceInfo(), listo: true }; approvalSession = null; closeSheet(); setTimeout(() => push('principal'), 280); });
+    });
+  if (sessionActive) {
+    stopMainListen();
+    mainUnsub = FB.onSnapshot(sesRef(handoffCode), (snap) => {
+      const data = snap.data(); if (!data) return;
+      mainData = data; approvalSession = handoffCode;
+      if (data.estado === 'aprobado' || data.estado === 'rechazado') return;
+      if (data.device) {
+        if (stack[stack.length - 1] !== 'principal') { principalLocal = false; closeSheet(); setTimeout(() => push('principal'), 300); }
+        else renderPrincipal(data);
+      }
+    });
+  }
+}
+
+/* ================= Firebase: scanning device (requester) ================= */
+async function startScanner(code) {
+  let snap; try { snap = await FB.getDoc(sesRef(code)); } catch (_) { return; }
+  if (!snap.exists()) { toast(t('ses_notfound')); return; }
+  handoffCode = code; isSecondary = true; secondarySession = code;
+  try { await FB.updateDoc(sesRef(code), { device: deviceInfo() }); } catch (_) {}
+  freshCapture = true; push('documento');
+  stopScan();
+  scanUnsub = FB.onSnapshot(sesRef(code), (s2) => {
+    const d = s2.data(); if (!d) return;
+    if (d.estado === 'aprobado') { stopScan(); isSecondary = false; if (stack[stack.length - 1] === 'esperando') pop(); setTimeout(() => push('resultado'), 340); }
+    else if (d.estado === 'rechazado') { stopScan(); isSecondary = false; toast(t('ap_rejected')); if (stack[stack.length - 1] === 'esperando') pop(); }
+  });
+}
+function onFirebaseReady() {
+  const h = location.hash || '';
+  const m = h.match(/\/api\/verify\/([0-9a-fA-F]{16,64})/);
+  if (FB && m) {
+    const code = m[1];
+    try { history.replaceState(null, '', location.pathname + location.search); } catch (_) {}
+    startScanner(code);
+  }
+}
+document.querySelectorAll('[data-handoff]').forEach((b) => b.addEventListener('click', openHandoff));
+
+/* ================= Document choice ================= */
+const docs = $('docs');
+docs.querySelectorAll('[role="radio"]').forEach((r) => r.addEventListener('click', () => {
+  docs.querySelectorAll('[role="radio"]').forEach((x) => x.setAttribute('aria-checked', String(x === r)));
+  state.doc = r.dataset.doc;
+}));
+const COUNTRIES = ['Nicaragua', 'Costa Rica', 'El Salvador', 'Guatemala', 'Honduras', 'Panamá'];
+$('countryRow').addEventListener('click', () => {
+  const rows = COUNTRIES.map((c, i) => (i ? '<div class="sep"></div>' : '') +
+    `<button class="row" role="radio" aria-checked="${c === state.country}" data-c="${c}"><span>${c}</span><svg class="check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5L19.5 7"/></svg></button>`).join('');
+  openSheet(t('country_label'), `<div class="group" role="radiogroup" aria-label="País" style="margin-top:16px">${rows}</div><div style="height:8px"></div>`, (body) => {
+    body.querySelectorAll('[data-c]').forEach((b) => b.addEventListener('click', () => {
+      body.querySelectorAll('[data-c]').forEach((x) => x.setAttribute('aria-checked', String(x === b)));
+      state.country = b.dataset.c; $('countryVal').textContent = state.country;
+      setTimeout(() => closeSheet(), 220);
+    }));
+  });
+});
+
+/* ================= Camera ================= */
+let stream = null, camToken = 0;
+const liveSupported = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) && window.isSecureContext;
+async function startCam(video, facing) {
+  stopCam();
+  const token = ++camToken;
+  if (!liveSupported) return false;
+  try {
+    const s = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: facing }, width: { ideal: 1920 }, height: { ideal: 1080 } }, audio: false });
+    if (token !== camToken) { s.getTracks().forEach((t) => t.stop()); return false; }
+    stream = s; video.srcObject = s;
+    await video.play().catch(() => {});
+    return true;
+  } catch (_) { return false; }
+}
+function stopCam() {
+  camToken++;
+  if (stream) { stream.getTracks().forEach((t) => t.stop()); stream = null; }
+  document.querySelectorAll('video').forEach((v) => { v.srcObject = null; });
+  $('vp').classList.remove('live'); $('facecam').classList.remove('live');
+}
+// Grab the visible (object-fit: cover) region of the video as a JPEG blob URL
+function grabFrame(video, box, mirror) {
+  const vw = video.videoWidth, vh = video.videoHeight; if (!vw || !vh) return Promise.resolve(null);
+  const ar = box.clientWidth / box.clientHeight;
+  let sw = vw, sh2 = vh; if (vw / vh > ar) sw = vh * ar; else sh2 = vw / ar;
+  const sx = (vw - sw) / 2, sy = (vh - sh2) / 2;
+  const scale = Math.min(1, 1600 / sw);
+  const c = document.createElement('canvas'); c.width = Math.round(sw * scale); c.height = Math.round(sh2 * scale);
+  const ctx = c.getContext('2d');
+  if (mirror) { ctx.translate(c.width, 0); ctx.scale(-1, 1); }
+  ctx.drawImage(video, sx, sy, sw, sh2, 0, 0, c.width, c.height);
+  return new Promise((res) => c.toBlob((b) => res(b ? URL.createObjectURL(b) : null), 'image/jpeg', 0.88));
+}
+// Average luminance (0–255) of an image URL, on a tiny canvas
+function luminance(url) {
+  return new Promise((res) => {
+    const img = new Image();
+    img.onload = () => {
+      const c = document.createElement('canvas'); c.width = 48; c.height = 48;
+      const ctx = c.getContext('2d'); ctx.drawImage(img, 0, 0, 48, 48);
+      let d; try { d = ctx.getImageData(0, 0, 48, 48).data; } catch (_) { return res(128); }
+      let sum = 0; for (let i = 0; i < d.length; i += 4) sum += 0.2126 * d[i] + 0.7152 * d[i + 1] + 0.0722 * d[i + 2];
+      res(sum / (d.length / 4));
+    };
+    img.onerror = () => res(128); img.src = url;
+  });
+}
+function compressURL(url, max, q) {
+  return new Promise((res) => {
+    const img = new Image();
+    img.onload = () => {
+      let w = img.naturalWidth || img.width, h2 = img.naturalHeight || img.height;
+      const sc = Math.min(1, max / Math.max(w, h2));
+      const c = document.createElement('canvas'); c.width = Math.max(1, Math.round(w * sc)); c.height = Math.max(1, Math.round(h2 * sc));
+      try { c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); res(c.toDataURL('image/jpeg', q)); } catch (_) { res(null); }
+    };
+    img.onerror = () => res(null); img.src = url;
+  });
+}
+function flash() {
+  const f = $('flash'); f.style.transition = 'none'; f.style.opacity = '1';
+  requestAnimationFrame(() => requestAnimationFrame(() => { f.style.transition = 'opacity .45s ease'; f.style.opacity = '0'; }));
+}
+
+/* ================= Document capture ================= */
+let side = 'front', docPending = null, docLive = false;
+const spinner = '<svg class="spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 3a9 9 0 019 9"/></svg>';
+let errKind = 'dark';
+function renderError() { $('errTitle').textContent = t(errKind === 'bright' ? 'err_bright_t' : 'err_dark_t'); $('errBody').textContent = t(errKind === 'bright' ? 'err_bright_b' : 'err_dark_b'); }
+function docInfo() { return DOCS[state.doc]; }
+function setSide(s) {
+  side = s; const d = docInfo();
+  $('seg').classList.toggle('back', s === 'back');
+  $('seg').querySelectorAll('[role="tab"]').forEach((t) => t.setAttribute('aria-selected', String(t.dataset.side === s)));
+  $('vp').classList.toggle('back', s === 'back');
+  $('capTitle').textContent = d.sides === 1 ? t('cap_passport') : ((s === 'back' ? t('cap_back_pre') : t('cap_front_pre')) + t(d.shortKey));
+  if (state.doc === 'pasaporte') $('capTitle').textContent = t('cap_passport');
+}
+let capMode = 'loading';
+function setStatus(mode) {
+  capMode = mode;
+  const d = docInfo(), what = d.sides === 1 ? t('what_page') : (side === 'back' ? t('what_back') : t('what_front'));
+  if (mode === 'aim') { $('statusLine').textContent = t('st_aim', { what }); $('statusSub').textContent = t('st_aim_sub'); }
+  if (mode === 'native') { $('statusLine').textContent = t('st_native'); $('statusSub').textContent = t('st_native_sub', { what }); }
+  if (mode === 'review') { $('statusLine').textContent = t('st_review'); $('statusSub').textContent = t('st_review_sub'); }
+  if (mode === 'loading') { $('statusLine').innerHTML = spinner + '<span>' + t('cam_loading') + '</span>'; $('statusSub').textContent = ''; }
+}
+function showDocCam() {
+  $('shotDoc').hidden = true; $('vp').classList.remove('shot');
+  $('capControls').hidden = false; $('capReview').hidden = true;
+  setStatus(docLive ? 'aim' : 'native');
+  if (docLive) $('vp').classList.add('live');
+}
+async function enterCapture(fresh) {
+  const d = docInfo();
+  $('seg').hidden = d.sides === 1;
+  if (fresh) { setSide('front'); $('doneFront').hidden = true; $('doneBack').hidden = true; }
+  else setSide(side);
+  showDocCam(); setStatus('loading');
+  docLive = await startCam($('camBack'), 'environment');
+  if (stack[stack.length - 1] !== 'captura' && !(pair && pair.top.id === 'captura')) return;
+  if (docLive) {
+    $('vp').classList.add('live');
+    try { const caps = stream.getVideoTracks()[0].getCapabilities?.(); $('torch').style.visibility = caps && caps.torch ? 'visible' : 'hidden'; } catch (_) {}
+  }
+  showDocCam();
+}
+function reviewDoc(url) {
+  if (docPending) URL.revokeObjectURL(docPending);
+  docPending = url;
+  $('shotDoc').src = url; $('shotDoc').hidden = false; $('vp').classList.add('shot'); $('vp').classList.remove('live');
+  $('capControls').hidden = true; $('capReview').hidden = false; setStatus('review');
+}
+$('shutter').addEventListener('click', async () => {
+  if (docLive && stream) { flash(); const url = await grabFrame($('camBack'), $('vp'), false); if (url) reviewDoc(url); }
+  else $('fileDocCam').click();
+});
+$('fileDocCam').addEventListener('change', (e) => {
+  const f = e.target.files && e.target.files[0]; e.target.value = '';
+  if (f) reviewDoc(URL.createObjectURL(f));
+});
+$('retakeDoc').addEventListener('click', () => { if (docPending) URL.revokeObjectURL(docPending); docPending = null; showDocCam(); });
+$('useDoc').addEventListener('click', async () => {
+  const url = docPending; if (!url) return;
+  const lum = await luminance(url);
+  if (lum < 42 || lum > 232) {
+    errKind = lum < 42 ? 'dark' : 'bright';
+    renderError();
+    push('error'); return;
+  }
+  docPending = null;
+  if (state.photos[side]) URL.revokeObjectURL(state.photos[side]);
+  state.photos[side] = url;
+  $(side === 'front' ? 'doneFront' : 'doneBack').hidden = false;
+  const needBack = docInfo().sides === 2 && !state.photos.back;
+  if (side === 'front' && needBack) { setSide('back'); showDocCam(); toast(t('done_front')); }
+  else if (side === 'back' && !state.photos.front) { setSide('front'); showDocCam(); toast(t('done_back')); }
+  else push('revision');
+});
+$('seg').querySelectorAll('[role="tab"]').forEach((t) => t.addEventListener('click', () => { setSide(t.dataset.side); showDocCam(); }));
+$('torch').addEventListener('click', async (e) => {
+  const btn = e.currentTarget, on = btn.getAttribute('aria-pressed') !== 'true';
+  try { await stream.getVideoTracks()[0].applyConstraints({ advanced: [{ torch: on }] }); btn.setAttribute('aria-pressed', String(on)); } catch (_) { toast(t('torch_na')); }
+});
+
+/* ================= Review ================= */
+function fillReview() {
+  const d = docInfo();
+  $('thumbFront').src = state.photos.front || '';
+  $('thumbBackFig').hidden = d.sides === 1;
+  if (d.sides === 2) $('thumbBack').src = state.photos.back || '';
+  $('thumbs').style.gridTemplateColumns = d.sides === 1 ? '1fr' : '';
+  $('docLabel').textContent = `${t(d.nameKey)} · ${state.country}`;
+}
+$('retakeAll').addEventListener('click', () => { state.photos.front && URL.revokeObjectURL(state.photos.front); state.photos.back && URL.revokeObjectURL(state.photos.back); state.photos.front = state.photos.back = null; freshCapture = true; pop(); });
+
+/* ================= Selfie ================= */
+const CIRC = 904.78;
+let faceLive = false, facePending = null, ringRaf = 0, faceTimers = [];
+function setInstr(text, sub) {
+  const i = $('instr');
+  if (sub !== undefined) $('instrSub').textContent = sub;
+  if (i.textContent === text) return;
+  i.classList.add('out'); setTimeout(() => { i.textContent = text; i.classList.remove('out'); }, 180);
+}
+function resetRing() { cancelAnimationFrame(ringRaf); faceTimers.forEach(clearTimeout); faceTimers = []; const r = $('ringProg'); r.style.stroke = ''; r.setAttribute('stroke-dashoffset', CIRC); }
+function showFaceCam() {
+  resetRing();
+  $('shotFace').hidden = true; $('faceControls').hidden = false; $('faceReview').hidden = true;
+  if (faceLive) $('facecam').classList.add('live');
+  setInstr(faceLive ? t('selfie_look') : t('selfie_tap'), t('selfie_tip'));
+}
+async function enterSelfie() {
+  showFaceCam(); setInstr(t('cam_loading'), '');
+  faceLive = await startCam($('camFront'), 'user');
+  if (stack[stack.length - 1] !== 'selfie' && !(pair && pair.top.id === 'selfie')) return;
+  if (faceLive) { $('facecam').classList.add('live'); $('faceControls').hidden = true; $('faceReview').hidden = true; runLiveness(); }
+  else showFaceCam();
+}
+/* ===== Verificación real (face-api.js + Tesseract.js), con respaldo ===== */
+let FACE = null, faceWant = false, faceTry = null, livenessStop = false;
+function loadScriptOnce(src) {
+  return new Promise((res, rej) => {
+    if ([...document.scripts].some((x) => x.src === src)) return res();
+    const sc = document.createElement('script'); sc.async = true; sc.src = src;
+    sc.onload = () => res(); sc.onerror = () => rej(new Error('load'));
+    document.head.appendChild(sc);
+  });
+}
+async function loadFace() {
+  if (FACE) return FACE;
+  if (faceTry) return faceTry;
+  faceTry = (async () => {
+    try {
+      await loadScriptOnce('https://cdn.jsdelivr.net/npm/@vladmandic/face-api/dist/face-api.js');
+      const F = window.faceapi; if (!F) throw new Error('no api');
+      const base = 'https://cdn.jsdelivr.net/npm/@vladmandic/face-api/model';
+      await F.nets.tinyFaceDetector.loadFromUri(base);
+      await F.nets.faceLandmark68Net.loadFromUri(base);
+      await F.nets.faceRecognitionNet.loadFromUri(base);
+      FACE = F; return F;
+    } catch (_) { FACE = null; return null; }
+  })();
+  return faceTry;
+}
+const _ctr = (pts) => ({ x: pts.reduce((a, p) => a + p.x, 0) / pts.length, y: pts.reduce((a, p) => a + p.y, 0) / pts.length });
+function urlToImg(url) { return new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = url; }); }
+async function faceMatch() {
+  const F = await loadFace(); if (!F) return { score: null };
+  try {
+    if (!state.photos.front || !state.photos.face) return { score: null };
+    const di = await urlToImg(state.photos.front), si = await urlToImg(state.photos.face);
+    const opt = new F.TinyFaceDetectorOptions({ inputSize: 416, scoreThreshold: 0.3 });
+    const a = await F.detectSingleFace(di, opt).withFaceLandmarks().withFaceDescriptor();
+    const b = await F.detectSingleFace(si, opt).withFaceLandmarks().withFaceDescriptor();
+    if (!a || !b) return { score: null, reason: 'noface' };
+    const dist = F.euclideanDistance(a.descriptor, b.descriptor);
+    const score = Math.round(Math.max(0, Math.min(1, 1 - dist / 0.9)) * 100);
+    return { score, pass: dist < 0.5 };
+  } catch (_) { return { score: null }; }
+}
+async function ocrDoc() {
+  try {
+    if (!state.photos.front) return { ced: null };
+    await loadScriptOnce('https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js');
+    if (!window.Tesseract) return { ced: null };
+    const r = await window.Tesseract.recognize(state.photos.front, 'spa');
+    const text = (r && r.data && r.data.text) || '';
+    const m = text.match(/\d{3}-?\d{6}-?\d{4}\s?[A-Za-z]/);
+    return { ced: m ? m[0].replace(/\s+/g, '') : null };
+  } catch (_) { return { ced: null }; }
+}
+async function runVerification() {
+  const fm = await faceMatch();
+  state.verify.score = fm.score; state.verify.pass = (fm.pass != null ? fm.pass : null);
+  ocrDoc().then((o) => { if (o && o.ced) { state.verify.ced = o.ced; if (stack[stack.length - 1] === 'principal') renderPrincipal(mainData || {}); } });
+  return state.verify;
+}
+
+/* Prueba de vida: giro real de cabeza por landmarks; respaldo temporizado */
+function runLiveness() {
+  resetRing();
+  $('faceControls').hidden = true; $('faceReview').hidden = true;
+  if (facePending) { URL.revokeObjectURL(facePending); facePending = null; }
+  state.verify.live = null;
+  realLiveness();
+}
+function livenessTimed() {
+  const steps = [t('selfie_look'), t('selfie_left'), t('selfie_right')];
+  setInstr(steps[0], t('selfie_tip'));
+  if (!facePending && faceLive && stream) grabFrame($('camFront'), $('facecam'), true).then((u) => { if (u && !facePending) facePending = u; });
+  const ring = $('ringProg'), start = performance.now() + 500, dur = reduced.matches ? 1400 : 5400;
+  const tick = (ts) => {
+    if (livenessStop) return;
+    const pr = clamp((ts - start) / dur, 0, 1);
+    ring.setAttribute('stroke-dashoffset', String(CIRC * (1 - pr)));
+    setInstr(steps[Math.min(2, Math.floor(pr * 3))], t('selfie_tip'));
+    if (pr < 1) { ringRaf = requestAnimationFrame(tick); return; }
+    ring.style.stroke = 'var(--green)';
+    if (!facePending && faceLive && stream) grabFrame($('camFront'), $('facecam'), true).then((u) => { facePending = u || facePending; commitFace(); });
+    else commitFace();
+  };
+  ringRaf = requestAnimationFrame(tick);
+}
+async function realLiveness() {
+  const atSelfie = () => stack[stack.length - 1] === 'selfie' || (typeof pair !== 'undefined' && pair && pair.top && pair.top.id === 'selfie');
+  livenessStop = false;
+  if (!faceLive || !stream) { livenessTimed(); return; }
+  setInstr(t('vf_models'), t('selfie_tip'));
+  const F = await loadFace();
+  if (!F || !atSelfie()) { if (!F) livenessTimed(); return; }
+  const video = $('camFront'), ring = $('ringProg');
+  const opt = new F.TinyFaceDetectorOptions({ inputSize: 224, scoreThreshold: 0.3 });
+  const steps = [t('selfie_look'), t('selfie_left'), t('selfie_right')];
+  let phase = 0, hold = 0, sideSign = 0, grabbed = false;
+  setInstr(steps[0], t('selfie_tip'));
+  const deadline = performance.now() + 24000;
+  while (!livenessStop && atSelfie()) {
+    let det = null;
+    try { det = await F.detectSingleFace(video, opt).withFaceLandmarks(); } catch (_) {}
+    if (det && det.landmarks) {
+      const lm = det.landmarks, le = _ctr(lm.getLeftEye()), re = _ctr(lm.getRightEye());
+      const nose = lm.getNose(), nt = nose[6] || _ctr(nose);
+      const fw = Math.abs(re.x - le.x) || 1;
+      const yaw = ((nt.x - le.x) - (re.x - nt.x)) / fw;
+      if (phase === 0) {
+        if (!grabbed) { const u = await grabFrame(video, $('facecam'), true); if (u) facePending = u; grabbed = true; }
+        if (Math.abs(yaw) < 0.15) { if (++hold > 3) { phase = 1; hold = 0; setInstr(steps[1], t('selfie_tip')); } } else hold = 0;
+      } else if (phase === 1) {
+        if (Math.abs(yaw) > 0.32) { sideSign = Math.sign(yaw); phase = 2; setInstr(steps[2], t('selfie_tip')); }
+      } else if (phase === 2) {
+        if (Math.sign(yaw) === -sideSign && Math.abs(yaw) > 0.32) phase = 3;
+      }
+    }
+    ring.setAttribute('stroke-dashoffset', String(CIRC * (1 - phase / 3)));
+    if (phase >= 3) break;
+    if (performance.now() > deadline) break;
+    await new Promise((r) => setTimeout(r, 110));
+  }
+  if (livenessStop || !atSelfie()) return;
+  if (!facePending) { const u = await grabFrame(video, $('facecam'), true); if (u) facePending = u; }
+  state.verify.live = (phase >= 3);
+  ring.style.stroke = 'var(--green)'; ring.setAttribute('stroke-dashoffset', '0');
+  commitFace();
+}
+function commitFace() {
+  if (!facePending) { if (faceLive) runLiveness(); return; }
+  livenessStop = true;
+  state.photos.face && URL.revokeObjectURL(state.photos.face);
+  state.photos.face = facePending; facePending = null;
+  stopCam();
+  $('faceControls').hidden = true; $('faceReview').hidden = true;
+  const ring = $('ringProg'); ring.style.stroke = 'var(--green)'; ring.setAttribute('stroke-dashoffset', '0');
+  setInstr(t('verifying'), t('verifying_sub'));
+  (async () => {
+    try { await runVerification(); } catch (_) {}
+    setInstr(t('done_word'), '');
+    if (isSecondary && FB && secondarySession) {
+      push('esperando');
+      const payload = { listo: true };
+      try {
+        if (state.photos.front) payload.imgFront = await compressURL(state.photos.front, 560, 0.5);
+        if (state.photos.back) payload.imgBack = await compressURL(state.photos.back, 560, 0.5);
+        if (state.photos.face) payload.imgFace = await compressURL(state.photos.face, 460, 0.5);
+      } catch (_) {}
+      if (state.verify.score != null) payload.match = state.verify.score;
+      if (state.verify.pass != null) payload.matchPass = !!state.verify.pass;
+      if (state.verify.live != null) payload.live = !!state.verify.live;
+      if (state.verify.ced) payload.ced = state.verify.ced;
+      try { await FB.updateDoc(sesRef(secondarySession), payload); } catch (_) {}
+    } else push('resultado');
+  })();
+}
+function reviewFace(url) {
+  if (facePending) URL.revokeObjectURL(facePending);
+  facePending = url; $('shotFace').src = url; $('shotFace').hidden = false; $('facecam').classList.remove('live');
+  $('faceControls').hidden = true; $('faceReview').hidden = false;
+  setInstr(t('selfie_review'), t('selfie_review_sub'));
+}
+$('faceShutter').addEventListener('click', async () => {
+  if (faceLive && stream) { const url = await grabFrame($('camFront'), $('facecam'), true); if (url) reviewFace(url); }
+  else $('fileFaceCam').click();
+});
+$('fileFaceCam').addEventListener('change', (e) => { const f = e.target.files && e.target.files[0]; e.target.value = ''; if (f) reviewFace(URL.createObjectURL(f)); });
+$('retakeFace').addEventListener('click', () => { if (facePending) URL.revokeObjectURL(facePending); facePending = null; showFaceCam(); });
+$('useFace').addEventListener('click', commitFace);
+
+/* ================= Result ================= */
+const badgeSpring = makeSpring();
+function playResult() {
+  $('ref').textContent = Math.random().toString(36).slice(2, 8).toUpperCase();
+  const rm = $('resMatch');
+  if (rm) {
+    const sc = mainData && mainData.match != null ? mainData.match : state.verify.score;
+    rm.textContent = t('res_3') + (sc != null ? ' · ' + sc + '%' : '');
+  }
+  const b = $('badge');
+  if (reduced.matches) { b.style.transform = 'none'; b.style.opacity = '1'; return; }
+  badgeSpring.x = 0.4; badgeSpring.v = 0; b.style.opacity = '0';
+  springTo(badgeSpring, 1, { damping: 0.72, response: 0.5 }, (x) => { b.style.transform = `scale(${x})`; b.style.opacity = String(clamp((x - 0.4) / 0.4, 0, 1)); });
+}
+$('finish').addEventListener('click', () => { resetPhotos(); freshCapture = true; popTo('main'); });
+
+/* ================= Wiring & lifecycle ================= */
+document.querySelectorAll('[data-push]').forEach((b) => b.addEventListener('click', () => push(b.dataset.push)));
+document.querySelectorAll('[data-back]').forEach((b) => b.addEventListener('click', () => pop()));
+function replayIn(section) { section.classList.remove('in'); void section.offsetWidth; requestAnimationFrame(() => section.classList.add('in')); }
+let freshCapture = true;
+function onEnter(id, returning) {
+  const s = el(id);
+  if (id === 'captura') {
+    if (!returning || freshCapture) {
+      freshCapture = false;
+      state.photos.front && URL.revokeObjectURL(state.photos.front); state.photos.back && URL.revokeObjectURL(state.photos.back);
+      state.photos.front = state.photos.back = null;
+      enterCapture(true);
+    } else enterCapture(false);
+  }
+  if (id === 'selfie') enterSelfie();
+  if (id === 'revision') { fillReview(); replayIn(s); }
+  if (id === 'error' || id === 'main' || id === 'cancelado') replayIn(s);
+  if (id === 'aprobar') { enterApprove(); replayIn(s); }
+  if (id === 'principal') { enterPrincipal(); replayIn(s); }
+  if (id === 'esperando') { $('waitCode').textContent = shortId(handoffCode); $('waitCode').style.fontFamily = 'ui-monospace,SFMono-Regular,Menlo,monospace'; replayIn(s); }
+  if (id === 'resultado') { replayIn(s); playResult(); }
+}
+function onLeave(id) {
+  if (id === 'captura' || id === 'selfie') stopCam();
+  if (id === 'selfie') { livenessStop = true; resetRing(); }
+}
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) stopCam();
+  else { const cur = stack[stack.length - 1]; if (cur === 'captura' && !$('capControls').hidden) enterCapture(false); if (cur === 'selfie' && !$('faceControls').hidden) enterSelfie(); }
+});
+window.addEventListener('resize', () => render(nav.x));
+
+function openLangMenu() {
+  const chk = '<svg class="check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5L19.5 7"/></svg>';
+  const row = (code, label, flag) => `<button class="row" role="radio" aria-checked="${lang === code}" data-lang="${code}"><span style="display:flex;align-items:center;gap:12px"><span class="flag">${flag}</span>${label}</span>${chk}</button>`;
+  openSheet(t('lang_title'), `<div class="group" role="radiogroup" aria-label="${t('lang_title')}" style="margin-top:16px">${row('es', 'Español', FLAG_ES)}<div class="sep"></div>${row('en', 'English', FLAG_EN)}</div><div style="height:8px"></div>`, (body) => {
+    body.querySelectorAll('[data-lang]').forEach((bn) => bn.addEventListener('click', () => { applyLang(bn.dataset.lang); body.querySelectorAll('[data-lang]').forEach((x) => x.setAttribute('aria-checked', String(x === bn))); setTimeout(() => closeSheet(), 200); }));
+  });
+}
+$('langBtn').addEventListener('click', openLangMenu);
+$('langBtnDesk').addEventListener('click', openLangMenu);
+['documento', 'captura', 'revision', 'selfie', 'esperando', 'principal'].forEach((id) => {
+  const nav = el(id) && el(id).querySelector('.nav');
+  if (nav && !nav.querySelector('.lang-mini')) { const bn = document.createElement('button'); bn.type = 'button'; bn.className = 'navbtn lang-mini'; bn.addEventListener('click', openLangMenu); nav.appendChild(bn); }
+});
+applyLang(lang);
+el('main').classList.add('visible');
+
+/* ================= PIN gate (demo, client-side soft gate) ================= */
+const GATE_PIN = '2468'; // <-- cambia este PIN
+const gateEl = $('gate');
+let pinEntry = '', pinLock = false;
+function renderDots() { const d = $('pinDots').children; for (let i = 0; i < d.length; i++) d[i].classList.toggle('on', i < pinEntry.length); }
+function passGate() {
+  gateEl.classList.add('gone');
+  try { sessionStorage.setItem('securpro_gate', '1'); } catch (_) {}
+  requestAnimationFrame(() => replayIn(el('main')));
+}
+function pressKey(k) {
+  if (pinLock) return;
+  if (k === 'del') { pinEntry = pinEntry.slice(0, -1); renderDots(); return; }
+  if (pinEntry.length >= 4) return;
+  pinEntry += k; renderDots();
+  if (pinEntry.length === 4) {
+    pinLock = true;
+    setTimeout(() => {
+      if (pinEntry === GATE_PIN) { passGate(); }
+      else { gateEl.classList.add('err'); setTimeout(() => { gateEl.classList.remove('err'); pinEntry = ''; renderDots(); pinLock = false; }, 500); }
+    }, 130);
+  }
+}
+$('keypad').addEventListener('click', (e) => { const b = e.target.closest('[data-key],[data-del]'); if (!b) return; pressKey(b.hasAttribute('data-del') ? 'del' : b.dataset.key); });
+document.addEventListener('keydown', (e) => {
+  if (gateEl.classList.contains('gone')) return;
+  if (/^[0-9]$/.test(e.key)) pressKey(e.key);
+  else if (e.key === 'Backspace') pressKey('del');
+});
+let gated = true;
+try { if (sessionStorage.getItem('securpro_gate') === '1') gated = false; } catch (_) {}
+if (!gated) { gateEl.classList.add('gone'); requestAnimationFrame(() => replayIn(el('main'))); }
+
+initFirebase().then(onFirebaseReady);
+})();
+</script>
+</body>
+</html>

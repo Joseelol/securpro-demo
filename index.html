@@ -167,6 +167,8 @@ button.row:active{background:#E8E8ED;transition:none}
 .facecam video{transform:scaleX(-1);opacity:0;transition:opacity .4s}
 .facecam.live video{opacity:1}
 .ring{position:absolute;inset:0}
+.confirm-row{display:flex;align-items:flex-start;gap:10px;margin-top:14px;font-size:14.5px;color:var(--ink);line-height:1.45;cursor:pointer}
+.confirm-row input{width:20px;height:20px;margin:0;accent-color:var(--accent);flex:none;margin-top:1px}
 .ring .prog{transition:stroke .3s ease}
 .instr{margin:clamp(16px,3vh,32px) 36px 0;min-height:30px;text-align:center;font-family:var(--display);font-size:22px;line-height:1.25;font-weight:600;letter-spacing:-.018em;transition:opacity .18s ease, transform .3s cubic-bezier(.2,.8,.2,1)}
 .instr.out{opacity:0;transform:translateY(4px)}
@@ -284,6 +286,7 @@ button.row:active{background:#E8E8ED;transition:none}
 <!-- Hidden file inputs: native camera / photo library fallback -->
 <input type="file" id="fileDocCam" class="vh" accept="image/*" capture="environment" tabindex="-1" aria-hidden="true">
 <input type="file" id="fileFaceCam" class="vh" accept="image/*" capture="user" tabindex="-1" aria-hidden="true">
+<input type="file" id="fileOcrTest" class="vh" accept="image/*" tabindex="-1" aria-hidden="true">
 
 <!-- 1 · Bienvenida -->
 <section class="screen welcome" id="main" aria-label="Bienvenida">
@@ -378,6 +381,7 @@ button.row:active{background:#E8E8ED;transition:none}
     <button class="btn-plain" id="retakeDoc" data-i18n="retake">Repetir</button>
     <button class="btn" id="useDoc" data-i18n="use_photo">Usar foto</button>
   </div>
+  <button class="btn-plain" id="ocrTestBtn" style="margin:4px auto 0;font-size:13px;color:var(--muted)" data-i18n="ocr_test">Subir foto (probar OCR)</button>
 </section>
 
 <!-- 4 · Revisión -->
@@ -391,9 +395,19 @@ button.row:active{background:#E8E8ED;transition:none}
     <figure id="thumbBackFig"><img id="thumbBack" alt=""><figcaption data-i18n="cap_back_c">Reverso</figcaption></figure>
   </div>
   <div class="group-label" style="margin-top:24px" id="docLabel">Cédula de identidad · Nicaragua</div>
-  <p class="footnote fi" style="--d:120ms;margin-top:10px" data-i18n="rev_check">Asegúrate de que el documento salga completo, enfocado y sin reflejos.</p>
+  <dl class="group" id="revData" style="margin-top:0;margin-bottom:0">
+    <div class="row"><dt data-i18n="f_name">Nombre</dt><dd class="value" id="revName" style="margin:0">—</dd></div>
+    <div class="sep"></div>
+    <div class="row"><dt data-i18n="f_number">Número</dt><dd class="value" id="revNum" style="margin:0;font-variant-numeric:tabular-nums">—</dd></div>
+    <div class="sep"></div>
+    <div class="row"><dt data-i18n="f_birth">Nacimiento</dt><dd class="value" id="revBirth" style="margin:0">—</dd></div>
+    <div class="sep"></div>
+    <div class="row"><dt data-i18n="f_expiry">Vencimiento</dt><dd class="value" id="revExpiry" style="margin:0">—</dd></div>
+  </dl>
+  <p class="footnote" id="revFootNote" data-i18n="rev_reading" style="margin-top:10px">Leyendo el documento…</p>
+  <label class="confirm-row" id="revConfirmRow" hidden><input type="checkbox" id="revConfirm"><span data-i18n="rev_confirm">Confirmo que estos datos coinciden con mi documento.</span></label>
   <div class="bottom">
-    <button class="btn" data-push="selfie" data-i18n="continue">Continuar</button>
+    <button class="btn" id="revCont" data-push="selfie" data-i18n="continue">Continuar</button>
     <button class="btn-plain" id="retakeAll" data-i18n="retake_all">Volver a tomar las fotos</button>
   </div>
 </section>
@@ -595,7 +609,7 @@ const STR = {
     aria_handoff:'Continuar en otro dispositivo', aria_shutter:'Tomar foto', aria_torch:'Linterna', aria_face_shutter:'Tomar selfie',
     rev_title:'Confirma tus datos', rev_sub:'Revisa que las dos fotos se vean nítidas y que el documento se lea con claridad.', rev_check:'Asegúrate de que el documento salga completo, enfocado y sin reflejos.',
     f_name:'Nombre', f_number:'Número', f_birth:'Nacimiento', f_expiry:'Vencimiento',
-    rev_foot:'Toca cada dato para revisarlo.', rev_reading:'Leyendo el documento…', rev_read_ok:'Lectura automática del documento. Verifica que los datos sean correctos.', rev_read_none:'No se pudo leer el documento automáticamente aquí. Revisa los datos manualmente.', rev_blank:'No pudimos leer el documento. Toma la foto de nuevo, bien enfocada y con buena luz.', retake_all:'Volver a tomar las fotos',
+    rev_foot:'Toca cada dato para revisarlo.', rev_reading:'Leyendo el documento…', rev_read_ok:'Lectura automática del documento. Verifica que los datos sean correctos.', rev_read_none:'No se pudo leer el documento automáticamente aquí. Revisa los datos manualmente.', rev_blank:'No pudimos leer el documento. Toma la foto de nuevo, bien enfocada y con buena luz.', rev_confirm:'Confirmo que estos datos coinciden con mi documento.', ocr_test:'Subir foto (probar OCR)', retake_all:'Volver a tomar las fotos',
     selfie_title:'Ahora, una selfie', selfie_sub:'Coloca tu rostro dentro del círculo.',
     res_title:'Identidad verificada', res_sub:'Listo, María José. Ya puedes continuar con tu solicitud.',
     res_fail_title:'No pudimos verificar', res_fail_sub:'El rostro no coincide o no detectamos un rostro real. Intenta de nuevo con buena luz y sin lentes.', res_demo:'Modo demostración: la verificación automática no corrió en este entorno (ábrela en el sitio publicado para probarla real).',
@@ -667,7 +681,7 @@ const STR = {
     aria_handoff:'Continue on another device', aria_shutter:'Take photo', aria_torch:'Flashlight', aria_face_shutter:'Take selfie',
     rev_title:'Confirm your details', rev_sub:'Check that both photos are sharp and the document reads clearly.', rev_check:'Make sure the document appears complete, in focus and glare-free.',
     f_name:'Name', f_number:'Number', f_birth:'Date of birth', f_expiry:'Expiry',
-    rev_foot:'Review each field below.', rev_reading:'Reading the document…', rev_read_ok:'Automatic document reading. Please check the data is correct.', rev_read_none:'Could not read the document automatically here. Please check the data manually.', rev_blank:'We could not read the document. Retake the photo, well focused and in good light.', retake_all:'Retake the photos',
+    rev_foot:'Review each field below.', rev_reading:'Reading the document…', rev_read_ok:'Automatic document reading. Please check the data is correct.', rev_read_none:'Could not read the document automatically here. Please check the data manually.', rev_blank:'We could not read the document. Retake the photo, well focused and in good light.', rev_confirm:'I confirm these details match my document.', ocr_test:'Upload photo (test OCR)', retake_all:'Retake the photos',
     selfie_title:'Now, a selfie', selfie_sub:'Place your face inside the circle.',
     res_title:'Identity verified', res_sub:'Done, María José. You can now continue with your request.',
     res_fail_title:'We could not verify', res_fail_sub:'The face does not match or no real face was detected. Try again in good light without glasses.', res_demo:'Demo mode: automatic verification did not run in this environment (open the published site to test it for real).',
@@ -1282,6 +1296,8 @@ $('useDoc').addEventListener('click', async () => {
   else push('revision');
 });
 $('seg').querySelectorAll('[role="tab"]').forEach((t) => t.addEventListener('click', () => { setSide(t.dataset.side); showDocCam(); }));
+$('ocrTestBtn').addEventListener('click', () => $('fileOcrTest').click());
+$('fileOcrTest').addEventListener('change', (e) => { const f = e.target.files && e.target.files[0]; e.target.value = ''; if (!f) return; state.photos.front && URL.revokeObjectURL(state.photos.front); state.photos.front = URL.createObjectURL(f); ocrCache = { url: null, res: null }; push('revision'); });
 $('torch').addEventListener('click', async (e) => {
   const btn = e.currentTarget, on = btn.getAttribute('aria-pressed') !== 'true';
   try { await stream.getVideoTracks()[0].applyConstraints({ advanced: [{ torch: on }] }); btn.setAttribute('aria-pressed', String(on)); } catch (_) { toast(t('torch_na')); }
@@ -1295,8 +1311,84 @@ function fillReview() {
   if (d.sides === 2) $('thumbBack').src = state.photos.back || '';
   $('thumbs').style.gridTemplateColumns = d.sides === 1 ? '1fr' : '';
   $('docLabel').textContent = `${t(d.nameKey)} · ${state.country}`;
+  readDocFields();
 }
-$('retakeAll').addEventListener('click', () => { state.photos.front && URL.revokeObjectURL(state.photos.front); state.photos.back && URL.revokeObjectURL(state.photos.back); state.photos.front = state.photos.back = null; freshCapture = true; pop(); });
+/* --- OCR (Tesseract.js) con preprocesado; el usuario solo confirma --- */
+function imgFromURL(url) { return new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = url; }); }
+async function preprocessDoc(url) {
+  const img = await imgFromURL(url);
+  const scale = Math.min(2.2, Math.max(1, 1500 / (img.naturalWidth || img.width)));
+  const w = Math.round((img.naturalWidth || img.width) * scale), h = Math.round((img.naturalHeight || img.height) * scale);
+  const c = document.createElement('canvas'); c.width = w; c.height = h;
+  const g = c.getContext('2d'); g.drawImage(img, 0, 0, w, h);
+  const im = g.getImageData(0, 0, w, h), a = im.data, contrast = 1.45, inter = 128 * (1 - contrast);
+  for (let i = 0; i < a.length; i += 4) {
+    let v = 0.299 * a[i] + 0.587 * a[i + 1] + 0.114 * a[i + 2];
+    v = v * contrast + inter; v = v < 0 ? 0 : v > 255 ? 255 : v;
+    a[i] = a[i + 1] = a[i + 2] = v;
+  }
+  g.putImageData(im, 0, 0);
+  return c;
+}
+function parseDoc(text) {
+  const out = { num: null, name: null, birth: null, expiry: null };
+  const num = text.match(/\d{3}-?\d{6}-?\d{4}\s?[A-Za-z]/);
+  if (num) out.num = num[0].replace(/\s+/g, '').toUpperCase();
+  const dates = text.match(/\b\d{1,2}[\/\-\. ](?:\d{1,2}|ENE|FEB|MAR|ABR|MAY|JUN|JUL|AGO|SEP|OCT|NOV|DIC|[A-Za-z]{3,9})[\/\-\. ]\d{2,4}\b/gi) || [];
+  if (dates[0]) out.birth = dates[0].trim();
+  if (dates[1]) out.expiry = dates[1].trim();
+  const nm = text.match(/(?:nombres?|apellidos?)[:\s]+([A-ZÁÉÍÓÚÑ][A-ZÁÉÍÓÚÑ\s]{4,40})/i);
+  if (nm) out.name = nm[1].replace(/\s+/g, ' ').trim();
+  else {
+    const skip = /REP|NICARAGUA|CEDULA|IDENTIDAD|CONSEJO|SUPREMO|ELECTORAL|NACIONAL|DOCUMENTO/;
+    const lines = text.split(/\n+/).map((l) => l.trim())
+      .filter((l) => /^[A-ZÁÉÍÓÚÑ][A-ZÁÉÍÓÚÑ ]{5,40}$/.test(l) && (l.match(/ /g) || []).length >= 1 && !skip.test(l));
+    if (lines.length) out.name = lines.sort((x, y) => y.length - x.length)[0];
+  }
+  return out;
+}
+async function ocrDoc() {
+  try {
+    if (!state.photos.front) return { ran: false };
+    await loadScriptOnce('https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js');
+    if (!window.Tesseract) return { ran: false };
+    const canvas = await preprocessDoc(state.photos.front);
+    const r = await window.Tesseract.recognize(canvas, 'spa');
+    const o = parseDoc((r && r.data && r.data.text) || ''); o.ran = true; return o;
+  } catch (_) { return { ran: false }; }
+}
+let ocrCache = { url: null, res: null };
+function setRev(name, num, birth, expiry) {
+  const m = { revName: name, revNum: num, revBirth: birth, revExpiry: expiry };
+  for (const id in m) { const e = $(id); if (e) e.textContent = m[id]; }
+}
+async function readDocFields() {
+  const foot = $('revFootNote'), row = $('revConfirmRow'), chk = $('revConfirm'), cont = $('revCont');
+  if (chk) chk.checked = false;
+  if (row) row.hidden = true;
+  if (cont) cont.disabled = true;
+  setRev('…', '…', '…', '…');
+  if (foot) foot.textContent = t('rev_reading');
+  let o;
+  if (ocrCache.url === state.photos.front && ocrCache.res) o = ocrCache.res;
+  else { o = await ocrDoc(); ocrCache = { url: state.photos.front, res: o }; }
+  const got = o && (o.num || o.name || o.birth || o.expiry);
+  if (got) {
+    setRev(o.name || '—', o.num || '—', o.birth || '—', o.expiry || '—');
+    if (foot) foot.textContent = t('rev_read_ok');
+    if (row) row.hidden = false;                 // mostrar casilla de confirmación
+    // Continuar se habilita al marcar la casilla
+  } else if (o && o.ran) {
+    setRev('—', '—', '—', '—');
+    if (foot) foot.textContent = t('rev_blank');  // ilegible -> volver a tomar
+  } else {
+    setRev('—', '—', '—', '—');
+    if (foot) foot.textContent = t('rev_read_none'); // no se pudo correr aquí -> no bloquear
+    if (cont) cont.disabled = false;
+  }
+}
+document.addEventListener('change', (e) => { if (e.target && e.target.id === 'revConfirm') { const c = $('revCont'); if (c) c.disabled = !e.target.checked; } });
+$('retakeAll').addEventListener('click', () => { state.photos.front && URL.revokeObjectURL(state.photos.front); state.photos.back && URL.revokeObjectURL(state.photos.back); state.photos.front = state.photos.back = null; ocrCache = { url: null, res: null }; freshCapture = true; pop(); });
 
 /* ================= Selfie ================= */
 const CIRC = 904.78;

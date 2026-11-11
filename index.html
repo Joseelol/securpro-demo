@@ -439,14 +439,14 @@ button.row:active{background:#E8E8ED;transition:none}
   <div class="badge">
     <svg id="badge" width="84" height="84" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="var(--green)"/><path class="tick" d="M7 12.4l3.3 3.3L17.2 8.8" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </div>
-  <h1 class="hero-title fi" style="--d:120ms;margin-top:26px" data-i18n="res_title">Identidad verificada</h1>
-  <p class="body center fi" style="--d:170ms;margin-top:12px" data-i18n="res_sub">Listo, María José. Ya puedes continuar con tu solicitud.</p>
+  <h1 class="hero-title fi" style="--d:120ms;margin-top:26px" id="resTitle" data-i18n="res_title">Identidad verificada</h1>
+  <p class="body center fi" style="--d:170ms;margin-top:12px" id="resSub" data-i18n="res_sub">Listo, María José. Ya puedes continuar con tu solicitud.</p>
   <ul class="group" style="margin-top:40px" aria-label="Resumen">
     <li class="row fi" style="--d:260ms"><span data-i18n="res_1">Documento auténtico</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5L19.5 7"/></svg></li>
     <li class="sep" aria-hidden="true"></li>
     <li class="row fi" style="--d:320ms"><span data-i18n="res_2">Datos coherentes</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5L19.5 7"/></svg></li>
     <li class="sep" aria-hidden="true"></li>
-    <li class="row fi" style="--d:380ms"><span id="resMatch" data-i18n="res_3">El rostro coincide</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5L19.5 7"/></svg></li>
+    <li class="row fi" style="--d:380ms"><span id="resMatch" data-i18n="res_3">El rostro coincide</span><svg id="resMatchIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5L19.5 7"/></svg></li>
   </ul>
   <p class="footnote fi" style="--d:440ms"><span data-i18n="res_foot">Tus imágenes ya se eliminaron de este dispositivo. Referencia VRF-</span><span id="ref">0000</span></p>
   <div class="bottom fi" style="--d:500ms"><button class="btn" id="finish" data-i18n="finish">Terminar</button><div class="kyf"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2l7 2.6v5.4c0 4.4-2.9 8.2-7 9.6-4.1-1.4-7-5.2-7-9.6V5.8l7-2.6z"/><path d="M9 12l2 2 4-4"/></svg><span data-i18n="protected_by">Protegido por</span><b>SecurPro</b></div></div>
@@ -607,6 +607,7 @@ const STR = {
     rev_foot:'Datos de ejemplo: la lectura automática del documento aún no está conectada.', retake_all:'Volver a tomar las fotos',
     selfie_title:'Ahora, una selfie', selfie_sub:'Coloca tu rostro dentro del círculo.',
     res_title:'Identidad verificada', res_sub:'Listo, María José. Ya puedes continuar con tu solicitud.',
+    res_fail_title:'No pudimos verificar', res_fail_sub:'El rostro no coincide o no detectamos un rostro real. Intenta de nuevo con buena luz y sin lentes.', res_demo:'Modo demostración: la verificación automática no corrió en este entorno (ábrela en el sitio publicado para probarla real).',
     res_1:'Documento auténtico', res_2:'Datos coherentes', res_3:'El rostro coincide',
     res_foot:'Tus imágenes ya se eliminaron de este dispositivo. Referencia VRF-', finish:'Terminar',
     err_tips:'Sugerencias', err_1:'Busca luz pareja, sin reflejos', err_2:'Apóyala en una superficie oscura', err_3:'Que se vean los cuatro bordes', try_again:'Intentar de nuevo',
@@ -677,6 +678,7 @@ const STR = {
     rev_foot:"Sample data: automatic document reading isn't connected yet.", retake_all:'Retake the photos',
     selfie_title:'Now, a selfie', selfie_sub:'Place your face inside the circle.',
     res_title:'Identity verified', res_sub:'Done, María José. You can now continue with your request.',
+    res_fail_title:'We could not verify', res_fail_sub:'The face does not match or no real face was detected. Try again in good light without glasses.', res_demo:'Demo mode: automatic verification did not run in this environment (open the published site to test it for real).',
     res_1:'Authentic document', res_2:'Consistent data', res_3:'Face matches',
     res_foot:'Your images have already been deleted from this device. Reference VRF-', finish:'Finish',
     err_tips:'Tips', err_1:'Find even light, no glare', err_2:'Rest it on a dark surface', err_3:'Make sure all four edges show', try_again:'Try again',
@@ -900,7 +902,7 @@ const DOCS = {
   pasaporte: { nameKey: 'doc_pasaporte', shortKey: 'short_passport', sides: 1 },
   licencia: { nameKey: 'doc_licencia', shortKey: 'short_licencia', sides: 2 },
 };
-const state = { country: 'Nicaragua', doc: 'cedula', photos: { front: null, back: null, face: null }, verify: { score: null, pass: null, live: null, ced: null } };
+const state = { country: 'Nicaragua', doc: 'cedula', photos: { front: null, back: null, face: null }, verify: { score: null, pass: null, live: null, ced: null, ran: false } };
 function resetPhotos() {
   for (const k of Object.keys(state.photos)) { if (state.photos[k]) URL.revokeObjectURL(state.photos[k]); state.photos[k] = null; }
 }
@@ -1385,6 +1387,7 @@ async function ocrDoc() {
 }
 async function runVerification() {
   const fm = await faceMatch();
+  state.verify.ran = !!FACE;
   state.verify.score = fm.score; state.verify.pass = (fm.pass != null ? fm.pass : null);
   ocrDoc().then((o) => { if (o && o.ced) { state.verify.ced = o.ced; if (stack[stack.length - 1] === 'principal') renderPrincipal(mainData || {}); } });
   return state.verify;
@@ -1502,10 +1505,24 @@ $('useFace').addEventListener('click', commitFace);
 const badgeSpring = makeSpring();
 function playResult() {
   $('ref').textContent = Math.random().toString(36).slice(2, 8).toUpperCase();
-  const rm = $('resMatch');
-  if (rm) {
-    const sc = mainData && mainData.match != null ? mainData.match : state.verify.score;
-    rm.textContent = t('res_3') + (sc != null ? ' · ' + sc + '%' : '');
+  const v = state.verify;
+  const approvedByHuman = !!mainData;           // flujo handoff: un operador ya revisó y aprobó
+  let ok = true, demo = false;
+  if (!approvedByHuman) {
+    if (v.ran) ok = (v.pass === true) && (v.live !== false);   // verificación real corrió
+    else demo = true;                                          // sin modelos: no se puede verificar
+  }
+  const sc = (mainData && mainData.match != null) ? mainData.match : v.score;
+  const circle = $('badge').querySelector('circle'), tick = $('badge').querySelector('.tick');
+  if (ok) { circle.setAttribute('fill', 'var(--green)'); tick.setAttribute('d', 'M7 12.4l3.3 3.3L17.2 8.8'); }
+  else { circle.setAttribute('fill', 'var(--orange)'); tick.setAttribute('d', 'M8.2 8.2l7.6 7.6M15.8 8.2l-7.6 7.6'); }
+  $('resTitle').textContent = ok ? t('res_title') : t('res_fail_title');
+  $('resSub').textContent = ok ? (demo ? t('res_demo') : t('res_sub')) : t('res_fail_sub');
+  const rm = $('resMatch'), ri = $('resMatchIcon');
+  if (rm) rm.textContent = t('res_3') + (sc != null ? ' · ' + sc + '%' : '');
+  if (ri) {
+    if (ok) { ri.setAttribute('stroke', 'var(--green)'); ri.innerHTML = '<path d="M4.5 12.5l5 5L19.5 7"/>'; }
+    else { ri.setAttribute('stroke', 'var(--orange)'); ri.innerHTML = '<path d="M6 6l12 12M18 6L6 18"/>'; }
   }
   const b = $('badge');
   if (reduced.matches) { b.style.transform = 'none'; b.style.opacity = '1'; return; }

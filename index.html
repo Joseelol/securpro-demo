@@ -51,7 +51,7 @@ button{font:inherit;color:inherit;background:none;border:none;padding:0;margin:0
   .shell{display:grid;grid-template-columns:minmax(360px,40%) 1fr;min-height:100vh;max-width:none;margin:0;padding:0}
   .desk-aside{display:flex;flex-direction:column;padding:40px clamp(44px,4vw,76px);color:#fff;background:linear-gradient(155deg,#2563EB 0%,#1E40AF 58%,#1B349A 100%);box-sizing:border-box;overflow:hidden}
   .desk-aside .desk-logo{color:#fff;flex:none}
-  .desk-aside .desk-logo-badge{background:rgba(255,255,255,.18);color:#fff}
+  .desk-aside .desk-logo-badge{background:transparent;width:auto;height:auto;border-radius:0;color:#fff}
   .desk-aside-body{display:block;margin:auto 0;max-width:30em}
   .desk-h{font-size:clamp(34px,3.1vw,48px);color:#fff}
   .desk-p{color:rgba(255,255,255,.86);max-width:32ch}
@@ -243,7 +243,7 @@ button.row:active{background:#E8E8ED;transition:none}
 <body>
 <div class="shell">
   <aside class="desk-aside">
-    <div class="desk-logo"><span class="desk-logo-badge"><svg width="22" height="22" viewBox="268.8 213.0 750.6 869.6" aria-hidden="true"><path d="M560.75 1058.19 C556.21 1057.73 551.78 1056.34 546.00 1053.58 C535.85 1048.72 526.92 1037.65 523.95 1026.25 C522.44 1020.45 522.44 1011.27 523.95 1005.50 C527.73 991.08 538.04 980.06 551.98 975.51 C558.56 973.36 564.50 972.68 570.65 973.38 C591.85 975.78 607.60 991.98 609.27 1013.09 C610.85 1033.12 596.96 1052.07 577.07 1057.01 C573.27 1057.95 564.57 1058.58 560.75 1058.19 Z M616.50 953.00 C607.65 951.95 596.67 948.11 589.22 943.44 C574.16 934.01 565.12 918.42 566.15 903.70 C566.46 899.35 568.13 893.62 570.16 889.94 C571.29 887.88 576.16 878.33 596.38 838.50 C601.05 829.29 608.31 815.00 612.51 806.75 C616.70 798.50 623.61 784.89 627.87 776.50 C639.62 753.37 649.17 734.63 653.74 725.75 C656.00 721.35 660.96 711.67 664.75 704.25 C668.55 696.83 672.41 689.69 673.35 688.40 C675.01 686.10 679.74 682.18 682.69 680.65 C683.50 680.23 685.42 679.42 686.96 678.85 C690.14 677.67 685.45 677.76 773.50 677.05 C828.19 676.61 824.96 676.82 832.39 673.16 C838.83 669.99 843.70 665.81 847.47 660.25 C848.77 658.33 853.38 649.58 857.71 640.81 C863.96 628.16 865.75 624.08 866.36 621.08 C868.13 612.40 864.29 604.90 856.57 601.95 L853.75 600.88 L772.12 601.17 C693.43 601.45 690.41 601.50 688.37 602.41 C687.20 602.93 685.86 603.80 685.38 604.34 C684.89 604.88 680.55 612.96 675.71 622.29 C670.88 631.62 665.33 642.29 663.38 646.00 C661.44 649.71 658.45 655.45 656.75 658.75 C655.05 662.05 652.58 666.77 651.27 669.25 C649.96 671.73 647.65 676.11 646.13 679.00 C641.46 687.88 638.41 693.64 636.99 696.25 C636.23 697.62 634.67 700.55 633.50 702.75 C632.34 704.95 630.88 707.65 630.26 708.75 C629.64 709.85 627.61 713.67 625.74 717.25 C623.88 720.83 621.52 725.33 620.50 727.25 C619.48 729.17 617.12 733.67 615.25 737.25 C613.38 740.83 611.23 744.65 610.47 745.75 C607.88 749.50 603.76 752.92 595.25 758.37 C590.58 761.37 578.54 769.18 568.50 775.73 C541.40 793.42 530.14 800.75 521.25 806.48 C516.85 809.31 510.21 813.59 506.50 816.00 C499.29 820.67 485.59 829.49 477.00 835.00 C474.11 836.85 467.93 840.84 463.25 843.86 C458.57 846.89 450.25 852.24 444.75 855.76 C439.25 859.28 431.94 864.01 428.50 866.27 C425.06 868.53 418.54 872.74 414.00 875.62 C409.46 878.51 400.58 884.18 394.26 888.23 C378.99 898.02 375.99 899.52 367.04 901.75 C359.46 903.64 352.92 904.21 346.88 903.51 C331.54 901.74 320.56 896.58 310.19 886.28 C301.49 877.64 296.88 869.29 294.14 857.20 C292.84 851.45 292.97 838.45 294.40 832.17 C296.50 822.88 301.16 813.09 306.90 805.88 C310.21 801.71 316.58 795.66 320.29 793.15 C323.36 791.08 324.85 790.15 338.25 782.00 C342.65 779.32 351.88 773.69 358.75 769.49 C365.62 765.29 374.29 760.01 378.00 757.75 C381.71 755.50 386.89 752.34 389.50 750.74 C394.65 747.58 431.10 725.57 447.25 715.86 C458.49 709.11 469.12 702.40 478.75 695.99 C482.32 693.61 494.01 685.83 504.71 678.71 C515.42 671.58 527.68 663.42 531.96 660.58 C536.25 657.74 539.75 655.15 539.75 654.83 C539.75 654.51 539.52 654.29 539.23 654.34 C538.95 654.39 496.86 654.59 445.72 654.79 C351.03 655.16 350.89 655.16 343.50 653.42 C329.54 650.12 316.91 641.52 309.34 630.14 C298.04 613.13 296.01 592.53 303.51 570.77 C308.21 557.15 316.31 544.63 327.34 533.95 C333.21 528.26 335.93 526.21 355.13 512.99 C363.17 507.46 375.15 499.20 381.75 494.63 C394.62 485.73 406.59 477.50 419.00 468.99 C423.26 466.07 430.46 461.12 435.00 458.00 C439.54 454.88 449.26 448.26 456.60 443.29 C463.95 438.32 475.37 430.54 481.99 426.00 C488.62 421.46 499.37 414.14 505.89 409.73 C512.41 405.32 524.16 397.35 532.00 392.02 C553.12 377.64 570.27 366.08 606.75 341.59 C616.38 335.13 628.75 326.76 634.25 323.00 C639.75 319.23 651.45 311.32 660.25 305.42 C669.05 299.51 680.75 291.64 686.25 287.92 C711.37 270.94 748.30 246.37 750.01 245.50 C753.47 243.73 761.92 240.54 765.85 239.50 C770.51 238.28 780.39 237.00 785.11 237.00 C788.54 237.00 796.66 238.08 800.12 239.00 C801.16 239.28 802.73 239.70 803.62 239.94 C808.67 241.29 816.89 245.23 822.37 248.92 C827.39 252.30 833.55 258.17 837.40 263.25 C840.42 267.24 844.35 274.97 846.18 280.52 C852.49 299.68 848.11 321.24 834.46 338.14 C829.72 344.01 823.46 349.82 818.25 353.17 C805.99 361.05 797.96 366.17 784.00 374.99 C775.61 380.29 766.39 386.14 763.50 388.00 C749.92 396.73 742.46 401.49 739.25 403.49 C737.33 404.70 732.38 407.85 728.25 410.51 C721.01 415.17 712.64 420.52 703.25 426.50 C700.77 428.07 695.49 431.45 691.50 434.01 C687.51 436.56 681.77 440.23 678.75 442.16 C675.73 444.09 670.89 447.18 668.00 449.02 C665.11 450.87 657.69 455.59 651.50 459.52 C645.31 463.46 636.72 468.94 632.41 471.71 C628.09 474.48 622.58 478.01 620.16 479.56 C617.73 481.10 609.45 486.37 601.75 491.27 C594.05 496.18 584.38 502.31 580.25 504.91 C576.12 507.51 563.52 515.49 552.25 522.64 C512.52 547.82 509.01 550.11 509.31 550.60 C509.57 551.01 579.27 550.71 591.25 550.23 C597.75 549.98 603.99 548.81 606.93 547.29 C608.21 546.62 618.01 540.06 631.25 531.00 C639.27 525.51 651.51 517.22 662.25 510.01 C668.02 506.13 676.24 500.56 680.50 497.65 C692.89 489.17 702.61 485.49 715.75 484.30 C717.40 484.15 736.86 483.88 759.00 483.70 C781.14 483.52 810.27 483.23 823.75 483.06 C837.23 482.89 859.27 482.76 872.75 482.76 C896.16 482.78 897.51 482.83 903.00 483.91 C950.12 493.20 985.26 529.00 993.46 576.07 C993.73 577.63 994.21 582.69 994.53 587.32 C995.45 600.72 993.86 613.79 989.49 628.73 C987.16 636.70 986.55 638.25 981.99 647.75 C978.57 654.88 976.01 660.36 968.65 676.25 C960.94 692.88 958.74 696.92 951.14 708.39 C942.36 721.64 934.92 730.59 922.81 742.48 C899.19 765.66 867.54 783.76 838.50 790.68 C822.08 794.59 816.50 795.00 779.22 795.00 C758.88 795.00 747.18 795.19 745.54 795.54 C741.09 796.49 740.12 797.51 736.08 805.50 C734.06 809.49 723.45 830.41 712.51 852.00 C701.56 873.59 688.16 900.02 682.73 910.75 C677.29 921.48 672.16 931.26 671.32 932.50 C665.14 941.63 652.24 949.30 638.09 952.24 C633.60 953.17 621.57 953.59 616.50 953.00 Z" fill="currentColor" fill-rule="evenodd"/></svg></span><span>SecurPro</span></div>
+    <div class="desk-logo"><span class="desk-logo-badge"><svg width="54" height="54" viewBox="268.8 213.0 750.6 869.6" aria-hidden="true"><path d="M560.75 1058.19 C556.21 1057.73 551.78 1056.34 546.00 1053.58 C535.85 1048.72 526.92 1037.65 523.95 1026.25 C522.44 1020.45 522.44 1011.27 523.95 1005.50 C527.73 991.08 538.04 980.06 551.98 975.51 C558.56 973.36 564.50 972.68 570.65 973.38 C591.85 975.78 607.60 991.98 609.27 1013.09 C610.85 1033.12 596.96 1052.07 577.07 1057.01 C573.27 1057.95 564.57 1058.58 560.75 1058.19 Z M616.50 953.00 C607.65 951.95 596.67 948.11 589.22 943.44 C574.16 934.01 565.12 918.42 566.15 903.70 C566.46 899.35 568.13 893.62 570.16 889.94 C571.29 887.88 576.16 878.33 596.38 838.50 C601.05 829.29 608.31 815.00 612.51 806.75 C616.70 798.50 623.61 784.89 627.87 776.50 C639.62 753.37 649.17 734.63 653.74 725.75 C656.00 721.35 660.96 711.67 664.75 704.25 C668.55 696.83 672.41 689.69 673.35 688.40 C675.01 686.10 679.74 682.18 682.69 680.65 C683.50 680.23 685.42 679.42 686.96 678.85 C690.14 677.67 685.45 677.76 773.50 677.05 C828.19 676.61 824.96 676.82 832.39 673.16 C838.83 669.99 843.70 665.81 847.47 660.25 C848.77 658.33 853.38 649.58 857.71 640.81 C863.96 628.16 865.75 624.08 866.36 621.08 C868.13 612.40 864.29 604.90 856.57 601.95 L853.75 600.88 L772.12 601.17 C693.43 601.45 690.41 601.50 688.37 602.41 C687.20 602.93 685.86 603.80 685.38 604.34 C684.89 604.88 680.55 612.96 675.71 622.29 C670.88 631.62 665.33 642.29 663.38 646.00 C661.44 649.71 658.45 655.45 656.75 658.75 C655.05 662.05 652.58 666.77 651.27 669.25 C649.96 671.73 647.65 676.11 646.13 679.00 C641.46 687.88 638.41 693.64 636.99 696.25 C636.23 697.62 634.67 700.55 633.50 702.75 C632.34 704.95 630.88 707.65 630.26 708.75 C629.64 709.85 627.61 713.67 625.74 717.25 C623.88 720.83 621.52 725.33 620.50 727.25 C619.48 729.17 617.12 733.67 615.25 737.25 C613.38 740.83 611.23 744.65 610.47 745.75 C607.88 749.50 603.76 752.92 595.25 758.37 C590.58 761.37 578.54 769.18 568.50 775.73 C541.40 793.42 530.14 800.75 521.25 806.48 C516.85 809.31 510.21 813.59 506.50 816.00 C499.29 820.67 485.59 829.49 477.00 835.00 C474.11 836.85 467.93 840.84 463.25 843.86 C458.57 846.89 450.25 852.24 444.75 855.76 C439.25 859.28 431.94 864.01 428.50 866.27 C425.06 868.53 418.54 872.74 414.00 875.62 C409.46 878.51 400.58 884.18 394.26 888.23 C378.99 898.02 375.99 899.52 367.04 901.75 C359.46 903.64 352.92 904.21 346.88 903.51 C331.54 901.74 320.56 896.58 310.19 886.28 C301.49 877.64 296.88 869.29 294.14 857.20 C292.84 851.45 292.97 838.45 294.40 832.17 C296.50 822.88 301.16 813.09 306.90 805.88 C310.21 801.71 316.58 795.66 320.29 793.15 C323.36 791.08 324.85 790.15 338.25 782.00 C342.65 779.32 351.88 773.69 358.75 769.49 C365.62 765.29 374.29 760.01 378.00 757.75 C381.71 755.50 386.89 752.34 389.50 750.74 C394.65 747.58 431.10 725.57 447.25 715.86 C458.49 709.11 469.12 702.40 478.75 695.99 C482.32 693.61 494.01 685.83 504.71 678.71 C515.42 671.58 527.68 663.42 531.96 660.58 C536.25 657.74 539.75 655.15 539.75 654.83 C539.75 654.51 539.52 654.29 539.23 654.34 C538.95 654.39 496.86 654.59 445.72 654.79 C351.03 655.16 350.89 655.16 343.50 653.42 C329.54 650.12 316.91 641.52 309.34 630.14 C298.04 613.13 296.01 592.53 303.51 570.77 C308.21 557.15 316.31 544.63 327.34 533.95 C333.21 528.26 335.93 526.21 355.13 512.99 C363.17 507.46 375.15 499.20 381.75 494.63 C394.62 485.73 406.59 477.50 419.00 468.99 C423.26 466.07 430.46 461.12 435.00 458.00 C439.54 454.88 449.26 448.26 456.60 443.29 C463.95 438.32 475.37 430.54 481.99 426.00 C488.62 421.46 499.37 414.14 505.89 409.73 C512.41 405.32 524.16 397.35 532.00 392.02 C553.12 377.64 570.27 366.08 606.75 341.59 C616.38 335.13 628.75 326.76 634.25 323.00 C639.75 319.23 651.45 311.32 660.25 305.42 C669.05 299.51 680.75 291.64 686.25 287.92 C711.37 270.94 748.30 246.37 750.01 245.50 C753.47 243.73 761.92 240.54 765.85 239.50 C770.51 238.28 780.39 237.00 785.11 237.00 C788.54 237.00 796.66 238.08 800.12 239.00 C801.16 239.28 802.73 239.70 803.62 239.94 C808.67 241.29 816.89 245.23 822.37 248.92 C827.39 252.30 833.55 258.17 837.40 263.25 C840.42 267.24 844.35 274.97 846.18 280.52 C852.49 299.68 848.11 321.24 834.46 338.14 C829.72 344.01 823.46 349.82 818.25 353.17 C805.99 361.05 797.96 366.17 784.00 374.99 C775.61 380.29 766.39 386.14 763.50 388.00 C749.92 396.73 742.46 401.49 739.25 403.49 C737.33 404.70 732.38 407.85 728.25 410.51 C721.01 415.17 712.64 420.52 703.25 426.50 C700.77 428.07 695.49 431.45 691.50 434.01 C687.51 436.56 681.77 440.23 678.75 442.16 C675.73 444.09 670.89 447.18 668.00 449.02 C665.11 450.87 657.69 455.59 651.50 459.52 C645.31 463.46 636.72 468.94 632.41 471.71 C628.09 474.48 622.58 478.01 620.16 479.56 C617.73 481.10 609.45 486.37 601.75 491.27 C594.05 496.18 584.38 502.31 580.25 504.91 C576.12 507.51 563.52 515.49 552.25 522.64 C512.52 547.82 509.01 550.11 509.31 550.60 C509.57 551.01 579.27 550.71 591.25 550.23 C597.75 549.98 603.99 548.81 606.93 547.29 C608.21 546.62 618.01 540.06 631.25 531.00 C639.27 525.51 651.51 517.22 662.25 510.01 C668.02 506.13 676.24 500.56 680.50 497.65 C692.89 489.17 702.61 485.49 715.75 484.30 C717.40 484.15 736.86 483.88 759.00 483.70 C781.14 483.52 810.27 483.23 823.75 483.06 C837.23 482.89 859.27 482.76 872.75 482.76 C896.16 482.78 897.51 482.83 903.00 483.91 C950.12 493.20 985.26 529.00 993.46 576.07 C993.73 577.63 994.21 582.69 994.53 587.32 C995.45 600.72 993.86 613.79 989.49 628.73 C987.16 636.70 986.55 638.25 981.99 647.75 C978.57 654.88 976.01 660.36 968.65 676.25 C960.94 692.88 958.74 696.92 951.14 708.39 C942.36 721.64 934.92 730.59 922.81 742.48 C899.19 765.66 867.54 783.76 838.50 790.68 C822.08 794.59 816.50 795.00 779.22 795.00 C758.88 795.00 747.18 795.19 745.54 795.54 C741.09 796.49 740.12 797.51 736.08 805.50 C734.06 809.49 723.45 830.41 712.51 852.00 C701.56 873.59 688.16 900.02 682.73 910.75 C677.29 921.48 672.16 931.26 671.32 932.50 C665.14 941.63 652.24 949.30 638.09 952.24 C633.60 953.17 621.57 953.59 616.50 953.00 Z" fill="currentColor" fill-rule="evenodd"/></svg></span><span>SecurPro</span></div>
     <div class="desk-aside-body">
       <h2 class="desk-h" data-i18n="desk_h">Verificación de identidad</h2>
       <p class="desk-p" data-i18n="desk_p">Confirma quién es tu cliente en minutos, desde cualquier dispositivo.</p>
@@ -257,14 +257,12 @@ button.row:active{background:#E8E8ED;transition:none}
   </aside>
   <section class="desk-right">
     <header class="desk-nav">
-      <span class="demo-pill" data-i18n="demo_badge">DEMO</span>
       <button class="navbtn" id="langBtnDesk" style="gap:6px"><span class="flag"></span><span>English</span></button>
     </header>
     <div id="app">
 
 <!-- PIN gate (demo access) -->
 <div class="gate" id="gate" role="dialog" aria-modal="true" aria-label="Acceso a la demo">
-  <span class="demo-pill" data-i18n="demo_badge">DEMO</span>
   <div class="lock">
     <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10.5" rx="2.6"/><path d="M8 10.5V7.5a4 4 0 018 0v3"/><circle cx="12" cy="15.5" r="1.2"/></svg>
   </div>
@@ -286,11 +284,10 @@ button.row:active{background:#E8E8ED;transition:none}
 
 <!-- 1 · Bienvenida -->
 <section class="screen welcome" id="main" aria-label="Bienvenida">
-  <span class="demo-pill demo-top" data-i18n="demo_badge">DEMO</span>
   <button class="navbtn corner left" id="langBtn" style="gap:5px"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 2.6 15.4 0 18M12 3c-2.6 2.6-2.6 15.4 0 18"/></svg><span id="langLabel">English</span></button>
   <button class="navbtn corner" id="notNow" data-i18n="cancel">Cancelar</button>
-  <div class="fi" style="--d:0ms;display:flex;justify-content:center;color:var(--accent)">
-    <svg width="76" height="76" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 8V6A2.5 2.5 0 016 3.5h2M16 3.5h2A2.5 2.5 0 0120.5 6v2M20.5 16v2a2.5 2.5 0 01-2.5 2.5h-2M8 20.5H6A2.5 2.5 0 013.5 18v-2"/><path d="M9 9.5v1M15 9.5v1"/><path d="M12 9.5v3.5h-.8"/><path d="M9.3 15.6a4 4 0 005.4 0"/></svg>
+  <div class="fi brand-hero" style="--d:0ms;display:flex;justify-content:center">
+    <svg width="94" height="94" viewBox="268.8 213.0 750.6 869.6" aria-hidden="true"><path d="M560.75 1058.19 C556.21 1057.73 551.78 1056.34 546.00 1053.58 C535.85 1048.72 526.92 1037.65 523.95 1026.25 C522.44 1020.45 522.44 1011.27 523.95 1005.50 C527.73 991.08 538.04 980.06 551.98 975.51 C558.56 973.36 564.50 972.68 570.65 973.38 C591.85 975.78 607.60 991.98 609.27 1013.09 C610.85 1033.12 596.96 1052.07 577.07 1057.01 C573.27 1057.95 564.57 1058.58 560.75 1058.19 Z M616.50 953.00 C607.65 951.95 596.67 948.11 589.22 943.44 C574.16 934.01 565.12 918.42 566.15 903.70 C566.46 899.35 568.13 893.62 570.16 889.94 C571.29 887.88 576.16 878.33 596.38 838.50 C601.05 829.29 608.31 815.00 612.51 806.75 C616.70 798.50 623.61 784.89 627.87 776.50 C639.62 753.37 649.17 734.63 653.74 725.75 C656.00 721.35 660.96 711.67 664.75 704.25 C668.55 696.83 672.41 689.69 673.35 688.40 C675.01 686.10 679.74 682.18 682.69 680.65 C683.50 680.23 685.42 679.42 686.96 678.85 C690.14 677.67 685.45 677.76 773.50 677.05 C828.19 676.61 824.96 676.82 832.39 673.16 C838.83 669.99 843.70 665.81 847.47 660.25 C848.77 658.33 853.38 649.58 857.71 640.81 C863.96 628.16 865.75 624.08 866.36 621.08 C868.13 612.40 864.29 604.90 856.57 601.95 L853.75 600.88 L772.12 601.17 C693.43 601.45 690.41 601.50 688.37 602.41 C687.20 602.93 685.86 603.80 685.38 604.34 C684.89 604.88 680.55 612.96 675.71 622.29 C670.88 631.62 665.33 642.29 663.38 646.00 C661.44 649.71 658.45 655.45 656.75 658.75 C655.05 662.05 652.58 666.77 651.27 669.25 C649.96 671.73 647.65 676.11 646.13 679.00 C641.46 687.88 638.41 693.64 636.99 696.25 C636.23 697.62 634.67 700.55 633.50 702.75 C632.34 704.95 630.88 707.65 630.26 708.75 C629.64 709.85 627.61 713.67 625.74 717.25 C623.88 720.83 621.52 725.33 620.50 727.25 C619.48 729.17 617.12 733.67 615.25 737.25 C613.38 740.83 611.23 744.65 610.47 745.75 C607.88 749.50 603.76 752.92 595.25 758.37 C590.58 761.37 578.54 769.18 568.50 775.73 C541.40 793.42 530.14 800.75 521.25 806.48 C516.85 809.31 510.21 813.59 506.50 816.00 C499.29 820.67 485.59 829.49 477.00 835.00 C474.11 836.85 467.93 840.84 463.25 843.86 C458.57 846.89 450.25 852.24 444.75 855.76 C439.25 859.28 431.94 864.01 428.50 866.27 C425.06 868.53 418.54 872.74 414.00 875.62 C409.46 878.51 400.58 884.18 394.26 888.23 C378.99 898.02 375.99 899.52 367.04 901.75 C359.46 903.64 352.92 904.21 346.88 903.51 C331.54 901.74 320.56 896.58 310.19 886.28 C301.49 877.64 296.88 869.29 294.14 857.20 C292.84 851.45 292.97 838.45 294.40 832.17 C296.50 822.88 301.16 813.09 306.90 805.88 C310.21 801.71 316.58 795.66 320.29 793.15 C323.36 791.08 324.85 790.15 338.25 782.00 C342.65 779.32 351.88 773.69 358.75 769.49 C365.62 765.29 374.29 760.01 378.00 757.75 C381.71 755.50 386.89 752.34 389.50 750.74 C394.65 747.58 431.10 725.57 447.25 715.86 C458.49 709.11 469.12 702.40 478.75 695.99 C482.32 693.61 494.01 685.83 504.71 678.71 C515.42 671.58 527.68 663.42 531.96 660.58 C536.25 657.74 539.75 655.15 539.75 654.83 C539.75 654.51 539.52 654.29 539.23 654.34 C538.95 654.39 496.86 654.59 445.72 654.79 C351.03 655.16 350.89 655.16 343.50 653.42 C329.54 650.12 316.91 641.52 309.34 630.14 C298.04 613.13 296.01 592.53 303.51 570.77 C308.21 557.15 316.31 544.63 327.34 533.95 C333.21 528.26 335.93 526.21 355.13 512.99 C363.17 507.46 375.15 499.20 381.75 494.63 C394.62 485.73 406.59 477.50 419.00 468.99 C423.26 466.07 430.46 461.12 435.00 458.00 C439.54 454.88 449.26 448.26 456.60 443.29 C463.95 438.32 475.37 430.54 481.99 426.00 C488.62 421.46 499.37 414.14 505.89 409.73 C512.41 405.32 524.16 397.35 532.00 392.02 C553.12 377.64 570.27 366.08 606.75 341.59 C616.38 335.13 628.75 326.76 634.25 323.00 C639.75 319.23 651.45 311.32 660.25 305.42 C669.05 299.51 680.75 291.64 686.25 287.92 C711.37 270.94 748.30 246.37 750.01 245.50 C753.47 243.73 761.92 240.54 765.85 239.50 C770.51 238.28 780.39 237.00 785.11 237.00 C788.54 237.00 796.66 238.08 800.12 239.00 C801.16 239.28 802.73 239.70 803.62 239.94 C808.67 241.29 816.89 245.23 822.37 248.92 C827.39 252.30 833.55 258.17 837.40 263.25 C840.42 267.24 844.35 274.97 846.18 280.52 C852.49 299.68 848.11 321.24 834.46 338.14 C829.72 344.01 823.46 349.82 818.25 353.17 C805.99 361.05 797.96 366.17 784.00 374.99 C775.61 380.29 766.39 386.14 763.50 388.00 C749.92 396.73 742.46 401.49 739.25 403.49 C737.33 404.70 732.38 407.85 728.25 410.51 C721.01 415.17 712.64 420.52 703.25 426.50 C700.77 428.07 695.49 431.45 691.50 434.01 C687.51 436.56 681.77 440.23 678.75 442.16 C675.73 444.09 670.89 447.18 668.00 449.02 C665.11 450.87 657.69 455.59 651.50 459.52 C645.31 463.46 636.72 468.94 632.41 471.71 C628.09 474.48 622.58 478.01 620.16 479.56 C617.73 481.10 609.45 486.37 601.75 491.27 C594.05 496.18 584.38 502.31 580.25 504.91 C576.12 507.51 563.52 515.49 552.25 522.64 C512.52 547.82 509.01 550.11 509.31 550.60 C509.57 551.01 579.27 550.71 591.25 550.23 C597.75 549.98 603.99 548.81 606.93 547.29 C608.21 546.62 618.01 540.06 631.25 531.00 C639.27 525.51 651.51 517.22 662.25 510.01 C668.02 506.13 676.24 500.56 680.50 497.65 C692.89 489.17 702.61 485.49 715.75 484.30 C717.40 484.15 736.86 483.88 759.00 483.70 C781.14 483.52 810.27 483.23 823.75 483.06 C837.23 482.89 859.27 482.76 872.75 482.76 C896.16 482.78 897.51 482.83 903.00 483.91 C950.12 493.20 985.26 529.00 993.46 576.07 C993.73 577.63 994.21 582.69 994.53 587.32 C995.45 600.72 993.86 613.79 989.49 628.73 C987.16 636.70 986.55 638.25 981.99 647.75 C978.57 654.88 976.01 660.36 968.65 676.25 C960.94 692.88 958.74 696.92 951.14 708.39 C942.36 721.64 934.92 730.59 922.81 742.48 C899.19 765.66 867.54 783.76 838.50 790.68 C822.08 794.59 816.50 795.00 779.22 795.00 C758.88 795.00 747.18 795.19 745.54 795.54 C741.09 796.49 740.12 797.51 736.08 805.50 C734.06 809.49 723.45 830.41 712.51 852.00 C701.56 873.59 688.16 900.02 682.73 910.75 C677.29 921.48 672.16 931.26 671.32 932.50 C665.14 941.63 652.24 949.30 638.09 952.24 C633.60 953.17 621.57 953.59 616.50 953.00 Z" fill="#141414" fill-rule="evenodd"/></svg>
   </div>
   <h1 class="hero-title fi" style="--d:60ms" data-i18n="welcome_title">Verifica tu identidad</h1>
   <p class="body center fi" style="--d:100ms;margin-top:12px" data-i18n="welcome_sub">Toma unos dos minutos y solo necesitas tu cédula.</p>
@@ -448,6 +445,7 @@ button.row:active{background:#E8E8ED;transition:none}
     <li class="sep" aria-hidden="true"></li>
     <li class="row fi" style="--d:380ms"><span id="resMatch" data-i18n="res_3">El rostro coincide</span><svg id="resMatchIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5L19.5 7"/></svg></li>
   </ul>
+  <div id="resData" class="fi" style="--d:410ms"></div>
   <p class="footnote fi" style="--d:440ms"><span data-i18n="res_foot">Tus imágenes ya se eliminaron de este dispositivo. Referencia VRF-</span><span id="ref">0000</span></p>
   <div class="bottom fi" style="--d:500ms"><button class="btn" id="finish" data-i18n="finish">Terminar</button><div class="kyf"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2l7 2.6v5.4c0 4.4-2.9 8.2-7 9.6-4.1-1.4-7-5.2-7-9.6V5.8l7-2.6z"/><path d="M9 12l2 2 4-4"/></svg><span data-i18n="protected_by">Protegido por</span><b>SecurPro</b></div></div>
 </section>
@@ -638,6 +636,7 @@ const STR = {
     selfie_review:'¿Se ve bien tu rostro?', selfie_review_sub:'Debe verse completo, sin sombras fuertes.',
     verifying:'Verificando…', verifying_sub:'Esto toma unos segundos.', done_word:'Listo',
     vf_match:'Coincidencia facial', vf_live:'Prueba de vida', vf_ced:'N.º leído', vf_models:'Cargando verificación…', vf_nomatch:'Sin coincidencia',
+    vf_read:'Datos leídos del documento', vf_name:'Nombre', vf_num:'Número', vf_birth:'Nacimiento', vf_expiry:'Vence', vf_read_note:'Lectura automática (puede contener errores).',
     err_dark_t:'La foto está muy oscura', err_dark_b:'No alcanzamos a ver los datos. Busca más luz y prueba otra vez.',
     err_bright_t:'Hay demasiado brillo', err_bright_b:'Un reflejo tapa los datos. Cambia el ángulo y prueba otra vez.',
     handoff_code_label:'Código de verificación', handoff_preview:'Ver la pantalla del dispositivo principal',
@@ -709,6 +708,7 @@ const STR = {
     selfie_review:'Does your face look good?', selfie_review_sub:'It should show fully, with no harsh shadows.',
     verifying:'Verifying…', verifying_sub:'This takes a few seconds.', done_word:'Done',
     vf_match:'Face match', vf_live:'Liveness', vf_ced:'Read no.', vf_models:'Loading verification…', vf_nomatch:'No match',
+    vf_read:'Data read from the document', vf_name:'Name', vf_num:'Number', vf_birth:'Birth', vf_expiry:'Expires', vf_read_note:'Automatic reading (may contain errors).',
     err_dark_t:'The photo is too dark', err_dark_b:"We can't see the data. Find more light and try again.",
     err_bright_t:"There's too much glare", err_bright_b:'A reflection covers the data. Change the angle and try again.',
     handoff_code_label:'Verification code', handoff_preview:"See the main device's screen",
@@ -902,7 +902,7 @@ const DOCS = {
   pasaporte: { nameKey: 'doc_pasaporte', shortKey: 'short_passport', sides: 1 },
   licencia: { nameKey: 'doc_licencia', shortKey: 'short_licencia', sides: 2 },
 };
-const state = { country: 'Nicaragua', doc: 'cedula', photos: { front: null, back: null, face: null }, verify: { score: null, pass: null, live: null, ced: null, ran: false } };
+const state = { country: 'Nicaragua', doc: 'cedula', photos: { front: null, back: null, face: null }, verify: { score: null, pass: null, live: null, ced: null, ran: false, fields: null } };
 function resetPhotos() {
   for (const k of Object.keys(state.photos)) { if (state.photos[k]) URL.revokeObjectURL(state.photos[k]); state.photos[k] = null; }
 }
@@ -1038,6 +1038,7 @@ function renderPhotos(data) {
     const col = data.matchPass === false ? '#C2410C' : '#15803D';
     const bits = [`<b style="color:${col}">${t('vf_match')}: ${data.match}%</b>`];
     if (data.live != null) bits.push(`${t('vf_live')}: ${data.live ? '✓' : '—'}`);
+    if (data.name) bits.push(`${t('vf_name')}: ${data.name}`);
     if (data.ced) bits.push(`${t('vf_ced')}: ${data.ced}`);
     vf = `<div style="margin:0 20px 10px;font-size:13.5px;color:var(--ink);line-height:1.5">${bits.join(' · ')}</div>`;
   }
@@ -1374,22 +1375,59 @@ async function faceMatch() {
     return { score, pass: dist < 0.5 };
   } catch (_) { return { score: null }; }
 }
+function parseDoc(text) {
+  const out = { num: null, name: null, birth: null, expiry: null };
+  const num = text.match(/\d{3}-?\d{6}-?\d{4}\s?[A-Za-z]/);
+  if (num) out.num = num[0].replace(/\s+/g, '').toUpperCase();
+  // fechas: dd/mm/aaaa, dd-mm-aaaa, o "dd MES aaaa"
+  const dates = text.match(/\b\d{1,2}[\/\-\. ](?:\d{1,2}|ENE|FEB|MAR|ABR|MAY|JUN|JUL|AGO|SEP|OCT|NOV|DIC|[A-Za-z]{3,9})[\/\-\. ]\d{2,4}\b/gi) || [];
+  const clean = dates.map((x) => x.trim());
+  if (clean[0]) out.birth = clean[0];
+  if (clean[1]) out.expiry = clean[1];
+  // nombre: etiqueta explícita, o la línea en MAYÚSCULAS más larga que no sea un encabezado
+  const nm = text.match(/(?:nombres?|apellidos?)[:\s]+([A-ZÁÉÍÓÚÑ][A-ZÁÉÍÓÚÑ\s]{4,40})/i);
+  if (nm) out.name = nm[1].replace(/\s+/g, ' ').trim();
+  else {
+    const skip = /REP|NICARAGUA|CEDULA|IDENTIDAD|CONSEJO|SUPREMO|ELECTORAL|NACIONAL|DOCUMENTO/;
+    const lines = text.split(/\n+/).map((l) => l.trim())
+      .filter((l) => /^[A-ZÁÉÍÓÚÑ][A-ZÁÉÍÓÚÑ ]{5,40}$/.test(l) && (l.match(/ /g) || []).length >= 1 && !skip.test(l));
+    if (lines.length) out.name = lines.sort((a, b) => b.length - a.length)[0];
+  }
+  return out;
+}
 async function ocrDoc() {
   try {
-    if (!state.photos.front) return { ced: null };
+    if (!state.photos.front) return {};
     await loadScriptOnce('https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js');
-    if (!window.Tesseract) return { ced: null };
+    if (!window.Tesseract) return {};
     const r = await window.Tesseract.recognize(state.photos.front, 'spa');
-    const text = (r && r.data && r.data.text) || '';
-    const m = text.match(/\d{3}-?\d{6}-?\d{4}\s?[A-Za-z]/);
-    return { ced: m ? m[0].replace(/\s+/g, '') : null };
-  } catch (_) { return { ced: null }; }
+    return parseDoc((r && r.data && r.data.text) || '');
+  } catch (_) { return {}; }
+}
+function renderDocData(box, data) {
+  if (!box) return;
+  if (!data || (!data.name && !data.ced && !data.birth && !data.expiry)) { box.innerHTML = ''; box.hidden = true; return; }
+  box.hidden = false;
+  const row = (lbl, val) => val ? `<div class="row" style="padding:11px 0"><dt style="margin:0;color:var(--muted);font-size:14px">${lbl}</dt><dd class="value" style="margin:0;text-align:right">${val}</dd></div>` : '';
+  box.innerHTML =
+    `<span class="group-label" style="display:block;margin:0 0 6px">${t('vf_read')}</span>` +
+    `<dl class="group" style="margin:0">` +
+    row(t('vf_name'), data.name) + row(t('vf_num'), data.ced) +
+    row(t('vf_birth'), data.birth) + row(t('vf_expiry'), data.expiry) +
+    `</dl><p class="footnote" style="margin:8px 2px 0">${t('vf_read_note')}</p>`;
 }
 async function runVerification() {
   const fm = await faceMatch();
   state.verify.ran = !!FACE;
   state.verify.score = fm.score; state.verify.pass = (fm.pass != null ? fm.pass : null);
-  ocrDoc().then((o) => { if (o && o.ced) { state.verify.ced = o.ced; if (stack[stack.length - 1] === 'principal') renderPrincipal(mainData || {}); } });
+  ocrDoc().then((o) => {
+    if (o && (o.num || o.name || o.birth || o.expiry)) {
+      state.verify.ced = o.num || state.verify.ced;
+      state.verify.fields = o;
+      if (stack[stack.length - 1] === 'resultado') renderDocData($('resData'), { ced: o.num, name: o.name, birth: o.birth, expiry: o.expiry });
+      if (stack[stack.length - 1] === 'principal') renderPrincipal(mainData || {});
+    }
+  });
   return state.verify;
 }
 
@@ -1483,6 +1521,7 @@ function commitFace() {
       if (state.verify.pass != null) payload.matchPass = !!state.verify.pass;
       if (state.verify.live != null) payload.live = !!state.verify.live;
       if (state.verify.ced) payload.ced = state.verify.ced;
+      if (state.verify.fields) { const f = state.verify.fields; if (f.name) payload.name = f.name; if (f.birth) payload.birth = f.birth; if (f.expiry) payload.expiry = f.expiry; }
       try { await FB.updateDoc(sesRef(secondarySession), payload); } catch (_) {}
     } else push('resultado');
   })();
@@ -1507,17 +1546,15 @@ function playResult() {
   $('ref').textContent = Math.random().toString(36).slice(2, 8).toUpperCase();
   const v = state.verify;
   const approvedByHuman = !!mainData;           // flujo handoff: un operador ya revisó y aprobó
-  let ok = true, demo = false;
-  if (!approvedByHuman) {
-    if (v.ran) ok = (v.pass === true) && (v.live !== false);   // verificación real corrió
-    else demo = true;                                          // sin modelos: no se puede verificar
-  }
+  let ok = true;
+  if (!approvedByHuman) ok = (v.ran === true) && (v.pass === true) && (v.live !== false);
   const sc = (mainData && mainData.match != null) ? mainData.match : v.score;
   const circle = $('badge').querySelector('circle'), tick = $('badge').querySelector('.tick');
   if (ok) { circle.setAttribute('fill', 'var(--green)'); tick.setAttribute('d', 'M7 12.4l3.3 3.3L17.2 8.8'); }
   else { circle.setAttribute('fill', 'var(--orange)'); tick.setAttribute('d', 'M8.2 8.2l7.6 7.6M15.8 8.2l-7.6 7.6'); }
   $('resTitle').textContent = ok ? t('res_title') : t('res_fail_title');
-  $('resSub').textContent = ok ? (demo ? t('res_demo') : t('res_sub')) : t('res_fail_sub');
+  $('resSub').textContent = ok ? t('res_sub') : t('res_fail_sub');
+  renderDocData($('resData'), (mainData && mainData.ced) ? mainData : v.fields ? { ced: v.fields.num, name: v.fields.name, birth: v.fields.birth, expiry: v.fields.expiry } : {});
   const rm = $('resMatch'), ri = $('resMatchIcon');
   if (rm) rm.textContent = t('res_3') + (sc != null ? ' · ' + sc + '%' : '');
   if (ri) {

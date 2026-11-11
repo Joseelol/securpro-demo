@@ -648,7 +648,7 @@ const STR = {
     st_review:'Revisa la foto', st_review_sub:'¿Se leen bien todos los datos y no hay reflejos?', cam_loading:'Abriendo la cámara…',
     cap_passport:'Página de tu foto', cap_front_pre:'Frente de la ', cap_back_pre:'Reverso de la ',
     short_cedula:'cédula', short_passport:'pasaporte', short_licencia:'licencia',
-    selfie_look:'Mira de frente a la cámara', selfie_tap:'Toca el botón para tomar tu selfie', selfie_tip:'Quítate los lentes y la gorra.',
+    selfie_look:'Mira de frente a la cámara', selfie_left:'Gira la cabeza despacio a la izquierda', selfie_right:'Ahora, despacio a la derecha', selfie_tap:'Toca el botón para tomar tu selfie', selfie_tip:'Quítate los lentes y la gorra.',
     selfie_review:'¿Se ve bien tu rostro?', selfie_review_sub:'Debe verse completo, sin sombras fuertes.',
     verifying:'Verificando…', verifying_sub:'Esto toma unos segundos.', done_word:'Listo',
     err_dark_t:'La foto está muy oscura', err_dark_b:'No alcanzamos a ver los datos. Busca más luz y prueba otra vez.',
@@ -716,7 +716,7 @@ const STR = {
     st_review:'Review the photo', st_review_sub:'Can you read all the data clearly, with no glare?', cam_loading:'Opening the camera…',
     cap_passport:'Photo page', cap_front_pre:'Front of your ', cap_back_pre:'Back of your ',
     short_cedula:'ID card', short_passport:'passport', short_licencia:'license',
-    selfie_look:'Look straight at the camera', selfie_tap:'Tap the button to take your selfie', selfie_tip:'Take off glasses and hat.',
+    selfie_look:'Look straight at the camera', selfie_left:'Slowly turn your head left', selfie_right:'Now, slowly to the right', selfie_tap:'Tap the button to take your selfie', selfie_tip:'Take off glasses and hat.',
     selfie_review:'Does your face look good?', selfie_review_sub:'It should show fully, with no harsh shadows.',
     verifying:'Verifying…', verifying_sub:'This takes a few seconds.', done_word:'Done',
     err_dark_t:'The photo is too dark', err_dark_b:"We can't see the data. Find more light and try again.",
@@ -750,9 +750,11 @@ function applyLang(l) {
   document.querySelectorAll('[data-i18n]').forEach((e) => { e.textContent = t(e.dataset.i18n); });
   document.querySelectorAll('[data-i18n-html]').forEach((e) => { e.innerHTML = t(e.dataset.i18nHtml); });
   document.querySelectorAll('[data-i18n-aria]').forEach((e) => { e.setAttribute('aria-label', t(e.dataset.i18nAria)); });
-  const flagHtml = `<span class="flag">${l === 'es' ? FLAG_ES : FLAG_EN}</span><span>${l === 'es' ? 'Español' : 'English'}</span>`;
-  const al = l === 'es' ? 'Change language to English' : 'Cambiar idioma a español';
+  const curFlag = l === 'es' ? FLAG_ES : FLAG_EN;
+  const flagHtml = `<span class="flag">${curFlag}</span><span>${l === 'es' ? 'Español' : 'English'}</span>`;
+  const al = l === 'es' ? 'Cambiar idioma' : 'Change language';
   [$('langBtn'), $('langBtnDesk')].forEach((lb) => { if (lb) { lb.innerHTML = flagHtml; lb.setAttribute('aria-label', al); } });
+  document.querySelectorAll('.lang-mini').forEach((el) => { el.innerHTML = `<span class="flag">${curFlag}</span>`; el.setAttribute('aria-label', al); });
 }
 
 
@@ -958,7 +960,7 @@ async function initFirebase() {
     const a = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js');
     const f = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js');
     const app = a.initializeApp(firebaseConfig);
-    FB = { db: f.getFirestore(app), doc: f.doc, setDoc: f.setDoc, getDoc: f.getDoc, updateDoc: f.updateDoc, onSnapshot: f.onSnapshot, serverTimestamp: f.serverTimestamp };
+    FB = { db: f.getFirestore(app), doc: f.doc, setDoc: f.setDoc, getDoc: f.getDoc, updateDoc: f.updateDoc, onSnapshot: f.onSnapshot, serverTimestamp: f.serverTimestamp, deleteField: f.deleteField, deleteDoc: f.deleteDoc };
     return true;
   } catch (e) { FB = null; return false; }
 }
@@ -1048,7 +1050,11 @@ function renderPhotos(data) {
 }
 function enterPrincipal() { renderPrincipal(mainData || {}); }
 async function decidePrincipal(estado) {
-  if (!principalLocal && FB && approvalSession) { try { await FB.updateDoc(sesRef(approvalSession), { estado }); } catch (_) {} }
+  if (!principalLocal && FB && approvalSession) {
+    const id = approvalSession;
+    try { await FB.updateDoc(sesRef(id), { estado, imgFront: FB.deleteField(), imgBack: FB.deleteField(), imgFace: FB.deleteField() }); } catch (_) {}
+    setTimeout(async () => { try { await FB.deleteDoc(sesRef(id)); } catch (_) {} }, 5000);
+  }
   stopMainListen();
   if (estado === 'aprobado') { if (principalLocal) { pop(); toast(t('ap_accepted')); } else { push('resultado'); } }
   else { pop(); toast(t('ap_rejected')); }
@@ -1325,7 +1331,51 @@ async function enterSelfie() {
   showFaceCam(); setInstr(t('cam_loading'), '');
   faceLive = await startCam($('camFront'), 'user');
   if (stack[stack.length - 1] !== 'selfie' && !(pair && pair.top.id === 'selfie')) return;
-  showFaceCam();
+  if (faceLive) { $('facecam').classList.add('live'); $('faceControls').hidden = true; $('faceReview').hidden = true; runLiveness(); }
+  else showFaceCam();
+}
+function runLiveness() {
+  resetRing();
+  $('faceControls').hidden = true; $('faceReview').hidden = true;
+  if (facePending) { URL.revokeObjectURL(facePending); facePending = null; }
+  grabFrame($('camFront'), $('facecam'), true).then((u) => { if (u && !facePending) facePending = u; });
+  const steps = [t('selfie_look'), t('selfie_left'), t('selfie_right')];
+  setInstr(steps[0], t('selfie_tip'));
+  const ring = $('ringProg'), start = performance.now() + 500, dur = reduced.matches ? 1400 : 5400;
+  const tick = (ts) => {
+    const pr = clamp((ts - start) / dur, 0, 1);
+    ring.setAttribute('stroke-dashoffset', String(CIRC * (1 - pr)));
+    setInstr(steps[Math.min(2, Math.floor(pr * 3))], t('selfie_tip'));
+    if (pr < 1) { ringRaf = requestAnimationFrame(tick); return; }
+    ring.style.stroke = 'var(--green)';
+    if (!facePending && faceLive && stream) { grabFrame($('camFront'), $('facecam'), true).then((u) => { facePending = u || facePending; commitFace(); }); }
+    else commitFace();
+  };
+  ringRaf = requestAnimationFrame(tick);
+}
+function commitFace() {
+  if (!facePending) { if (faceLive) runLiveness(); return; }
+  state.photos.face && URL.revokeObjectURL(state.photos.face);
+  state.photos.face = facePending; facePending = null;
+  stopCam();
+  $('faceControls').hidden = true; $('faceReview').hidden = true;
+  const ring = $('ringProg'); ring.style.stroke = 'var(--green)'; ring.setAttribute('stroke-dashoffset', '0');
+  setInstr(t('verifying'), t('verifying_sub'));
+  faceTimers.push(setTimeout(() => {
+    setInstr(t('done_word'), '');
+    if (isSecondary && FB && secondarySession) {
+      push('esperando');
+      (async () => {
+        const payload = { listo: true };
+        try {
+          if (state.photos.front) payload.imgFront = await compressURL(state.photos.front, 560, 0.5);
+          if (state.photos.back) payload.imgBack = await compressURL(state.photos.back, 560, 0.5);
+          if (state.photos.face) payload.imgFace = await compressURL(state.photos.face, 460, 0.5);
+        } catch (_) {}
+        try { await FB.updateDoc(sesRef(secondarySession), payload); } catch (_) {}
+      })();
+    } else push('resultado');
+  }, 1500));
 }
 function reviewFace(url) {
   if (facePending) URL.revokeObjectURL(facePending);
@@ -1339,36 +1389,7 @@ $('faceShutter').addEventListener('click', async () => {
 });
 $('fileFaceCam').addEventListener('change', (e) => { const f = e.target.files && e.target.files[0]; e.target.value = ''; if (f) reviewFace(URL.createObjectURL(f)); });
 $('retakeFace').addEventListener('click', () => { if (facePending) URL.revokeObjectURL(facePending); facePending = null; showFaceCam(); });
-$('useFace').addEventListener('click', () => {
-  if (!facePending) return;
-  state.photos.face && URL.revokeObjectURL(state.photos.face);
-  state.photos.face = facePending; facePending = null;
-  stopCam();
-  $('faceReview').hidden = true;
-  setInstr(t('verifying'), t('verifying_sub'));
-  const ring = $('ringProg'), start = performance.now(), dur = reduced.matches ? 400 : 2200;
-  const tick = (ts) => {
-    const pr = clamp((ts - start) / dur, 0, 1), e = 1 - Math.pow(1 - pr, 3);
-    ring.setAttribute('stroke-dashoffset', String(CIRC * (1 - e)));
-    if (pr < 1) { ringRaf = requestAnimationFrame(tick); return; }
-    ring.style.stroke = 'var(--green)'; setInstr(t('done_word'), '');
-    faceTimers.push(setTimeout(() => {
-      if (isSecondary && FB && secondarySession) {
-        push('esperando');
-        (async () => {
-          const payload = { listo: true };
-          try {
-            if (state.photos.front) payload.imgFront = await compressURL(state.photos.front, 560, 0.5);
-            if (state.photos.back) payload.imgBack = await compressURL(state.photos.back, 560, 0.5);
-            if (state.photos.face) payload.imgFace = await compressURL(state.photos.face, 460, 0.5);
-          } catch (_) {}
-          try { await FB.updateDoc(sesRef(secondarySession), payload); } catch (_) {}
-        })();
-      } else push('resultado');
-    }, 650));
-  };
-  ringRaf = requestAnimationFrame(tick);
-});
+$('useFace').addEventListener('click', commitFace);
 
 /* ================= Result ================= */
 const badgeSpring = makeSpring();
@@ -1423,6 +1444,10 @@ function openLangMenu() {
 }
 $('langBtn').addEventListener('click', openLangMenu);
 $('langBtnDesk').addEventListener('click', openLangMenu);
+['documento', 'captura', 'revision', 'selfie', 'esperando', 'principal'].forEach((id) => {
+  const nav = el(id) && el(id).querySelector('.nav');
+  if (nav && !nav.querySelector('.lang-mini')) { const bn = document.createElement('button'); bn.type = 'button'; bn.className = 'navbtn lang-mini'; bn.addEventListener('click', openLangMenu); nav.appendChild(bn); }
+});
 applyLang(lang);
 el('main').classList.add('visible');
 

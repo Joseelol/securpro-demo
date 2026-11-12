@@ -969,8 +969,8 @@ $('grab').addEventListener('pointerup', endSheetDrag);
 $('grab').addEventListener('pointercancel', endSheetDrag);
 
 let toastT = 0;
-const APP_VERSION = '3.3';
-const APP_BUILD = '2026-11-10';
+const APP_VERSION = '3.4';
+const APP_BUILD = '2026-11-12';
 
 /* ===========================================================
    OCR en la nube (Google Cloud Vision) — CONFIGURACIÓN
@@ -1418,13 +1418,14 @@ async function preprocessDoc(url) {
 }
 function parseDoc(text) {
   const out = { num: null, name: null, birth: null, expiry: null };
+  out._raw = text || '';
   const num = text.match(/\d{3}-?\d{6}-?\d{4}\s?[A-Za-z]/);
   if (num) out.num = num[0].replace(/\s+/g, '').toUpperCase();
   const dates = text.match(/\b\d{1,2}[\/\-\. ](?:\d{1,2}|ENE|FEB|MAR|ABR|MAY|JUN|JUL|AGO|SEP|OCT|NOV|DIC|[A-Za-z]{3,9})[\/\-\. ]\d{2,4}\b/gi) || [];
   if (dates[0]) out.birth = dates[0].trim();
   if (dates[1]) out.expiry = dates[1].trim();
   const lines = text.split(/\n+/).map((l) => l.trim()).filter(Boolean);
-  const STOP = /NOMBRE|APELLIDO|NUMERO|N[UÚ]MERO|FECHA|NACIONAL|SEXO|REP[UÚ]BLICA|CONSEJO|SUPREMO|C[EÉ]DULA|IDENTIDAD|ELECTORAL|CSE|AMERICA|FIRMA|TITULAR|VENCIMIENTO/i;
+  const STOP = /NOMBRE|APELLIDO|NUMERO|N[UÚ]MERO|FECHA|NACIONAL|SEXO|REP[UÚ]BLICA|CONSEJO|SUPREMO|C[EÉ]DULA|IDENTIDAD|ELECTORAL|CSE|AMERICA|NICARAGUA|CENTRO|CENTRAL|FIRMA|TITULAR|VENCIMIENTO|NACIMIENTO/i;
   const clean = (x) => x.replace(/[^A-ZÁÉÍÓÚÑ ]/g, ' ').split(/\s+/).filter((w) => /^[A-ZÁÉÍÓÚÑ]{2,}$/.test(w)).join(' ').trim();
   const cap4 = (x) => x.split(' ').slice(0, 4).join(' ');
   function valueFor(reLabel) {
@@ -1441,17 +1442,38 @@ function parseDoc(text) {
     }
     return '';
   }
-  const nombres = valueFor(/NOMBRES?/i), apellidos = valueFor(/APELLIDOS?/i);
+  let nombres = valueFor(/NOMBRES?/i), apellidos = valueFor(/APELLIDOS?/i);
+  // Bloque de nombre independiente de etiquetas: líneas en MAYÚSCULAS, solo letras,
+  // sin dígitos ni palabras STOP. En la cédula suelen ser la línea de nombres y la de apellidos.
+  const nameLines = [];
+  for (const l of lines) {
+    if (/\d/.test(l)) continue;
+    if (!/^[A-ZÁÉÍÓÚÑ][A-ZÁÉÍÓÚÑ'. ]{2,40}$/.test(l)) continue;
+    if (STOP.test(l)) continue;
+    const c = cap4(clean(l));
+    if (c && c.length >= 3 && !nameLines.includes(c)) nameLines.push(c);
+  }
+  const distinct = (a, b) => a && b && a !== b && !a.includes(b) && !b.includes(a);
+  if (apellidos && !nombres) {               // caso típico: detectó apellidos, faltó nombres
+    const other = nameLines.find((l) => distinct(l, apellidos));
+    if (other) nombres = other;
+  } else if (nombres && !apellidos) {
+    const other = nameLines.find((l) => distinct(l, nombres));
+    if (other) apellidos = other;
+  } else if (!nombres && !apellidos && nameLines.length) {  // sin etiquetas: usa las 2 líneas de nombre
+    if (nameLines.length >= 2) { nombres = nameLines[0]; apellidos = nameLines[1]; }
+    else { out.name = nameLines[0]; }
+  }
   out.nombres = nombres; out.apellidos = apellidos;
   const full = [nombres, apellidos].filter(Boolean).join(' ').replace(/\s+/g, ' ').trim();
   if (full.length >= 3) out.name = full;
-  else {
+  else if (!out.name) {
     const cand = lines.filter((l) => /^[A-ZÁÉÍÓÚÑ][A-ZÁÉÍÓÚÑ ]{5,40}$/.test(l) && (l.match(/ /g) || []).length >= 1 && !STOP.test(l));
     if (cand.length) out.name = cand.sort((x, y) => y.length - x.length)[0];
   }
   // Primer nombre + primer apellido (para el saludo del resultado)
   const firstName = (nombres || (out.name || '')).split(' ')[0] || '';
-  const firstLast = (apellidos || '').split(' ')[0] || (out.name ? (out.name.split(' ')[1] || '') : '');
+  const firstLast = (apellidos || '').split(' ')[0] || (out.name ? (out.name.split(' ').slice(-2)[0] || '') : '');
   out.shortName = [firstName, firstLast].filter(Boolean).join(' ').trim();
   return out;
 }
@@ -1532,7 +1554,7 @@ async function readDocFields() {
   else { showLoader(t('proc_title'), t('proc_sub')); o = await ocrDoc(); ocrCache = { url: state.photos.front, res: o }; hideLoader(); }
   const got = o && (o.num || o.name || o.birth || o.expiry);
   if (got) {
-    state.verify.fields = o; if (o.num) state.verify.ced = o.num;   // GUARDAR los datos leídos
+    state.verify.fields = o; if (o.num) state.verify.ced = o.num; state.verify.rawOcr = o._raw || '';   // GUARDAR los datos leídos
     setRev(o.name || '—', o.num || '—', o.birth || '—', o.expiry || '—');
     if (foot) foot.textContent = t('rev_read_ok');
     if (row) row.hidden = false;                 // mostrar casilla de confirmación
@@ -1548,6 +1570,12 @@ async function readDocFields() {
 }
 document.addEventListener('change', (e) => { if (e.target && e.target.id === 'revConfirm') { const c = $('revCont'); if (c) c.disabled = !e.target.checked; } });
 $('retakeAll').addEventListener('click', () => { state.photos.front && URL.revokeObjectURL(state.photos.front); state.photos.back && URL.revokeObjectURL(state.photos.back); state.photos.front = state.photos.back = null; ocrCache = { url: null, res: null }; freshCapture = true; pop(); });
+// Diagnóstico: mantener presionada la nota "Datos leídos" ~1s muestra el texto crudo del OCR
+{ const fn = $('revFootNote'); if (fn) { let lpTmr = null;
+  const showRaw = () => { const r = (state.verify && state.verify.rawOcr) || ''; if (r) { fn.textContent = 'OCR crudo: ' + r.replace(/\n+/g, ' / '); fn.style.whiteSpace = 'normal'; } };
+  fn.addEventListener('pointerdown', () => { lpTmr = setTimeout(showRaw, 900); });
+  ['pointerup', 'pointerleave', 'pointercancel'].forEach((ev) => fn.addEventListener(ev, () => { if (lpTmr) { clearTimeout(lpTmr); lpTmr = null; } }));
+} }
 
 /* ================= Selfie ================= */
 const CIRC = 904.78;

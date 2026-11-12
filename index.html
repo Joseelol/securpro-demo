@@ -929,7 +929,7 @@ $('grab').addEventListener('pointerup', endSheetDrag);
 $('grab').addEventListener('pointercancel', endSheetDrag);
 
 let toastT = 0;
-const APP_VERSION = '2.2';
+const APP_VERSION = '2.3';
 const APP_BUILD = '2026-11-10';
 
 /* ===========================================================
@@ -1429,9 +1429,8 @@ function docChecks(f) {
   if (!f) return { authentic: false, consistent: null };
   const num = (f.num || '').replace(/-/g, '').toUpperCase();
   const numValid = /^\d{13}[A-Z]$/.test(num);
-  const hasName = !!(f.name && f.name.replace(/\s/g, '').length >= 4);
   const hasBirth = !!f.birth;
-  const authentic = numValid && hasName && hasBirth;
+  const authentic = numValid && hasBirth;   // número con formato válido + fecha legible (el nombre no bloquea)
   let consistent = null;
   if (numValid && f.birth) {
     const mid = num.slice(3, 9); // DDMMYY
@@ -1763,8 +1762,9 @@ function playResult() {
   const rm = $('resMatch'), ri = $('resMatchIcon');
   if (rm) rm.textContent = t('res_3') + (sc != null ? ' · ' + sc + '%' : '');
   if (ri) {
-    if (state3 === 'ok') { ri.setAttribute('stroke', 'var(--green)'); ri.innerHTML = '<path d="M4.5 12.5l5 5L19.5 7"/>'; }
-    else if (state3 === 'review') { ri.setAttribute('stroke', AMBER); ri.innerHTML = '<path d="M5 12h14"/>'; }
+    const fb = approvedByHuman ? 'match' : v.band;   // la fila de la cara refleja SU propio resultado
+    if (fb === 'match') { ri.setAttribute('stroke', 'var(--green)'); ri.innerHTML = '<path d="M4.5 12.5l5 5L19.5 7"/>'; }
+    else if (fb === 'gray') { ri.setAttribute('stroke', AMBER); ri.innerHTML = '<path d="M5 12h14"/>'; }
     else { ri.setAttribute('stroke', 'var(--orange)'); ri.innerHTML = '<path d="M6 6l12 12M18 6L6 18"/>'; }
   }
   const b = $('badge');

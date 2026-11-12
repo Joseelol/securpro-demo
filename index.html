@@ -315,7 +315,6 @@ button.row:active{background:#E8E8ED;transition:none}
 <!-- Hidden file inputs: native camera / photo library fallback -->
 <input type="file" id="fileDocCam" class="vh" accept="image/*" capture="environment" tabindex="-1" aria-hidden="true">
 <input type="file" id="fileFaceCam" class="vh" accept="image/*" capture="user" tabindex="-1" aria-hidden="true">
-<input type="file" id="fileOcrTest" class="vh" accept="image/*" tabindex="-1" aria-hidden="true">
 
 <!-- 1 · Bienvenida -->
 <section class="screen welcome" id="main" aria-label="Bienvenida">
@@ -410,7 +409,6 @@ button.row:active{background:#E8E8ED;transition:none}
     <button class="btn-plain" id="retakeDoc" data-i18n="retake">Repetir</button>
     <button class="btn" id="useDoc" data-i18n="use_photo">Usar foto</button>
   </div>
-  <button class="btn-plain" id="ocrTestBtn" style="margin:4px auto 0;font-size:13px;color:var(--muted)" data-i18n="ocr_test">Subir foto (probar OCR)</button>
 </section>
 
 <!-- 4 · Revisión -->
@@ -969,8 +967,8 @@ $('grab').addEventListener('pointerup', endSheetDrag);
 $('grab').addEventListener('pointercancel', endSheetDrag);
 
 let toastT = 0;
-const APP_VERSION = '3.4';
-const APP_BUILD = '2026-11-12';
+const APP_VERSION = '3.5';
+const APP_BUILD = '2026-11-12b';
 
 /* ===========================================================
    OCR en la nube (Google Cloud Vision) — CONFIGURACIÓN
@@ -1376,14 +1374,13 @@ $('useDoc').addEventListener('click', async () => {
   if (state.photos[side]) URL.revokeObjectURL(state.photos[side]);
   state.photos[side] = url;
   $(side === 'front' ? 'doneFront' : 'doneBack').hidden = false;
-  const needBack = docInfo().sides === 2 && !state.photos.back;
-  if (side === 'front' && needBack) { setSide('back'); showDocCam(); toast(t('done_front')); }
-  else if (side === 'back' && !state.photos.front) { setSide('front'); showDocCam(); toast(t('done_back')); }
+  const twoSided = docInfo().sides === 2;
+  // Forzar ambas caras: no se avanza a revisión hasta tener frente y reverso.
+  if (!state.photos.front) { setSide('front'); showDocCam(); toast(t('done_back')); }
+  else if (twoSided && !state.photos.back) { setSide('back'); showDocCam(); toast(t('done_front')); }
   else push('revision');
 });
 $('seg').querySelectorAll('[role="tab"]').forEach((t) => t.addEventListener('click', () => { setSide(t.dataset.side); showDocCam(); }));
-$('ocrTestBtn').addEventListener('click', () => $('fileOcrTest').click());
-$('fileOcrTest').addEventListener('change', (e) => { const f = e.target.files && e.target.files[0]; e.target.value = ''; if (!f) return; state.photos.front && URL.revokeObjectURL(state.photos.front); state.photos.front = URL.createObjectURL(f); ocrCache = { url: null, res: null }; push('revision'); });
 $('torch').addEventListener('click', async (e) => {
   const btn = e.currentTarget, on = btn.getAttribute('aria-pressed') !== 'true';
   try { await stream.getVideoTracks()[0].applyConstraints({ advanced: [{ torch: on }] }); btn.setAttribute('aria-pressed', String(on)); } catch (_) { toast(t('torch_na')); }
@@ -1418,7 +1415,6 @@ async function preprocessDoc(url) {
 }
 function parseDoc(text) {
   const out = { num: null, name: null, birth: null, expiry: null };
-  out._raw = text || '';
   const num = text.match(/\d{3}-?\d{6}-?\d{4}\s?[A-Za-z]/);
   if (num) out.num = num[0].replace(/\s+/g, '').toUpperCase();
   const dates = text.match(/\b\d{1,2}[\/\-\. ](?:\d{1,2}|ENE|FEB|MAR|ABR|MAY|JUN|JUL|AGO|SEP|OCT|NOV|DIC|[A-Za-z]{3,9})[\/\-\. ]\d{2,4}\b/gi) || [];
@@ -1554,7 +1550,7 @@ async function readDocFields() {
   else { showLoader(t('proc_title'), t('proc_sub')); o = await ocrDoc(); ocrCache = { url: state.photos.front, res: o }; hideLoader(); }
   const got = o && (o.num || o.name || o.birth || o.expiry);
   if (got) {
-    state.verify.fields = o; if (o.num) state.verify.ced = o.num; state.verify.rawOcr = o._raw || '';   // GUARDAR los datos leídos
+    state.verify.fields = o; if (o.num) state.verify.ced = o.num;   // GUARDAR los datos leídos
     setRev(o.name || '—', o.num || '—', o.birth || '—', o.expiry || '—');
     if (foot) foot.textContent = t('rev_read_ok');
     if (row) row.hidden = false;                 // mostrar casilla de confirmación
@@ -1570,12 +1566,6 @@ async function readDocFields() {
 }
 document.addEventListener('change', (e) => { if (e.target && e.target.id === 'revConfirm') { const c = $('revCont'); if (c) c.disabled = !e.target.checked; } });
 $('retakeAll').addEventListener('click', () => { state.photos.front && URL.revokeObjectURL(state.photos.front); state.photos.back && URL.revokeObjectURL(state.photos.back); state.photos.front = state.photos.back = null; ocrCache = { url: null, res: null }; freshCapture = true; pop(); });
-// Diagnóstico: mantener presionada la nota "Datos leídos" ~1s muestra el texto crudo del OCR
-{ const fn = $('revFootNote'); if (fn) { let lpTmr = null;
-  const showRaw = () => { const r = (state.verify && state.verify.rawOcr) || ''; if (r) { fn.textContent = 'OCR crudo: ' + r.replace(/\n+/g, ' / '); fn.style.whiteSpace = 'normal'; } };
-  fn.addEventListener('pointerdown', () => { lpTmr = setTimeout(showRaw, 900); });
-  ['pointerup', 'pointerleave', 'pointercancel'].forEach((ev) => fn.addEventListener(ev, () => { if (lpTmr) { clearTimeout(lpTmr); lpTmr = null; } }));
-} }
 
 /* ================= Selfie ================= */
 const CIRC = 904.78;

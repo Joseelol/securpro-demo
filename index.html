@@ -479,6 +479,7 @@ button.row:active{background:#E8E8ED;transition:none}
     <li class="row fi" style="--d:380ms"><span id="resMatch" data-i18n="res_3">El rostro coincide</span><svg id="resMatchIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5L19.5 7"/></svg></li>
   </ul>
   <p class="footnote fi" style="--d:440ms"><span data-i18n="res_foot">Tus imágenes ya se eliminaron de este dispositivo. Referencia VRF-</span><span id="ref">0000</span></p>
+  <p class="footnote fi" id="resDebug" style="--d:460ms;margin:8px 20px 0;color:#B45309;font-variant-numeric:tabular-nums"></p>
   <div class="bottom fi" style="--d:500ms"><button class="btn" id="finish" data-i18n="finish">Terminar</button><div class="kyf"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2l7 2.6v5.4c0 4.4-2.9 8.2-7 9.6-4.1-1.4-7-5.2-7-9.6V5.8l7-2.6z"/><path d="M9 12l2 2 4-4"/></svg><span data-i18n="protected_by">Protegido por</span><b>SecurPro</b></div></div>
 </section>
 
@@ -929,7 +930,7 @@ $('grab').addEventListener('pointerup', endSheetDrag);
 $('grab').addEventListener('pointercancel', endSheetDrag);
 
 let toastT = 0;
-const APP_VERSION = '2.5';
+const APP_VERSION = '2.6';
 const APP_BUILD = '2026-11-10';
 
 /* ===========================================================
@@ -1766,6 +1767,12 @@ function playResult() {
     if (fb === 'match') { ri.setAttribute('stroke', 'var(--green)'); ri.innerHTML = '<path d="M4.5 12.5l5 5L19.5 7"/>'; }
     else if (fb === 'gray') { ri.setAttribute('stroke', AMBER); ri.innerHTML = '<path d="M5 12h14"/>'; }
     else { ri.setAttribute('stroke', 'var(--orange)'); ri.innerHTML = '<path d="M6 6l12 12M18 6L6 18"/>'; }
+  }
+  const dbg = $('resDebug');
+  if (dbg) {
+    const f = v.fields;
+    if (!f) dbg.textContent = 'DEBUG: OCR no entregó datos (fields=null)';
+    else dbg.textContent = 'DEBUG · num="' + (f.num || '') + '" nac="' + (f.birth || '') + '" src=' + (f.src || '?') + ' · auth=' + chk.authentic + ' cons=' + chk.consistent;
   }
   const b = $('badge');
   if (reduced.matches) { b.style.transform = 'none'; b.style.opacity = '1'; return; }

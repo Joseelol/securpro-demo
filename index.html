@@ -470,7 +470,7 @@ button.row:active{background:#E8E8ED;transition:none}
     <svg id="badge" width="84" height="84" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="var(--green)"/><path class="tick" d="M7 12.4l3.3 3.3L17.2 8.8" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </div>
   <h1 class="hero-title fi" style="--d:120ms;margin-top:26px" id="resTitle" data-i18n="res_title">Identidad verificada</h1>
-  <p class="body center fi" style="--d:170ms;margin-top:12px" id="resSub" data-i18n="res_sub">Listo, María José. Ya puedes continuar con tu solicitud.</p>
+  <p class="body center fi" style="--d:170ms;margin-top:12px" id="resSub" data-i18n="res_sub">Listo. Ya puedes continuar con tu solicitud.</p>
   <ul class="group" style="margin-top:40px" aria-label="Resumen">
     <li class="row fi" style="--d:260ms"><span data-i18n="res_1">Documento auténtico</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5L19.5 7"/></svg></li>
     <li class="sep" aria-hidden="true"></li>
@@ -636,7 +636,7 @@ const STR = {
     f_name:'Nombre', f_number:'Número', f_birth:'Nacimiento', f_expiry:'Vencimiento',
     rev_foot:'Toca cada dato para revisarlo.', rev_reading:'Leyendo el documento…', rev_read_ok:'Lectura automática del documento. Verifica que los datos sean correctos.', rev_read_none:'No se pudo leer el documento automáticamente aquí. Revisa los datos manualmente.', rev_blank:'No pudimos leer el documento. Toma la foto de nuevo, bien enfocada y con buena luz.', rev_confirm:'Confirmo que estos datos coinciden con mi documento.', ocr_test:'Subir foto (probar OCR)', retake_all:'Volver a tomar las fotos',
     selfie_title:'Ahora, una selfie', selfie_sub:'Coloca tu rostro dentro del círculo.',
-    res_title:'Identidad verificada', res_sub:'Listo, María José. Ya puedes continuar con tu solicitud.',
+    res_title:'Identidad verificada', res_sub:'Listo. Ya puedes continuar con tu solicitud.', res_ok_name:'Listo, {name}. Ya puedes continuar con tu solicitud.',
     res_fail_title:'No pudimos verificar', res_fail_sub:'El rostro no coincide o no detectamos un rostro real. Intenta de nuevo con buena luz y sin lentes.', res_demo:'Modo demostración: la verificación automática no corrió en este entorno (ábrela en el sitio publicado para probarla real).',
     res_1:'Documento auténtico', res_2:'Datos coherentes', res_3:'El rostro coincide',
     res_foot:'Tus imágenes ya se eliminaron de este dispositivo. Referencia VRF-', finish:'Terminar',
@@ -709,7 +709,7 @@ const STR = {
     f_name:'Name', f_number:'Number', f_birth:'Date of birth', f_expiry:'Expiry',
     rev_foot:'Review each field below.', rev_reading:'Reading the document…', rev_read_ok:'Automatic document reading. Please check the data is correct.', rev_read_none:'Could not read the document automatically here. Please check the data manually.', rev_blank:'We could not read the document. Retake the photo, well focused and in good light.', rev_confirm:'I confirm these details match my document.', ocr_test:'Upload photo (test OCR)', retake_all:'Retake the photos',
     selfie_title:'Now, a selfie', selfie_sub:'Place your face inside the circle.',
-    res_title:'Identity verified', res_sub:'Done, María José. You can now continue with your request.',
+    res_title:'Identity verified', res_sub:'Done. You can now continue with your request.', res_ok_name:'Done, {name}. You can now continue with your request.',
     res_fail_title:'We could not verify', res_fail_sub:'The face does not match or no real face was detected. Try again in good light without glasses.', res_demo:'Demo mode: automatic verification did not run in this environment (open the published site to test it for real).',
     res_1:'Authentic document', res_2:'Consistent data', res_3:'Face matches',
     res_foot:'Your images have already been deleted from this device. Reference VRF-', finish:'Finish',
@@ -929,7 +929,7 @@ $('grab').addEventListener('pointerup', endSheetDrag);
 $('grab').addEventListener('pointercancel', endSheetDrag);
 
 let toastT = 0;
-const APP_VERSION = '1.5';
+const APP_VERSION = '1.6';
 const APP_BUILD = '2026-11-10';
 
 /* ===========================================================
@@ -1401,14 +1401,21 @@ function parseDoc(text) {
     }
     return '';
   }
-  const full = [valueFor(/NOMBRES?/i), valueFor(/APELLIDOS?/i)].filter(Boolean).join(' ').replace(/\s+/g, ' ').trim();
+  const nombres = valueFor(/NOMBRES?/i), apellidos = valueFor(/APELLIDOS?/i);
+  out.nombres = nombres; out.apellidos = apellidos;
+  const full = [nombres, apellidos].filter(Boolean).join(' ').replace(/\s+/g, ' ').trim();
   if (full.length >= 3) out.name = full;
   else {
     const cand = lines.filter((l) => /^[A-ZÁÉÍÓÚÑ][A-ZÁÉÍÓÚÑ ]{5,40}$/.test(l) && (l.match(/ /g) || []).length >= 1 && !STOP.test(l));
     if (cand.length) out.name = cand.sort((x, y) => y.length - x.length)[0];
   }
+  // Primer nombre + primer apellido (para el saludo del resultado)
+  const firstName = (nombres || (out.name || '')).split(' ')[0] || '';
+  const firstLast = (apellidos || '').split(' ')[0] || (out.name ? (out.name.split(' ')[1] || '') : '');
+  out.shortName = [firstName, firstLast].filter(Boolean).join(' ').trim();
   return out;
 }
+function titleCase(s) { return (s || '').toLowerCase().replace(/(^|\s)\p{L}/gu, (m) => m.toUpperCase()); }
 async function toBase64(url, max, q) { const d = await compressURL(url, max, q); return d.split(',')[1]; }
 async function cloudOCR() {
   const b64 = await toBase64(state.photos.front, 1600, 0.85);
@@ -1539,7 +1546,12 @@ async function faceMatch() {
     if (!a || !b) return { score: null, reason: 'noface' };
     const dist = F.euclideanDistance(a.descriptor, b.descriptor);
     const score = Math.round(Math.max(0, Math.min(1, 1 - dist / 0.9)) * 100);
-    return { score, pass: dist < 0.5 };
+    // Guardas anti-falso-positivo: detecciones confiables + rostro del documento no diminuto
+    const sa = (a.detection && a.detection.score) || 0, sb = (b.detection && b.detection.score) || 0;
+    const faceW = (a.detection && a.detection.box && a.detection.box.width) || 0;
+    const bigEnough = faceW >= (di.naturalWidth || di.width || 1) * 0.05;
+    const pass = dist < 0.45 && sa > 0.5 && sb > 0.5 && bigEnough;
+    return { score, pass };
   } catch (_) { return { score: null }; }
 }
 async function runVerification() {
@@ -1669,7 +1681,9 @@ function playResult() {
   if (ok) { circle.setAttribute('fill', 'var(--green)'); tick.setAttribute('d', 'M7 12.4l3.3 3.3L17.2 8.8'); }
   else { circle.setAttribute('fill', 'var(--orange)'); tick.setAttribute('d', 'M8.2 8.2l7.6 7.6M15.8 8.2l-7.6 7.6'); }
   $('resTitle').textContent = ok ? t('res_title') : t('res_fail_title');
-  $('resSub').textContent = ok ? t('res_sub') : t('res_fail_sub');
+  const nm = (v.fields && v.fields.shortName) ? titleCase(v.fields.shortName) : ((mainData && mainData.name) ? titleCase(String(mainData.name).split(' ').slice(0, 2).join(' ')) : '');
+  if (ok) $('resSub').textContent = nm ? t('res_ok_name').replace('{name}', nm) : t('res_sub');
+  else $('resSub').textContent = t('res_fail_sub');
   const rm = $('resMatch'), ri = $('resMatchIcon');
   if (rm) rm.textContent = t('res_3') + (sc != null ? ' · ' + sc + '%' : '');
   if (ri) {

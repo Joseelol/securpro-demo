@@ -929,8 +929,23 @@ $('grab').addEventListener('pointerup', endSheetDrag);
 $('grab').addEventListener('pointercancel', endSheetDrag);
 
 let toastT = 0;
-const APP_VERSION = '1.3';
+const APP_VERSION = '1.5';
 const APP_BUILD = '2026-11-10';
+
+/* ===========================================================
+   OCR en la nube (Google Cloud Vision) — CONFIGURACIÓN
+   Rellena UNA de las dos opciones. Si ambas quedan vacías,
+   la app usa Tesseract (gratis, en el navegador) como antes.
+   ----------------------------------------------------------
+   endpoint  → URL de tu Cloud Function (RECOMENDADO para
+               producción: la API key queda oculta en el backend).
+   visionKey → API key de Google Vision SOLO para pruebas rápidas.
+               ⚠ Queda EXPUESTA en el navegador; no usar en producción.
+   =========================================================== */
+const OCR_CONFIG = {
+  endpoint: 'https://us-central1-securpro-demo.cloudfunctions.net/ocr',
+  visionKey: ''   // ej: 'AIzaSy...'  (solo pruebas)
+};
 function toast(msg) { const t = $('toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), 2200); }
 function showLoader(msg, sub) { const l = $('loader'); if (!l) return; $('loaderMsg').textContent = msg || ''; $('loaderSub').textContent = sub || ''; l.classList.add('on'); l.setAttribute('aria-hidden', 'false'); }
 function hideLoader() { const l = $('loader'); if (!l) return; l.classList.remove('on'); l.setAttribute('aria-hidden', 'true'); }
@@ -1394,14 +1409,39 @@ function parseDoc(text) {
   }
   return out;
 }
+async function toBase64(url, max, q) { const d = await compressURL(url, max, q); return d.split(',')[1]; }
+async function cloudOCR() {
+  const b64 = await toBase64(state.photos.front, 1600, 0.85);
+  if (OCR_CONFIG.visionKey) {
+    const r = await fetch('https://vision.googleapis.com/v1/images:annotate?key=' + encodeURIComponent(OCR_CONFIG.visionKey), {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ requests: [{ image: { content: b64 }, features: [{ type: 'DOCUMENT_TEXT_DETECTION' }] }] })
+    });
+    const j = await r.json();
+    return (j.responses && j.responses[0] && j.responses[0].fullTextAnnotation && j.responses[0].fullTextAnnotation.text) || '';
+  }
+  const r = await fetch(OCR_CONFIG.endpoint, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ image: b64 })
+  });
+  const j = await r.json();
+  return j.text || '';
+}
 async function ocrDoc() {
   try {
     if (!state.photos.front) return { ran: false };
+    // 1) Google Vision, si está configurado
+    if (OCR_CONFIG.endpoint || OCR_CONFIG.visionKey) {
+      try {
+        const text = await cloudOCR();
+        if (text && text.trim()) { const o = parseDoc(text); o.ran = true; o.src = 'vision'; return o; }
+      } catch (_) { /* si falla, caemos a Tesseract */ }
+    }
+    // 2) Respaldo: Tesseract en el navegador
     await loadScriptOnce('https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js');
     if (!window.Tesseract) return { ran: false };
     const canvas = await preprocessDoc(state.photos.front);
     const r = await window.Tesseract.recognize(canvas, 'spa');
-    const o = parseDoc((r && r.data && r.data.text) || ''); o.ran = true; return o;
+    const o = parseDoc((r && r.data && r.data.text) || ''); o.ran = true; o.src = 'tesseract'; return o;
   } catch (_) { return { ran: false }; }
 }
 let ocrCache = { url: null, res: null };

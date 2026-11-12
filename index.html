@@ -1584,8 +1584,6 @@ async function faceMatch() {
     const a = await F.detectSingleFace(di, opt).withFaceLandmarks().withFaceDescriptor();
     if (!a) return { dist: null, reason: 'noface' };
     const sa = (a.detection && a.detection.score) || 0;
-    const faceW = (a.detection && a.detection.box && a.detection.box.width) || 0;
-    const bigEnough = faceW >= (di.naturalWidth || di.width || 1) * 0.05;
     let best = null, bestSb = 0;
     for (const fr of frames) {
       try {
@@ -1598,7 +1596,7 @@ async function faceMatch() {
     }
     if (best === null) return { dist: null, reason: 'noface' };
     const score = Math.round(Math.max(0, Math.min(1, 1 - best / 0.9)) * 100);
-    const reliable = sa > 0.5 && bestSb > 0.5 && bigEnough;
+    const reliable = sa > 0.4 && bestSb > 0.4;
     return { dist: best, score, reliable };
   } catch (_) { return { dist: null }; }
 }

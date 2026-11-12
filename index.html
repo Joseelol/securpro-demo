@@ -699,7 +699,7 @@ const STR = {
     st_review:'Revisa la foto', st_review_sub:'¿Se leen bien todos los datos y no hay reflejos?', cam_loading:'Abriendo la cámara…',
     cap_passport:'Página de tu foto', cap_front_pre:'Frente de la ', cap_back_pre:'Reverso de la ',
     short_cedula:'cédula', short_passport:'pasaporte', short_licencia:'licencia',
-    selfie_look:'Mira de frente a la cámara', selfie_left:'Gira la cabeza despacio a la izquierda', selfie_right:'Ahora, despacio a la derecha', selfie_tap:'Toca el botón para tomar tu selfie', selfie_tip:'Quítate los lentes y la gorra.',
+    selfie_look:'Mira de frente a la cámara', selfie_left:'Gira la cabeza despacio a la izquierda', selfie_right:'Ahora, despacio a la derecha', selfie_g_blink:'Parpadea', selfie_g_turn:'Gira la cabeza a un lado', selfie_g_up:'Mira hacia arriba', selfie_g_down:'Mira hacia abajo', selfie_tap:'Toca el botón para tomar tu selfie', selfie_tip:'Quítate los lentes y la gorra.',
     selfie_review:'¿Se ve bien tu rostro?', selfie_review_sub:'Debe verse completo, sin sombras fuertes.',
     verifying:'Verificando…', verifying_sub:'Esto toma unos segundos.', done_word:'Listo',
     proc_title:'Procesando información…', proc_sub:'Leyendo los datos de tu documento.', verif_title:'Verificando información…', verif_sub:'Comparando tu rostro y confirmando que eres tú.',
@@ -775,7 +775,7 @@ const STR = {
     st_review:'Review the photo', st_review_sub:'Can you read all the data clearly, with no glare?', cam_loading:'Opening the camera…',
     cap_passport:'Photo page', cap_front_pre:'Front of your ', cap_back_pre:'Back of your ',
     short_cedula:'ID card', short_passport:'passport', short_licencia:'license',
-    selfie_look:'Look straight at the camera', selfie_left:'Slowly turn your head left', selfie_right:'Now, slowly to the right', selfie_tap:'Tap the button to take your selfie', selfie_tip:'Take off glasses and hat.',
+    selfie_look:'Look straight at the camera', selfie_left:'Slowly turn your head left', selfie_right:'Now, slowly to the right', selfie_g_blink:'Blink', selfie_g_turn:'Turn your head to one side', selfie_g_up:'Look up', selfie_g_down:'Look down', selfie_tap:'Tap the button to take your selfie', selfie_tip:'Take off glasses and hat.',
     selfie_review:'Does your face look good?', selfie_review_sub:'It should show fully, with no harsh shadows.',
     verifying:'Verifying…', verifying_sub:'This takes a few seconds.', done_word:'Done',
     proc_title:'Processing information…', proc_sub:'Reading the data on your document.', verif_title:'Verifying information…', verif_sub:'Comparing your face and confirming it’s you.',
@@ -967,8 +967,8 @@ $('grab').addEventListener('pointerup', endSheetDrag);
 $('grab').addEventListener('pointercancel', endSheetDrag);
 
 let toastT = 0;
-const APP_VERSION = '3.5';
-const APP_BUILD = '2026-11-12b';
+const APP_VERSION = '4.0';
+const APP_BUILD = '2026-11-12c';
 
 /* ===========================================================
    OCR en la nube (Google Cloud Vision) — CONFIGURACIÓN
@@ -1498,39 +1498,36 @@ function docChecks(f) {
   }
   return { authentic, consistent };
 }
-async function toBase64(url, max, q) { const d = await compressURL(url, max, q); return d.split(',')[1]; }
-async function cloudOCR() {
-  const b64 = await toBase64(state.photos.front, 1600, 0.85);
-  if (OCR_CONFIG.visionKey) {
-    const r = await fetch('https://vision.googleapis.com/v1/images:annotate?key=' + encodeURIComponent(OCR_CONFIG.visionKey), {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ requests: [{ image: { content: b64 }, features: [{ type: 'DOCUMENT_TEXT_DETECTION' }] }] })
-    });
-    const j = await r.json();
-    return (j.responses && j.responses[0] && j.responses[0].fullTextAnnotation && j.responses[0].fullTextAnnotation.text) || '';
-  }
+// Llamada genérica al backend de verificación (todas las decisiones viven en el servidor)
+async function serverCall(mode, payload) {
   const r = await fetch(OCR_CONFIG.endpoint, {
-    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ image: b64 })
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(Object.assign({ mode }, payload || {}))
   });
-  const j = await r.json();
-  return j.text || '';
+  if (!r.ok) throw new Error('http ' + r.status);
+  return r.json();
 }
 async function ocrDoc() {
   try {
     if (!state.photos.front) return { ran: false };
-    // 1) Google Vision, si está configurado
-    if (OCR_CONFIG.endpoint || OCR_CONFIG.visionKey) {
+    // 1) Servidor: OCR + parseo + chequeos + rostro del documento (devuelve docToken firmado)
+    if (OCR_CONFIG.endpoint) {
       try {
-        const text = await cloudOCR();
-        if (text && text.trim()) { const o = parseDoc(text); o.ran = true; o.src = 'vision'; return o; }
-      } catch (_) { /* si falla, caemos a Tesseract */ }
+        const front = await compressURL(state.photos.front, 1100, 0.8);
+        const back = state.photos.back ? await compressURL(state.photos.back, 1100, 0.8) : null;
+        const j = await serverCall('document', { front, back });
+        if (j && j.ok) {
+          const f = j.fields || {};
+          return { ran: true, src: 'server', num: f.num, name: f.name, shortName: f.shortName, birth: f.birth, expiry: f.expiry, checks: j.checks || null, docToken: j.docToken || null, hasDocFace: !!j.hasDocFace };
+        }
+      } catch (_) { /* si el servidor falla, caemos a Tesseract local (sin veredicto del servidor) */ }
     }
-    // 2) Respaldo: Tesseract en el navegador
+    // 2) Respaldo local: Tesseract en el navegador (sin docToken -> la verificación irá a revisión humana)
     await loadScriptOnce('https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js');
     if (!window.Tesseract) return { ran: false };
     const canvas = await preprocessDoc(state.photos.front);
     const r = await window.Tesseract.recognize(canvas, 'spa');
-    const o = parseDoc((r && r.data && r.data.text) || ''); o.ran = true; o.src = 'tesseract'; return o;
+    const o = parseDoc((r && r.data && r.data.text) || ''); o.ran = true; o.src = 'tesseract'; o.docToken = null; o.checks = null; return o;
   } catch (_) { return { ran: false }; }
 }
 let ocrCache = { url: null, res: null };
@@ -1551,6 +1548,7 @@ async function readDocFields() {
   const got = o && (o.num || o.name || o.birth || o.expiry);
   if (got) {
     state.verify.fields = o; if (o.num) state.verify.ced = o.num;   // GUARDAR los datos leídos
+    state.verify.docToken = o.docToken || null; state.verify.docChecks = o.checks || null;   // veredicto del documento (servidor)
     setRev(o.name || '—', o.num || '—', o.birth || '—', o.expiry || '—');
     if (foot) foot.textContent = t('rev_read_ok');
     if (row) row.hidden = false;                 // mostrar casilla de confirmación
@@ -1583,14 +1581,105 @@ function showFaceCam() {
   if (faceLive) $('facecam').classList.add('live');
   setInstr(faceLive ? t('selfie_look') : t('selfie_tap'), t('selfie_tip'));
 }
+function atSelfieNow() { return stack[stack.length - 1] === 'selfie' || (typeof pair !== 'undefined' && pair && pair.top && pair.top.id === 'selfie'); }
+function waitMs(ms) { return new Promise((r) => setTimeout(r, ms)); }
+function grabDataURL(video, w, q) {
+  try {
+    if (!video || !video.videoWidth) return null;
+    const scale = w / video.videoWidth, cw = w, ch = Math.round(video.videoHeight * scale);
+    const c = document.createElement('canvas'); c.width = cw; c.height = ch;
+    c.getContext('2d').drawImage(video, 0, 0, cw, ch);
+    return c.toDataURL('image/jpeg', q);
+  } catch (_) { return null; }
+}
+let padFrames = [], selfieShot = null, padStop = false;
+const GTEXT = { blink: 'selfie_g_blink', turn: 'selfie_g_turn', up: 'selfie_g_up', down: 'selfie_g_down', left: 'selfie_g_turn', right: 'selfie_g_turn' };
 async function enterSelfie() {
-  if (!faceRetrying) { state.verify.bestDist = null; state.verify.attempts = 0; state.verify.band = null; state.verify.score = null; state.verify.pass = null; state.verify.reliable = false; }
+  if (!faceRetrying) { state.verify.attempts = 0; }
   faceRetrying = false;
+  padFrames = []; selfieShot = null; padStop = false;
+  state.verify.verdict = null; state.verify.band = null; state.verify.live = null; state.verify.reference = null;
   showFaceCam(); setInstr(t('cam_loading'), '');
   faceLive = await startCam($('camFront'), 'user');
-  if (stack[stack.length - 1] !== 'selfie' && !(pair && pair.top.id === 'selfie')) return;
-  if (faceLive) { $('facecam').classList.add('live'); $('faceControls').hidden = true; $('faceReview').hidden = true; runLiveness(); }
-  else showFaceCam();
+  if (!atSelfieNow()) return;
+  if (!faceLive) { showFaceCam(); return; }   // sin cámara en vivo -> captura manual (botón)
+  $('facecam').classList.add('live'); $('faceControls').hidden = true; $('faceReview').hidden = true;
+  let seq = null, token = null;
+  try { const c = await serverCall('challenge', {}); seq = c.seq; token = c.challengeToken; } catch (_) {}
+  state.verify.seq = seq; state.verify.challengeToken = token;
+  if (!atSelfieNow()) return;
+  runChallenge(seq);
+}
+// Prueba de vida dirigida por el servidor: muestra cada gesto y captura frames; el servidor los verifica.
+async function runChallenge(seq) {
+  const video = $('camFront'), ring = $('ringProg');
+  resetRing();
+  setInstr(t('selfie_look'), t('selfie_tip'));
+  await waitMs(700);
+  if (padStop || !atSelfieNow()) return;
+  selfieShot = grabDataURL(video, 480, 0.75);   // selfie frontal
+  const list = (seq && seq.length) ? seq : ['blink', 'turn', 'up'];
+  const per = reduced.matches ? 1300 : 2600;
+  for (let gi = 0; gi < list.length; gi++) {
+    if (padStop || !atSelfieNow()) return;
+    setInstr(t(GTEXT[list[gi]] || 'selfie_look'), t('selfie_tip'));
+    const start = performance.now();
+    while (performance.now() - start < per) {
+      if (padStop || !atSelfieNow()) return;
+      if (padFrames.length < 16) { const f = grabDataURL(video, 320, 0.55); if (f) padFrames.push(f); }
+      const pr = (gi + (performance.now() - start) / per) / list.length;
+      ring.setAttribute('stroke-dashoffset', String(CIRC * (1 - pr)));
+      await waitMs(300);
+    }
+  }
+  if (padStop || !atSelfieNow()) return;
+  ring.style.stroke = 'var(--green)'; ring.setAttribute('stroke-dashoffset', '0');
+  finishSelfie();
+}
+async function finishSelfie() {
+  padStop = true;
+  if (selfieShot) { if (state.photos.face && String(state.photos.face).startsWith('blob:')) URL.revokeObjectURL(state.photos.face); state.photos.face = selfieShot; }
+  stopCam();
+  $('faceControls').hidden = true; $('faceReview').hidden = true;
+  setInstr(t('verifying'), t('verifying_sub'));
+  showLoader(t('verif_title'), t('verif_sub'));
+  let res = null;
+  try {
+    res = await serverCall('verify', { docToken: state.verify.docToken || null, challengeToken: state.verify.challengeToken || null, selfie: selfieShot, frames: padFrames });
+  } catch (_) {}
+  if (res && res.ok) {
+    state.verify.verdict = res.verdict;
+    state.verify.reference = res.reference;
+    state.verify.result = res.result;
+    state.verify.band = (res.face && res.face.band) || 'unknown';
+    state.verify.live = !!(res.liveness && res.liveness.ok);
+    if (res.document && res.document.checks) state.verify.docChecks = res.document.checks;
+    state.verify.score = (res.face && res.face.distance != null) ? Math.round(Math.max(0, Math.min(1, 1 - res.face.distance / 0.9)) * 100) : null;
+  } else {
+    state.verify.verdict = 'review';   // no se pudo evaluar -> revisión humana (nunca aprueba por defecto)
+  }
+  if (isSecondary && FB && secondarySession) {
+    const payload = { listo: true, verdict: state.verify.verdict, ref: state.verify.reference || '' };
+    try {
+      if (state.photos.front) payload.imgFront = await compressURL(state.photos.front, 560, 0.5);
+      if (state.photos.back) payload.imgBack = await compressURL(state.photos.back, 560, 0.5);
+      if (state.photos.face) payload.imgFace = await compressURL(state.photos.face, 460, 0.5);
+    } catch (_) {}
+    if (state.verify.score != null) payload.match = state.verify.score;
+    payload.matchPass = state.verify.verdict === 'verified';
+    payload.live = !!state.verify.live;
+    if (state.verify.docChecks) payload.checks = state.verify.docChecks;
+    if (state.verify.fields) { const f = state.verify.fields; if (f.num) payload.ced = f.num; if (f.name) payload.name = f.name; if (f.birth) payload.birth = f.birth; }
+    try { await FB.updateDoc(sesRef(secondarySession), payload); } catch (_) {}
+    hideLoader(); push('esperando'); return;
+  }
+  hideLoader();
+  routeVerdict();
+}
+function routeVerdict() {
+  const v = state.verify.verdict;
+  if (v === 'verified' || v === 'rejected') { push('resultado'); return; }
+  if ((state.verify.attempts || 0) < 2) push('revisar'); else push('humano');   // review -> reverificar / humano
 }
 /* ===== Verificación real (face-api.js + Tesseract.js), con respaldo ===== */
 let FACE = null, faceWant = false, faceTry = null, livenessStop = false;
@@ -1787,30 +1876,29 @@ $('faceShutter').addEventListener('click', async () => {
 });
 $('fileFaceCam').addEventListener('change', (e) => { const f = e.target.files && e.target.files[0]; e.target.value = ''; if (f) reviewFace(URL.createObjectURL(f)); });
 $('retakeFace').addEventListener('click', () => { if (facePending) URL.revokeObjectURL(facePending); facePending = null; showFaceCam(); });
-$('useFace').addEventListener('click', commitFace);
+$('useFace').addEventListener('click', async () => {
+  if (!facePending) return;
+  try { selfieShot = await compressURL(facePending, 480, 0.75); } catch (_) { selfieShot = null; }
+  if (!Array.isArray(padFrames)) padFrames = [];
+  finishSelfie();   // sin frames de gestos -> el servidor marcará revisión humana
+});
 
 /* ================= Result ================= */
 const badgeSpring = makeSpring();
 function playResult() {
-  $('ref').textContent = Math.random().toString(36).slice(2, 8).toUpperCase();
   const v = state.verify;
+  $('ref').textContent = v.reference || (mainData && mainData.ref) || Math.random().toString(36).slice(2, 8).toUpperCase();
   const approvedByHuman = !!mainData;           // flujo handoff: un operador ya revisó y aprobó
   const fields = (mainData && mainData.ced) ? { num: mainData.ced, name: mainData.name, birth: mainData.birth } : (v.fields || null);
-  const chk = docChecks(fields);
+  const chk = v.docChecks || (mainData && mainData.checks) || docChecks(fields);
   const AMBER0 = '#E0A020';
   const markRow = (el, pass) => { if (!el) return; if (pass) { el.setAttribute('stroke', 'var(--green)'); el.innerHTML = '<path d="M4.5 12.5l5 5L19.5 7"/>'; } else { el.setAttribute('stroke', 'var(--orange)'); el.innerHTML = '<path d="M6 6l12 12M18 6L6 18"/>'; } };
   const markTri = (el, st) => { if (!el) return; if (st === true) { el.setAttribute('stroke', 'var(--green)'); el.innerHTML = '<path d="M4.5 12.5l5 5L19.5 7"/>'; } else if (st === false) { el.setAttribute('stroke', 'var(--orange)'); el.innerHTML = '<path d="M6 6l12 12M18 6L6 18"/>'; } else { el.setAttribute('stroke', AMBER0); el.innerHTML = '<path d="M5 12h14"/>'; } };
   markRow($('resDocIcon'), chk.authentic);
   markTri($('resDataIcon'), chk.consistent);
   const AMBER = '#E0A020';
-  let ok = true, review = false;
-  if (!approvedByHuman) {
-    const docsOk = chk.authentic && (chk.consistent !== false);
-    const base = (v.ran === true) && docsOk && (v.live !== false);
-    ok = base && v.band === 'match';
-    review = base && v.band === 'gray' && !ok;
-  }
-  const state3 = ok ? 'ok' : (review ? 'review' : 'fail');
+  const sv = v.verdict || (mainData && mainData.verdict) || (approvedByHuman ? 'verified' : null);
+  const state3 = sv === 'verified' ? 'ok' : (sv === 'review' ? 'review' : 'fail');
   const sc = (mainData && mainData.match != null) ? mainData.match : v.score;
   const circle = $('badge').querySelector('circle'), tick = $('badge').querySelector('.tick');
   if (state3 === 'ok') { circle.setAttribute('fill', 'var(--green)'); tick.setAttribute('d', 'M7 12.4l3.3 3.3L17.2 8.8'); }
@@ -1867,7 +1955,7 @@ function onEnter(id, returning) {
 }
 function onLeave(id) {
   if (id === 'captura' || id === 'selfie') stopCam();
-  if (id === 'selfie') { livenessStop = true; resetRing(); }
+  if (id === 'selfie') { livenessStop = true; padStop = true; resetRing(); }
 }
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) stopCam();

@@ -929,7 +929,7 @@ $('grab').addEventListener('pointerup', endSheetDrag);
 $('grab').addEventListener('pointercancel', endSheetDrag);
 
 let toastT = 0;
-const APP_VERSION = '2.3';
+const APP_VERSION = '2.4';
 const APP_BUILD = '2026-11-10';
 
 /* ===========================================================
@@ -1427,13 +1427,13 @@ function parseDMY(s) {
    - consistent: la fecha de nacimiento coincide con la que lleva embebida el número */
 function docChecks(f) {
   if (!f) return { authentic: false, consistent: null };
-  const num = (f.num || '').replace(/-/g, '').toUpperCase();
-  const numValid = /^\d{13}[A-Z]$/.test(num);
+  const digits = (f.num || '').replace(/[^0-9]/g, '');   // tolerante: solo cuenta los dígitos
+  const numValid = digits.length >= 13;
   const hasBirth = !!f.birth;
-  const authentic = numValid && hasBirth;   // número con formato válido + fecha legible (el nombre no bloquea)
+  const authentic = numValid && hasBirth;   // número legible (13+ dígitos) + fecha legible
   let consistent = null;
   if (numValid && f.birth) {
-    const mid = num.slice(3, 9); // DDMMYY
+    const mid = digits.slice(3, 9); // DDMMYY embebido en el número
     const dd = +mid.slice(0, 2), mm = +mid.slice(2, 4), yy = +mid.slice(4, 6);
     const b = parseDMY(f.birth);
     if (b) consistent = (dd === b.d && mm === b.mo && yy === (b.y % 100));
@@ -1739,9 +1739,11 @@ function playResult() {
   const approvedByHuman = !!mainData;           // flujo handoff: un operador ya revisó y aprobó
   const fields = (mainData && mainData.ced) ? { num: mainData.ced, name: mainData.name, birth: mainData.birth } : (v.fields || null);
   const chk = docChecks(fields);
+  const AMBER0 = '#E0A020';
   const markRow = (el, pass) => { if (!el) return; if (pass) { el.setAttribute('stroke', 'var(--green)'); el.innerHTML = '<path d="M4.5 12.5l5 5L19.5 7"/>'; } else { el.setAttribute('stroke', 'var(--orange)'); el.innerHTML = '<path d="M6 6l12 12M18 6L6 18"/>'; } };
+  const markTri = (el, st) => { if (!el) return; if (st === true) { el.setAttribute('stroke', 'var(--green)'); el.innerHTML = '<path d="M4.5 12.5l5 5L19.5 7"/>'; } else if (st === false) { el.setAttribute('stroke', 'var(--orange)'); el.innerHTML = '<path d="M6 6l12 12M18 6L6 18"/>'; } else { el.setAttribute('stroke', AMBER0); el.innerHTML = '<path d="M5 12h14"/>'; } };
   markRow($('resDocIcon'), chk.authentic);
-  markRow($('resDataIcon'), chk.consistent !== false);
+  markTri($('resDataIcon'), chk.consistent);
   const AMBER = '#E0A020';
   let ok = true, review = false;
   if (!approvedByHuman) {

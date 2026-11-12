@@ -184,6 +184,9 @@ button.row:active{background:#E8E8ED;transition:none}
 .ring{position:absolute;inset:0}
 .confirm-row{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:14px;font-size:14.5px;color:var(--ink);line-height:1.45;cursor:pointer;text-align:center}
 .confirm-row input{width:20px;height:20px;margin:0;accent-color:var(--accent);flex:none;margin-top:1px}
+.field-label{display:block;font-size:14.5px;color:var(--muted);margin:0 0 10px;text-align:center;line-height:1.4}
+.field{display:block;width:100%;height:52px;border:1.5px solid #E2E2E7;border-radius:26px;padding:0 20px;font-size:16px;color:var(--ink);background:#fff;outline:none;box-sizing:border-box;text-align:center;transition:border-color .2s}
+.field:focus{border-color:var(--accent)}
 .ring .prog{transition:stroke .3s ease}
 .instr{margin:clamp(16px,3vh,32px) 36px 0;min-height:30px;text-align:center;font-family:var(--display);font-size:22px;line-height:1.25;font-weight:600;letter-spacing:-.018em;transition:opacity .18s ease, transform .3s cubic-bezier(.2,.8,.2,1)}
 .instr.out{opacity:0;transform:translateY(4px)}
@@ -192,6 +195,7 @@ button.row:active{background:#E8E8ED;transition:none}
 .result{padding-top:calc(env(safe-area-inset-top) + clamp(40px, 11vh, 96px))}
 .badge{display:flex;justify-content:center}
 .badge svg{transform:scale(.4);opacity:0}
+#revisar .badge svg,#humano .badge svg,#recibido .badge svg{transform:none;opacity:1}
 .badge .tick{stroke-dasharray:16;stroke-dashoffset:16;transition:stroke-dashoffset .4s cubic-bezier(.5,0,.2,1) .18s}
 .in .badge .tick{stroke-dashoffset:0}
 .thumbs{margin:24px 16px 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
@@ -479,8 +483,37 @@ button.row:active{background:#E8E8ED;transition:none}
     <li class="row fi" style="--d:380ms"><span id="resMatch" data-i18n="res_3">El rostro coincide</span><svg id="resMatchIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5L19.5 7"/></svg></li>
   </ul>
   <p class="footnote fi" style="--d:440ms"><span data-i18n="res_foot">Tus imágenes ya se eliminaron de este dispositivo. Referencia VRF-</span><span id="ref">0000</span></p>
-  <p class="footnote fi" id="resDebug" style="--d:460ms;margin:8px 20px 0;color:#B45309;font-variant-numeric:tabular-nums"></p>
   <div class="bottom fi" style="--d:500ms"><button class="btn" id="finish" data-i18n="finish">Terminar</button><div class="kyf"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2l7 2.6v5.4c0 4.4-2.9 8.2-7 9.6-4.1-1.4-7-5.2-7-9.6V5.8l7-2.6z"/><path d="M9 12l2 2 4-4"/></svg><span data-i18n="protected_by">Protegido por</span><b>SecurPro</b></div></div>
+</section>
+
+<!-- 6b · Revisar (zona gris: reverificar) -->
+<section class="screen result" id="revisar" aria-label="No pudimos confirmar">
+  <div class="badge">
+    <svg width="84" height="84" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#E0A020"/><path d="M12 6.8v6.2" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="16.8" r="1.15" fill="#fff"/></svg>
+  </div>
+  <h1 class="hero-title fi" style="--d:120ms;margin-top:26px" data-i18n="rv_title">No pudimos confirmarlo</h1>
+  <p class="body center fi" style="--d:170ms;margin-top:12px" data-i18n="rv_sub">Tu rostro no coincidió con suficiente seguridad. Inténtalo de nuevo con buena luz, de frente y sin lentes.</p>
+  <div class="bottom fi" style="--d:320ms"><button class="btn" id="reverifyBtn" data-i18n="rv_reverify">Verificar de nuevo</button><div class="kyf"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2l7 2.6v5.4c0 4.4-2.9 8.2-7 9.6-4.1-1.4-7-5.2-7-9.6V5.8l7-2.6z"/><path d="M9 12l2 2 4-4"/></svg><span data-i18n="protected_by">Protegido por</span><b>SecurPro</b></div></div>
+</section>
+
+<!-- 6c · Revisión humana -->
+<section class="screen result" id="humano" aria-label="Revisión humana">
+  <div class="badge">
+    <svg width="84" height="84" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#E0A020"/><circle cx="12" cy="10" r="2.6" fill="none" stroke="#fff" stroke-width="1.7"/><path d="M7 17.2a5 5 0 0110 0" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/></svg>
+  </div>
+  <h1 class="hero-title fi" style="--d:120ms;margin-top:26px" data-i18n="hr_title">Tu verificación pasará a revisión</h1>
+  <p class="body center fi" style="--d:170ms;margin-top:12px" data-i18n="hr_sub">No pudimos confirmar tu identidad automáticamente. Una persona de nuestro equipo revisará tu caso y te avisaremos del resultado.</p>
+  <div class="bottom fi" style="--d:320ms"><p class="footnote" style="text-align:center;margin:0 6px 16px;color:var(--muted)" data-i18n="hr_policy">Para esta revisión conservamos temporalmente tus imágenes y datos (máximo 72 horas) y los eliminamos tras la decisión. Al aceptar, autorizas esta revisión manual conforme al Aviso de privacidad.</p><input class="field" type="email" id="notifyEmail" inputmode="email" autocomplete="email" placeholder="tu@correo.com" style="margin-bottom:12px" hidden><button class="btn" id="hrAccept" data-i18n="hr_accept">Aceptar</button><button class="btn-plain" id="notifyToggle" data-i18n="notify_toggle">¿Recibir novedades por correo?</button><div class="kyf"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2l7 2.6v5.4c0 4.4-2.9 8.2-7 9.6-4.1-1.4-7-5.2-7-9.6V5.8l7-2.6z"/><path d="M9 12l2 2 4-4"/></svg><span data-i18n="protected_by">Protegido por</span><b>SecurPro</b></div></div>
+</section>
+
+<!-- 6d · Recibido -->
+<section class="screen result" id="recibido" aria-label="Caso recibido">
+  <div class="badge">
+    <svg width="84" height="84" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="var(--green)"/><path d="M7 12.4l3.3 3.3L17.2 8.8" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+  <h1 class="hero-title fi" style="--d:120ms;margin-top:26px" data-i18n="rc_title">Caso enviado a revisión</h1>
+  <p class="body center fi" style="--d:170ms;margin-top:12px" data-i18n="rc_sub">Gracias. Te avisaremos del resultado.</p>
+  <div class="bottom fi" style="--d:320ms"><p class="footnote" style="text-align:center;margin:0 6px 16px"><span data-i18n="rc_ref">Referencia VRF-</span><span id="rcRef">0000</span></p><button class="btn" id="rcFinish" data-i18n="finish">Terminar</button><div class="kyf"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2l7 2.6v5.4c0 4.4-2.9 8.2-7 9.6-4.1-1.4-7-5.2-7-9.6V5.8l7-2.6z"/><path d="M9 12l2 2 4-4"/></svg><span data-i18n="protected_by">Protegido por</span><b>SecurPro</b></div></div>
 </section>
 
 <!-- 7 · Error -->
@@ -638,6 +671,9 @@ const STR = {
     rev_foot:'Toca cada dato para revisarlo.', rev_reading:'Leyendo el documento…', rev_read_ok:'Lectura automática del documento. Verifica que los datos sean correctos.', rev_read_none:'No se pudo leer el documento automáticamente aquí. Revisa los datos manualmente.', rev_blank:'No pudimos leer el documento. Toma la foto de nuevo, bien enfocada y con buena luz.', rev_confirm:'Confirmo que estos datos coinciden con mi documento.', ocr_test:'Subir foto (probar OCR)', retake_all:'Volver a tomar las fotos',
     selfie_title:'Ahora, una selfie', selfie_sub:'Coloca tu rostro dentro del círculo.',
     res_title:'Identidad verificada', res_sub:'Listo. Ya puedes continuar con tu solicitud.', res_ok_name:'Listo, {name}. Ya puedes continuar con tu solicitud.', res_review_title:'Verificación en revisión', res_review_sub:'No pudimos confirmar tu rostro con seguridad. Un agente revisará tu caso en breve.', retry_face:'Repitamos la selfie, busca buena luz', retry_face_sub:'Mira de frente y con buena luz.',
+    rv_title:'No pudimos confirmarlo', rv_sub:'Tu rostro no coincidió con suficiente seguridad. Inténtalo de nuevo con buena luz, de frente y sin lentes.', rv_score:'Coincidencia', rv_reverify:'Verificar de nuevo',
+    hr_title:'Tu verificación pasará a revisión', hr_sub:'No pudimos confirmar tu identidad automáticamente. Una persona de nuestro equipo revisará tu caso y te avisaremos del resultado.', hr_policy:'Para esta revisión conservamos temporalmente tus imágenes y datos (máximo 72 horas) y los eliminamos tras la decisión. Al aceptar, autorizas esta revisión manual conforme al Aviso de privacidad.', hr_accept:'Aceptar',
+    rc_title:'Caso enviado a revisión', rc_sub:'Gracias. Te avisaremos del resultado.', rc_ref:'Referencia VRF-', notify_q:'¿Deseas que te enviemos novedades a tu correo?', notify_toggle:'¿Recibir novedades por correo?', notify_saved:'Listo, te avisaremos a tu correo.', notify_bad:'Revisa tu correo electrónico.',
     res_fail_title:'No pudimos verificar', res_fail_sub:'El rostro no coincide o no detectamos un rostro real. Intenta de nuevo con buena luz y sin lentes.', res_demo:'Modo demostración: la verificación automática no corrió en este entorno (ábrela en el sitio publicado para probarla real).',
     res_1:'Documento auténtico', res_2:'Datos coherentes', res_3:'El rostro coincide',
     res_foot:'Tus imágenes ya se eliminaron de este dispositivo. Referencia VRF-', finish:'Terminar',
@@ -711,6 +747,9 @@ const STR = {
     rev_foot:'Review each field below.', rev_reading:'Reading the document…', rev_read_ok:'Automatic document reading. Please check the data is correct.', rev_read_none:'Could not read the document automatically here. Please check the data manually.', rev_blank:'We could not read the document. Retake the photo, well focused and in good light.', rev_confirm:'I confirm these details match my document.', ocr_test:'Upload photo (test OCR)', retake_all:'Retake the photos',
     selfie_title:'Now, a selfie', selfie_sub:'Place your face inside the circle.',
     res_title:'Identity verified', res_sub:'Done. You can now continue with your request.', res_ok_name:'Done, {name}. You can now continue with your request.', res_review_title:'Verification under review', res_review_sub:'We could not confirm your face with confidence. An agent will review your case shortly.', retry_face:'Let us retry the selfie in good light', retry_face_sub:'Look straight ahead in good light.',
+    rv_title:"We couldn't confirm it", rv_sub:"Your face didn't match with enough confidence. Try again in good light, facing forward, without glasses.", rv_score:'Match', rv_reverify:'Reverify',
+    hr_title:'This verification will be human reviewed', hr_sub:"We couldn't confirm your identity automatically. A member of our team will review your case and notify you of the result.", hr_policy:'For this review we temporarily keep your images and data (up to 72 hours) and delete them after the decision. By accepting, you authorize this manual review under the Privacy Notice.', hr_accept:'Accept',
+    rc_title:'Case sent for review', rc_sub:"Thanks. We'll notify you of the result.", rc_ref:'Reference VRF-', notify_q:'Want us to email you updates?', notify_toggle:'Get updates by email?', notify_saved:"Done, we'll email you updates.", notify_bad:'Check your email address.',
     res_fail_title:'We could not verify', res_fail_sub:'The face does not match or no real face was detected. Try again in good light without glasses.', res_demo:'Demo mode: automatic verification did not run in this environment (open the published site to test it for real).',
     res_1:'Authentic document', res_2:'Consistent data', res_3:'Face matches',
     res_foot:'Your images have already been deleted from this device. Reference VRF-', finish:'Finish',
@@ -930,7 +969,7 @@ $('grab').addEventListener('pointerup', endSheetDrag);
 $('grab').addEventListener('pointercancel', endSheetDrag);
 
 let toastT = 0;
-const APP_VERSION = '2.6';
+const APP_VERSION = '3.3';
 const APP_BUILD = '2026-11-10';
 
 /* ===========================================================
@@ -1493,6 +1532,7 @@ async function readDocFields() {
   else { showLoader(t('proc_title'), t('proc_sub')); o = await ocrDoc(); ocrCache = { url: state.photos.front, res: o }; hideLoader(); }
   const got = o && (o.num || o.name || o.birth || o.expiry);
   if (got) {
+    state.verify.fields = o; if (o.num) state.verify.ced = o.num;   // GUARDAR los datos leídos
     setRev(o.name || '—', o.num || '—', o.birth || '—', o.expiry || '—');
     if (foot) foot.textContent = t('rev_read_ok');
     if (row) row.hidden = false;                 // mostrar casilla de confirmación
@@ -1691,15 +1731,6 @@ function commitFace() {
   showLoader(t('verif_title'), t('verif_sub'));
   (async () => {
     try { await runVerification(); } catch (_) {}
-    // Zona gris → pruebas adicionales: repetir la selfie (máx. 2 veces)
-    if (state.verify.band === 'gray' && (state.verify.attempts || 0) < 2) {
-      state.verify.attempts = (state.verify.attempts || 0) + 1;
-      hideLoader();
-      faceRetrying = true;
-      toast(t('retry_face'));
-      enterSelfie();
-      return;
-    }
     if (isSecondary && FB && secondarySession) {
       const payload = { listo: true };
       try {
@@ -1713,7 +1744,17 @@ function commitFace() {
       if (state.verify.fields) { const f = state.verify.fields; if (f.num) payload.ced = f.num; if (f.name) payload.name = f.name; if (f.birth) payload.birth = f.birth; }
       try { await FB.updateDoc(sesRef(secondarySession), payload); } catch (_) {}
       hideLoader(); push('esperando');
-    } else { hideLoader(); push('resultado'); }
+    } else {
+      hideLoader();
+      // Enrutado zona gris (solo si lo único dudoso es el rostro)
+      const c = docChecks(state.verify.fields);
+      const docsOk = c.authentic && (c.consistent !== false);
+      const base = state.verify.ran === true && docsOk && state.verify.live !== false;
+      if (base && state.verify.band === 'gray') {
+        if ((state.verify.attempts || 0) < 2) push('revisar');   // reverificar
+        else push('humano');                                     // revisión humana
+      } else push('resultado');                                  // verificado o rechazado
+    }
   })();
 }
 function reviewFace(url) {
@@ -1768,18 +1809,16 @@ function playResult() {
     else if (fb === 'gray') { ri.setAttribute('stroke', AMBER); ri.innerHTML = '<path d="M5 12h14"/>'; }
     else { ri.setAttribute('stroke', 'var(--orange)'); ri.innerHTML = '<path d="M6 6l12 12M18 6L6 18"/>'; }
   }
-  const dbg = $('resDebug');
-  if (dbg) {
-    const f = v.fields;
-    if (!f) dbg.textContent = 'DEBUG: OCR no entregó datos (fields=null)';
-    else dbg.textContent = 'DEBUG · num="' + (f.num || '') + '" nac="' + (f.birth || '') + '" src=' + (f.src || '?') + ' · auth=' + chk.authentic + ' cons=' + chk.consistent;
-  }
   const b = $('badge');
   if (reduced.matches) { b.style.transform = 'none'; b.style.opacity = '1'; return; }
   badgeSpring.x = 0.4; badgeSpring.v = 0; b.style.opacity = '0';
   springTo(badgeSpring, 1, { damping: 0.72, response: 0.5 }, (x) => { b.style.transform = `scale(${x})`; b.style.opacity = String(clamp((x - 0.4) / 0.4, 0, 1)); });
 }
 $('finish').addEventListener('click', () => { resetPhotos(); freshCapture = true; popTo('main'); });
+$('reverifyBtn').addEventListener('click', () => { state.verify.attempts = (state.verify.attempts || 0) + 1; faceRetrying = true; push('selfie'); });
+$('notifyToggle').addEventListener('click', () => { const f = $('notifyEmail'); if (f) { f.hidden = false; f.focus(); } $('notifyToggle').hidden = true; });
+$('hrAccept').addEventListener('click', () => { const f = $('notifyEmail'); const em = (f && f.value || '').trim(); if (em && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)) { toast(t('notify_bad')); return; } if (em) { state.notifyEmail = em; toast(t('notify_saved')); } push('recibido'); });
+$('rcFinish').addEventListener('click', () => { const em = ($('notifyEmail') && $('notifyEmail').value || '').trim(); if (em && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)) { toast(t('notify_bad')); return; } if (em) { state.notifyEmail = em; toast(t('notify_saved')); } if ($('notifyEmail')) $('notifyEmail').value = ''; resetPhotos(); freshCapture = true; popTo('main'); });
 
 /* ================= Wiring & lifecycle ================= */
 document.querySelectorAll('[data-push]').forEach((b) => b.addEventListener('click', () => push(b.dataset.push)));
@@ -1804,6 +1843,9 @@ function onEnter(id, returning) {
   if (id === 'principal') { enterPrincipal(); replayIn(s); }
   if (id === 'esperando') { $('waitCode').textContent = shortId(handoffCode); $('waitCode').style.fontFamily = 'ui-monospace,SFMono-Regular,Menlo,monospace'; replayIn(s); }
   if (id === 'resultado') { replayIn(s); playResult(); }
+  if (id === 'revisar') { replayIn(s); }
+  if (id === 'humano') { const f = $('notifyEmail'); if (f) { f.hidden = true; f.value = ''; } const tg = $('notifyToggle'); if (tg) tg.hidden = false; replayIn(s); }
+  if (id === 'recibido') { $('rcRef').textContent = Math.random().toString(36).slice(2, 8).toUpperCase(); replayIn(s); }
 }
 function onLeave(id) {
   if (id === 'captura' || id === 'selfie') stopCam();

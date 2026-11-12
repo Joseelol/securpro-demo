@@ -636,7 +636,7 @@ const STR = {
     f_name:'Nombre', f_number:'Número', f_birth:'Nacimiento', f_expiry:'Vencimiento',
     rev_foot:'Toca cada dato para revisarlo.', rev_reading:'Leyendo el documento…', rev_read_ok:'Lectura automática del documento. Verifica que los datos sean correctos.', rev_read_none:'No se pudo leer el documento automáticamente aquí. Revisa los datos manualmente.', rev_blank:'No pudimos leer el documento. Toma la foto de nuevo, bien enfocada y con buena luz.', rev_confirm:'Confirmo que estos datos coinciden con mi documento.', ocr_test:'Subir foto (probar OCR)', retake_all:'Volver a tomar las fotos',
     selfie_title:'Ahora, una selfie', selfie_sub:'Coloca tu rostro dentro del círculo.',
-    res_title:'Identidad verificada', res_sub:'Listo. Ya puedes continuar con tu solicitud.', res_ok_name:'Listo, {name}. Ya puedes continuar con tu solicitud.',
+    res_title:'Identidad verificada', res_sub:'Listo. Ya puedes continuar con tu solicitud.', res_ok_name:'Listo, {name}. Ya puedes continuar con tu solicitud.', res_review_title:'Verificación en revisión', res_review_sub:'No pudimos confirmar tu rostro con seguridad. Un agente revisará tu caso en breve.', retry_face:'Repitamos la selfie, busca buena luz', retry_face_sub:'Mira de frente y con buena luz.',
     res_fail_title:'No pudimos verificar', res_fail_sub:'El rostro no coincide o no detectamos un rostro real. Intenta de nuevo con buena luz y sin lentes.', res_demo:'Modo demostración: la verificación automática no corrió en este entorno (ábrela en el sitio publicado para probarla real).',
     res_1:'Documento auténtico', res_2:'Datos coherentes', res_3:'El rostro coincide',
     res_foot:'Tus imágenes ya se eliminaron de este dispositivo. Referencia VRF-', finish:'Terminar',
@@ -709,7 +709,7 @@ const STR = {
     f_name:'Name', f_number:'Number', f_birth:'Date of birth', f_expiry:'Expiry',
     rev_foot:'Review each field below.', rev_reading:'Reading the document…', rev_read_ok:'Automatic document reading. Please check the data is correct.', rev_read_none:'Could not read the document automatically here. Please check the data manually.', rev_blank:'We could not read the document. Retake the photo, well focused and in good light.', rev_confirm:'I confirm these details match my document.', ocr_test:'Upload photo (test OCR)', retake_all:'Retake the photos',
     selfie_title:'Now, a selfie', selfie_sub:'Place your face inside the circle.',
-    res_title:'Identity verified', res_sub:'Done. You can now continue with your request.', res_ok_name:'Done, {name}. You can now continue with your request.',
+    res_title:'Identity verified', res_sub:'Done. You can now continue with your request.', res_ok_name:'Done, {name}. You can now continue with your request.', res_review_title:'Verification under review', res_review_sub:'We could not confirm your face with confidence. An agent will review your case shortly.', retry_face:'Let us retry the selfie in good light', retry_face_sub:'Look straight ahead in good light.',
     res_fail_title:'We could not verify', res_fail_sub:'The face does not match or no real face was detected. Try again in good light without glasses.', res_demo:'Demo mode: automatic verification did not run in this environment (open the published site to test it for real).',
     res_1:'Authentic document', res_2:'Consistent data', res_3:'Face matches',
     res_foot:'Your images have already been deleted from this device. Reference VRF-', finish:'Finish',
@@ -929,7 +929,7 @@ $('grab').addEventListener('pointerup', endSheetDrag);
 $('grab').addEventListener('pointercancel', endSheetDrag);
 
 let toastT = 0;
-const APP_VERSION = '1.9';
+const APP_VERSION = '2.2';
 const APP_BUILD = '2026-11-10';
 
 /* ===========================================================
@@ -956,7 +956,7 @@ const DOCS = {
   pasaporte: { nameKey: 'doc_pasaporte', shortKey: 'short_passport', sides: 1 },
   licencia: { nameKey: 'doc_licencia', shortKey: 'short_licencia', sides: 2 },
 };
-const state = { country: 'Nicaragua', doc: 'cedula', photos: { front: null, back: null, face: null }, verify: { score: null, pass: null, live: null, ced: null, ran: false, fields: null } };
+const state = { country: 'Nicaragua', doc: 'cedula', photos: { front: null, back: null, face: null }, verify: { score: null, pass: null, live: null, ced: null, ran: false, fields: null, bestDist: null, band: null, attempts: 0, reliable: false } };
 function resetPhotos() {
   for (const k of Object.keys(state.photos)) { if (state.photos[k]) URL.revokeObjectURL(state.photos[k]); state.photos[k] = null; }
 }
@@ -1526,6 +1526,8 @@ function showFaceCam() {
   setInstr(faceLive ? t('selfie_look') : t('selfie_tap'), t('selfie_tip'));
 }
 async function enterSelfie() {
+  if (!faceRetrying) { state.verify.bestDist = null; state.verify.attempts = 0; state.verify.band = null; state.verify.score = null; state.verify.pass = null; state.verify.reliable = false; }
+  faceRetrying = false;
   showFaceCam(); setInstr(t('cam_loading'), '');
   faceLive = await startCam($('camFront'), 'user');
   if (stack[stack.length - 1] !== 'selfie' && !(pair && pair.top.id === 'selfie')) return;
@@ -1560,29 +1562,55 @@ async function loadFace() {
 }
 const _ctr = (pts) => ({ x: pts.reduce((a, p) => a + p.x, 0) / pts.length, y: pts.reduce((a, p) => a + p.y, 0) / pts.length });
 function urlToImg(url) { return new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = url; }); }
+// Umbrales de coincidencia facial (distancia euclidiana; menor = más parecido)
+const FACE_CLEAR = 0.45;  // por debajo → coincidencia clara (~>50%)
+const FACE_GRAY = 0.54;   // entre CLEAR y GRAY → zona gris / sospechoso (~40-50%); por encima → no coincide (<40%)
+let faceFrames = [];      // varios cuadros de la selfie para elegir el mejor
+let faceRetrying = false;
+function clearFaceFrames() { faceFrames.forEach((u) => { try { URL.revokeObjectURL(u); } catch (_) {} }); faceFrames = []; }
+function faceBand(dist, reliable) {
+  if (dist == null || !reliable) return 'unknown';
+  if (dist < FACE_CLEAR) return 'match';
+  if (dist <= FACE_GRAY) return 'gray';
+  return 'nomatch';
+}
 async function faceMatch() {
-  const F = await loadFace(); if (!F) return { score: null };
+  const F = await loadFace(); if (!F) return { dist: null };
   try {
-    if (!state.photos.front || !state.photos.face) return { score: null };
-    const di = await urlToImg(state.photos.front), si = await urlToImg(state.photos.face);
+    if (!state.photos.front) return { dist: null };
+    const frames = (faceFrames && faceFrames.length) ? faceFrames.slice() : (state.photos.face ? [state.photos.face] : []);
+    if (!frames.length) return { dist: null };
+    const di = await urlToImg(state.photos.front);
     const opt = new F.TinyFaceDetectorOptions({ inputSize: 416, scoreThreshold: 0.3 });
     const a = await F.detectSingleFace(di, opt).withFaceLandmarks().withFaceDescriptor();
-    const b = await F.detectSingleFace(si, opt).withFaceLandmarks().withFaceDescriptor();
-    if (!a || !b) return { score: null, reason: 'noface' };
-    const dist = F.euclideanDistance(a.descriptor, b.descriptor);
-    const score = Math.round(Math.max(0, Math.min(1, 1 - dist / 0.9)) * 100);
-    // Guardas anti-falso-positivo: detecciones confiables + rostro del documento no diminuto
-    const sa = (a.detection && a.detection.score) || 0, sb = (b.detection && b.detection.score) || 0;
+    if (!a) return { dist: null, reason: 'noface' };
+    const sa = (a.detection && a.detection.score) || 0;
     const faceW = (a.detection && a.detection.box && a.detection.box.width) || 0;
     const bigEnough = faceW >= (di.naturalWidth || di.width || 1) * 0.05;
-    const pass = dist < 0.45 && sa > 0.5 && sb > 0.5 && bigEnough;
-    return { score, pass };
-  } catch (_) { return { score: null }; }
+    let best = null, bestSb = 0;
+    for (const fr of frames) {
+      try {
+        const si = await urlToImg(fr);
+        const b = await F.detectSingleFace(si, opt).withFaceLandmarks().withFaceDescriptor();
+        if (!b) continue;
+        const d = F.euclideanDistance(a.descriptor, b.descriptor);
+        if (best === null || d < best) { best = d; bestSb = (b.detection && b.detection.score) || 0; }
+      } catch (_) {}
+    }
+    if (best === null) return { dist: null, reason: 'noface' };
+    const score = Math.round(Math.max(0, Math.min(1, 1 - best / 0.9)) * 100);
+    const reliable = sa > 0.5 && bestSb > 0.5 && bigEnough;
+    return { dist: best, score, reliable };
+  } catch (_) { return { dist: null }; }
 }
 async function runVerification() {
   const fm = await faceMatch();
   state.verify.ran = !!FACE;
-  state.verify.score = fm.score; state.verify.pass = (fm.pass != null ? fm.pass : null);
+  if (fm.dist != null && (state.verify.bestDist == null || fm.dist < state.verify.bestDist)) {
+    state.verify.bestDist = fm.dist; state.verify.score = fm.score; state.verify.reliable = fm.reliable;
+  } else if (state.verify.score == null) { state.verify.score = fm.score; }
+  state.verify.band = faceBand(state.verify.bestDist, state.verify.reliable);
+  state.verify.pass = (state.verify.band === 'match');
   return state.verify;
 }
 
@@ -1591,13 +1619,14 @@ function runLiveness() {
   resetRing();
   $('faceControls').hidden = true; $('faceReview').hidden = true;
   if (facePending) { URL.revokeObjectURL(facePending); facePending = null; }
+  clearFaceFrames();
   state.verify.live = null;
   realLiveness();
 }
 function livenessTimed() {
   const steps = [t('selfie_look'), t('selfie_left'), t('selfie_right')];
   setInstr(steps[0], t('selfie_tip'));
-  if (!facePending && faceLive && stream) grabFrame($('camFront'), $('facecam'), true).then((u) => { if (u && !facePending) facePending = u; });
+  if (faceLive && stream) grabFrame($('camFront'), $('facecam'), true).then((u) => { if (u) { if (!facePending) facePending = u; faceFrames.push(u); } });
   const ring = $('ringProg'), start = performance.now() + 500, dur = reduced.matches ? 1400 : 5400;
   const tick = (ts) => {
     if (livenessStop) return;
@@ -1606,7 +1635,7 @@ function livenessTimed() {
     setInstr(steps[Math.min(2, Math.floor(pr * 3))], t('selfie_tip'));
     if (pr < 1) { ringRaf = requestAnimationFrame(tick); return; }
     ring.style.stroke = 'var(--green)';
-    if (!facePending && faceLive && stream) grabFrame($('camFront'), $('facecam'), true).then((u) => { facePending = u || facePending; commitFace(); });
+    if (faceLive && stream) grabFrame($('camFront'), $('facecam'), true).then((u) => { if (u) { if (!facePending) facePending = u; faceFrames.push(u); } commitFace(); });
     else commitFace();
   };
   ringRaf = requestAnimationFrame(tick);
@@ -1633,7 +1662,7 @@ async function realLiveness() {
       const fw = Math.abs(re.x - le.x) || 1;
       const yaw = ((nt.x - le.x) - (re.x - nt.x)) / fw;
       if (phase === 0) {
-        if (!grabbed) { const u = await grabFrame(video, $('facecam'), true); if (u) facePending = u; grabbed = true; }
+        if (!grabbed) { const u = await grabFrame(video, $('facecam'), true); if (u) { facePending = u; faceFrames.push(u); } grabbed = true; }
         if (Math.abs(yaw) < 0.15) { if (++hold > 3) { phase = 1; hold = 0; setInstr(steps[1], t('selfie_tip')); } } else hold = 0;
       } else if (phase === 1) {
         if (Math.abs(yaw) > 0.32) { sideSign = Math.sign(yaw); phase = 2; setInstr(steps[2], t('selfie_tip')); }
@@ -1647,7 +1676,7 @@ async function realLiveness() {
     await new Promise((r) => setTimeout(r, 110));
   }
   if (livenessStop || !atSelfie()) return;
-  if (!facePending) { const u = await grabFrame(video, $('facecam'), true); if (u) facePending = u; }
+  { const u = await grabFrame(video, $('facecam'), true); if (u) { if (!facePending) facePending = u; faceFrames.push(u); } }
   state.verify.live = (phase >= 3);
   ring.style.stroke = 'var(--green)'; ring.setAttribute('stroke-dashoffset', '0');
   commitFace();
@@ -1664,6 +1693,15 @@ function commitFace() {
   showLoader(t('verif_title'), t('verif_sub'));
   (async () => {
     try { await runVerification(); } catch (_) {}
+    // Zona gris → pruebas adicionales: repetir la selfie (máx. 2 veces)
+    if (state.verify.band === 'gray' && (state.verify.attempts || 0) < 2) {
+      state.verify.attempts = (state.verify.attempts || 0) + 1;
+      hideLoader();
+      faceRetrying = true;
+      toast(t('retry_face'));
+      enterSelfie();
+      return;
+    }
     if (isSecondary && FB && secondarySession) {
       const payload = { listo: true };
       try {
@@ -1705,20 +1743,28 @@ function playResult() {
   const markRow = (el, pass) => { if (!el) return; if (pass) { el.setAttribute('stroke', 'var(--green)'); el.innerHTML = '<path d="M4.5 12.5l5 5L19.5 7"/>'; } else { el.setAttribute('stroke', 'var(--orange)'); el.innerHTML = '<path d="M6 6l12 12M18 6L6 18"/>'; } };
   markRow($('resDocIcon'), chk.authentic);
   markRow($('resDataIcon'), chk.consistent !== false);
-  let ok = true;
-  if (!approvedByHuman) ok = (v.ran === true) && (v.pass === true) && (v.live !== false) && chk.authentic && (chk.consistent !== false);
+  const AMBER = '#E0A020';
+  let ok = true, review = false;
+  if (!approvedByHuman) {
+    const docsOk = chk.authentic && (chk.consistent !== false);
+    const base = (v.ran === true) && docsOk && (v.live !== false);
+    ok = base && v.band === 'match';
+    review = base && v.band === 'gray' && !ok;
+  }
+  const state3 = ok ? 'ok' : (review ? 'review' : 'fail');
   const sc = (mainData && mainData.match != null) ? mainData.match : v.score;
   const circle = $('badge').querySelector('circle'), tick = $('badge').querySelector('.tick');
-  if (ok) { circle.setAttribute('fill', 'var(--green)'); tick.setAttribute('d', 'M7 12.4l3.3 3.3L17.2 8.8'); }
+  if (state3 === 'ok') { circle.setAttribute('fill', 'var(--green)'); tick.setAttribute('d', 'M7 12.4l3.3 3.3L17.2 8.8'); }
+  else if (state3 === 'review') { circle.setAttribute('fill', AMBER); tick.setAttribute('d', 'M12 7.6V12l2.6 1.6'); }
   else { circle.setAttribute('fill', 'var(--orange)'); tick.setAttribute('d', 'M8.2 8.2l7.6 7.6M15.8 8.2l-7.6 7.6'); }
-  $('resTitle').textContent = ok ? t('res_title') : t('res_fail_title');
+  $('resTitle').textContent = state3 === 'ok' ? t('res_title') : state3 === 'review' ? t('res_review_title') : t('res_fail_title');
   const nm = (v.fields && v.fields.shortName) ? titleCase(v.fields.shortName) : ((mainData && mainData.name) ? titleCase(String(mainData.name).split(' ').slice(0, 2).join(' ')) : '');
-  if (ok) $('resSub').textContent = nm ? t('res_ok_name').replace('{name}', nm) : t('res_sub');
-  else $('resSub').textContent = t('res_fail_sub');
+  $('resSub').textContent = state3 === 'ok' ? (nm ? t('res_ok_name').replace('{name}', nm) : t('res_sub')) : state3 === 'review' ? t('res_review_sub') : t('res_fail_sub');
   const rm = $('resMatch'), ri = $('resMatchIcon');
   if (rm) rm.textContent = t('res_3') + (sc != null ? ' · ' + sc + '%' : '');
   if (ri) {
-    if (ok) { ri.setAttribute('stroke', 'var(--green)'); ri.innerHTML = '<path d="M4.5 12.5l5 5L19.5 7"/>'; }
+    if (state3 === 'ok') { ri.setAttribute('stroke', 'var(--green)'); ri.innerHTML = '<path d="M4.5 12.5l5 5L19.5 7"/>'; }
+    else if (state3 === 'review') { ri.setAttribute('stroke', AMBER); ri.innerHTML = '<path d="M5 12h14"/>'; }
     else { ri.setAttribute('stroke', 'var(--orange)'); ri.innerHTML = '<path d="M6 6l12 12M18 6L6 18"/>'; }
   }
   const b = $('badge');

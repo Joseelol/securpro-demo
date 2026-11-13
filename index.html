@@ -701,7 +701,7 @@ const STR = {
     st_review:'Revisa la foto', st_review_sub:'¿Se leen bien todos los datos y no hay reflejos?', cam_loading:'Abriendo la cámara…',
     cap_passport:'Página de tu foto', cap_front_pre:'Frente de la ', cap_back_pre:'Reverso de la ',
     short_cedula:'cédula', short_passport:'pasaporte', short_licencia:'licencia',
-    selfie_look:'Mira de frente a la cámara', selfie_left:'Gira la cabeza despacio a la izquierda', selfie_right:'Ahora, despacio a la derecha', selfie_g_blink:'Parpadea', selfie_g_turn:'Gira la cabeza a un lado', selfie_g_up:'Mira hacia arriba', selfie_g_down:'Mira hacia abajo', selfie_hold:'Mira de frente y no te muevas', selfie_count:'Tomando tu selfie en {n}…', selfie_taken:'¡Selfie lista!', live_intro:'Ahora, la prueba de vida', live_intro_sub:'Sigue las indicaciones, con calma.', live_do:'Hazlo despacio', selfie_tap:'Toca el botón para tomar tu selfie', selfie_tip:'Quítate los lentes y la gorra.',
+    selfie_look:'Mira de frente a la cámara', selfie_left:'Gira la cabeza despacio a la izquierda', selfie_right:'Ahora, despacio a la derecha', selfie_g_blink:'Parpadea varias veces', selfie_g_turn:'Gira la cabeza a un lado', selfie_g_up:'Mira hacia arriba', selfie_g_down:'Mira hacia abajo', selfie_hold:'Mira de frente y no te muevas', selfie_count:'Tomando tu selfie en {n}…', selfie_taken:'¡Selfie lista!', live_intro:'Ahora, la prueba de vida', live_intro_sub:'Sigue las indicaciones, con calma.', live_do:'Hazlo despacio', selfie_tap:'Toca el botón para tomar tu selfie', selfie_tip:'Quítate los lentes y la gorra.',
     selfie_review:'¿Se ve bien tu rostro?', selfie_review_sub:'Debe verse completo, sin sombras fuertes.',
     verifying:'Verificando…', verifying_sub:'Esto toma unos segundos.', done_word:'Listo',
     proc_title:'Procesando información…', proc_sub:'Leyendo los datos de tu documento.', verif_title:'Verificando información…', verif_sub:'Comparando tu rostro y confirmando que eres tú.',
@@ -777,7 +777,7 @@ const STR = {
     st_review:'Review the photo', st_review_sub:'Can you read all the data clearly, with no glare?', cam_loading:'Opening the camera…',
     cap_passport:'Photo page', cap_front_pre:'Front of your ', cap_back_pre:'Back of your ',
     short_cedula:'ID card', short_passport:'passport', short_licencia:'license',
-    selfie_look:'Look straight at the camera', selfie_left:'Slowly turn your head left', selfie_right:'Now, slowly to the right', selfie_g_blink:'Blink', selfie_g_turn:'Turn your head to one side', selfie_g_up:'Look up', selfie_g_down:'Look down', selfie_hold:'Look straight ahead and hold still', selfie_count:'Taking your selfie in {n}…', selfie_taken:'Selfie captured!', live_intro:'Now, the liveness check', live_intro_sub:'Follow the prompts, take your time.', live_do:'Do it slowly', selfie_tap:'Tap the button to take your selfie', selfie_tip:'Take off glasses and hat.',
+    selfie_look:'Look straight at the camera', selfie_left:'Slowly turn your head left', selfie_right:'Now, slowly to the right', selfie_g_blink:'Blink a few times', selfie_g_turn:'Turn your head to one side', selfie_g_up:'Look up', selfie_g_down:'Look down', selfie_hold:'Look straight ahead and hold still', selfie_count:'Taking your selfie in {n}…', selfie_taken:'Selfie captured!', live_intro:'Now, the liveness check', live_intro_sub:'Follow the prompts, take your time.', live_do:'Do it slowly', selfie_tap:'Tap the button to take your selfie', selfie_tip:'Take off glasses and hat.',
     selfie_review:'Does your face look good?', selfie_review_sub:'It should show fully, with no harsh shadows.',
     verifying:'Verifying…', verifying_sub:'This takes a few seconds.', done_word:'Done',
     proc_title:'Processing information…', proc_sub:'Reading the data on your document.', verif_title:'Verifying information…', verif_sub:'Comparing your face and confirming it’s you.',
@@ -969,8 +969,8 @@ $('grab').addEventListener('pointerup', endSheetDrag);
 $('grab').addEventListener('pointercancel', endSheetDrag);
 
 let toastT = 0;
-const APP_VERSION = '4.4';
-const APP_BUILD = '2026-11-12g';
+const APP_VERSION = '4.5';
+const APP_BUILD = '2026-11-12h';
 
 /* ===========================================================
    OCR en la nube (Google Cloud Vision) — CONFIGURACIÓN
@@ -1640,17 +1640,20 @@ async function startLiveness() {
   const per = reduced.matches ? 1800 : 3200;   // tiempo por gesto
   for (let gi = 0; gi < list.length; gi++) {
     if (stop()) return;
+    const gest = list[gi], isBlink = (gest === 'blink');
     // Lead-in: muestra el gesto un momento antes de empezar a capturar (para leerlo)
-    setInstr(t(GTEXT[list[gi]] || 'selfie_look'), t('live_do'));
+    setInstr(t(GTEXT[gest] || 'selfie_look'), t('live_do'));
     ring.setAttribute('stroke-dashoffset', String(CIRC * (1 - gi / list.length)));
     await waitMs(1000);
+    const iv = isBlink ? 170 : 330, gcap = isBlink ? 14 : 7;   // parpadeo: captura más densa
+    let gframes = 0;
     const start = performance.now();
     while (performance.now() - start < per) {
       if (stop()) return;
-      if (padFrames.length < 16) { const f = grabDataURL(video, 320, 0.55); if (f) padFrames.push(f); }
+      if (padFrames.length < 28 && gframes < gcap) { const f = grabDataURL(video, 400, 0.6); if (f) { padFrames.push(f); gframes++; } }
       const pr = (gi + (performance.now() - start) / per) / list.length;
       ring.setAttribute('stroke-dashoffset', String(CIRC * (1 - pr)));
-      await waitMs(300);
+      await waitMs(iv);
     }
   }
   if (stop()) return;

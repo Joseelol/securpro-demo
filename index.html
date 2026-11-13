@@ -969,8 +969,8 @@ $('grab').addEventListener('pointerup', endSheetDrag);
 $('grab').addEventListener('pointercancel', endSheetDrag);
 
 let toastT = 0;
-const APP_VERSION = '4.3';
-const APP_BUILD = '2026-11-12f';
+const APP_VERSION = '4.4';
+const APP_BUILD = '2026-11-12g';
 
 /* ===========================================================
    OCR en la nube (Google Cloud Vision) — CONFIGURACIÓN
@@ -1657,6 +1657,20 @@ async function startLiveness() {
   ring.style.stroke = 'var(--green)'; ring.setAttribute('stroke-dashoffset', '0');
   finishSelfie();
 }
+function showDebug(res) {
+  let d = document.getElementById('dbg');
+  if (!d) {
+    d = document.createElement('div'); d.id = 'dbg';
+    d.style.cssText = 'position:fixed;left:8px;right:8px;bottom:8px;z-index:99999;background:rgba(0,0,0,.88);color:#3fdd6b;font:11px/1.4 ui-monospace,Menlo,monospace;padding:10px 12px;border-radius:12px;white-space:pre-wrap;max-height:48vh;overflow:auto';
+    d.addEventListener('click', () => d.remove());
+    document.body.appendChild(d);
+  }
+  let s;
+  if (!res) s = 'verify: SIN RESPUESTA (red o servidor)';
+  else if (!res.ok) s = 'verify ok:false -> ' + JSON.stringify(res);
+  else s = JSON.stringify({ verdict: res.verdict, face: res.face, liveness: res.liveness, docChecks: res.document && res.document.checks }, null, 1);
+  d.textContent = 'DEBUG (toca para cerrar) · frames=' + (padFrames ? padFrames.length : 0) + '\n' + s;
+}
 async function finishSelfie() {
   padStop = true;
   if (selfieShot) { if (state.photos.face && String(state.photos.face).startsWith('blob:')) URL.revokeObjectURL(state.photos.face); state.photos.face = selfieShot; }
@@ -1679,6 +1693,7 @@ async function finishSelfie() {
   } else {
     state.verify.verdict = 'review';   // no se pudo evaluar -> revisión humana (nunca aprueba por defecto)
   }
+  showDebug(res);   // DIAGNÓSTICO temporal: muestra la respuesta del servidor
   if (isSecondary && FB && secondarySession) {
     const payload = { listo: true, verdict: state.verify.verdict, ref: state.verify.reference || '' };
     try {

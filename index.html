@@ -315,6 +315,7 @@ button.row:active{background:#E8E8ED;transition:none}
 <!-- Hidden file inputs: native camera / photo library fallback -->
 <input type="file" id="fileDocCam" class="vh" accept="image/*" capture="environment" tabindex="-1" aria-hidden="true">
 <input type="file" id="fileFaceCam" class="vh" accept="image/*" capture="user" tabindex="-1" aria-hidden="true">
+<input type="file" id="fileOcrTest" class="vh" accept="image/*" multiple tabindex="-1" aria-hidden="true">
 
 <!-- 1 · Bienvenida -->
 <section class="screen welcome" id="main" aria-label="Bienvenida">
@@ -409,6 +410,7 @@ button.row:active{background:#E8E8ED;transition:none}
     <button class="btn-plain" id="retakeDoc" data-i18n="retake">Repetir</button>
     <button class="btn" id="useDoc" data-i18n="use_photo">Usar foto</button>
   </div>
+  <button class="btn-plain" id="ocrTestBtn" style="margin:4px auto 0;font-size:13px;color:var(--muted)" data-i18n="ocr_test">Subir foto (probar OCR)</button>
 </section>
 
 <!-- 4 · Revisión -->
@@ -699,7 +701,7 @@ const STR = {
     st_review:'Revisa la foto', st_review_sub:'¿Se leen bien todos los datos y no hay reflejos?', cam_loading:'Abriendo la cámara…',
     cap_passport:'Página de tu foto', cap_front_pre:'Frente de la ', cap_back_pre:'Reverso de la ',
     short_cedula:'cédula', short_passport:'pasaporte', short_licencia:'licencia',
-    selfie_look:'Mira de frente a la cámara', selfie_left:'Gira la cabeza despacio a la izquierda', selfie_right:'Ahora, despacio a la derecha', selfie_g_blink:'Parpadea', selfie_g_turn:'Gira la cabeza a un lado', selfie_g_up:'Mira hacia arriba', selfie_g_down:'Mira hacia abajo', selfie_tap:'Toca el botón para tomar tu selfie', selfie_tip:'Quítate los lentes y la gorra.',
+    selfie_look:'Mira de frente a la cámara', selfie_left:'Gira la cabeza despacio a la izquierda', selfie_right:'Ahora, despacio a la derecha', selfie_g_blink:'Parpadea', selfie_g_turn:'Gira la cabeza a un lado', selfie_g_up:'Mira hacia arriba', selfie_g_down:'Mira hacia abajo', selfie_hold:'Mira de frente y no te muevas', selfie_count:'Tomando tu selfie en {n}…', selfie_taken:'¡Selfie lista!', live_intro:'Ahora, la prueba de vida', live_intro_sub:'Sigue las indicaciones, con calma.', live_do:'Hazlo despacio', selfie_tap:'Toca el botón para tomar tu selfie', selfie_tip:'Quítate los lentes y la gorra.',
     selfie_review:'¿Se ve bien tu rostro?', selfie_review_sub:'Debe verse completo, sin sombras fuertes.',
     verifying:'Verificando…', verifying_sub:'Esto toma unos segundos.', done_word:'Listo',
     proc_title:'Procesando información…', proc_sub:'Leyendo los datos de tu documento.', verif_title:'Verificando información…', verif_sub:'Comparando tu rostro y confirmando que eres tú.',
@@ -775,7 +777,7 @@ const STR = {
     st_review:'Review the photo', st_review_sub:'Can you read all the data clearly, with no glare?', cam_loading:'Opening the camera…',
     cap_passport:'Photo page', cap_front_pre:'Front of your ', cap_back_pre:'Back of your ',
     short_cedula:'ID card', short_passport:'passport', short_licencia:'license',
-    selfie_look:'Look straight at the camera', selfie_left:'Slowly turn your head left', selfie_right:'Now, slowly to the right', selfie_g_blink:'Blink', selfie_g_turn:'Turn your head to one side', selfie_g_up:'Look up', selfie_g_down:'Look down', selfie_tap:'Tap the button to take your selfie', selfie_tip:'Take off glasses and hat.',
+    selfie_look:'Look straight at the camera', selfie_left:'Slowly turn your head left', selfie_right:'Now, slowly to the right', selfie_g_blink:'Blink', selfie_g_turn:'Turn your head to one side', selfie_g_up:'Look up', selfie_g_down:'Look down', selfie_hold:'Look straight ahead and hold still', selfie_count:'Taking your selfie in {n}…', selfie_taken:'Selfie captured!', live_intro:'Now, the liveness check', live_intro_sub:'Follow the prompts, take your time.', live_do:'Do it slowly', selfie_tap:'Tap the button to take your selfie', selfie_tip:'Take off glasses and hat.',
     selfie_review:'Does your face look good?', selfie_review_sub:'It should show fully, with no harsh shadows.',
     verifying:'Verifying…', verifying_sub:'This takes a few seconds.', done_word:'Done',
     proc_title:'Processing information…', proc_sub:'Reading the data on your document.', verif_title:'Verifying information…', verif_sub:'Comparing your face and confirming it’s you.',
@@ -967,8 +969,8 @@ $('grab').addEventListener('pointerup', endSheetDrag);
 $('grab').addEventListener('pointercancel', endSheetDrag);
 
 let toastT = 0;
-const APP_VERSION = '4.0';
-const APP_BUILD = '2026-11-12c';
+const APP_VERSION = '4.3';
+const APP_BUILD = '2026-11-12f';
 
 /* ===========================================================
    OCR en la nube (Google Cloud Vision) — CONFIGURACIÓN
@@ -1381,6 +1383,20 @@ $('useDoc').addEventListener('click', async () => {
   else push('revision');
 });
 $('seg').querySelectorAll('[role="tab"]').forEach((t) => t.addEventListener('click', () => { setSide(t.dataset.side); showDocCam(); }));
+// Subir foto(s) para probar (sin cámara): 1ra = frente, 2da = reverso (opcional) -> va a revisión
+$('ocrTestBtn').addEventListener('click', () => $('fileOcrTest').click());
+$('fileOcrTest').addEventListener('change', (e) => {
+  const files = e.target.files ? Array.from(e.target.files) : []; e.target.value = '';
+  if (!files.length) return;
+  state.photos.front && URL.revokeObjectURL(state.photos.front);
+  state.photos.back && URL.revokeObjectURL(state.photos.back);
+  state.photos.front = URL.createObjectURL(files[0]);
+  state.photos.back = files[1] ? URL.createObjectURL(files[1]) : null;
+  if (state.photos.front) $('doneFront').hidden = false;
+  if (state.photos.back) $('doneBack').hidden = false;
+  ocrCache = { url: null, res: null };
+  push('revision');
+});
 $('torch').addEventListener('click', async (e) => {
   const btn = e.currentTarget, on = btn.getAttribute('aria-pressed') !== 'true';
   try { await stream.getVideoTracks()[0].applyConstraints({ advanced: [{ torch: on }] }); btn.setAttribute('aria-pressed', String(on)); } catch (_) { toast(t('torch_na')); }
@@ -1602,37 +1618,42 @@ async function enterSelfie() {
   showFaceCam(); setInstr(t('cam_loading'), '');
   faceLive = await startCam($('camFront'), 'user');
   if (!atSelfieNow()) return;
-  if (!faceLive) { showFaceCam(); return; }   // sin cámara en vivo -> captura manual (botón)
-  $('facecam').classList.add('live'); $('faceControls').hidden = true; $('faceReview').hidden = true;
+  // Muestra la cámara con el BOTÓN para tomar la selfie (manual). La prueba de vida va después.
+  showFaceCam();
+  setInstr(faceLive ? t('selfie_hold') : t('selfie_tap'), t('selfie_tip'));
+}
+// Prueba de vida (gestos) — se ejecuta DESPUÉS de que el usuario toma la selfie con el botón.
+async function startLiveness() {
+  const video = $('camFront'), ring = $('ringProg');
+  const stop = () => padStop || !atSelfieNow();
+  if (!(faceLive && stream)) { finishSelfie(); return; }   // sin cámara en vivo -> sin gestos -> revisión humana
+  try { $('shotFace').hidden = true; $('facecam').classList.add('live'); } catch (_) {}
+  $('faceControls').hidden = true; $('faceReview').hidden = true;
+  // Reto fresco del servidor (secuencia aleatoria de gestos)
   let seq = null, token = null;
   try { const c = await serverCall('challenge', {}); seq = c.seq; token = c.challengeToken; } catch (_) {}
   state.verify.seq = seq; state.verify.challengeToken = token;
-  if (!atSelfieNow()) return;
-  runChallenge(seq);
-}
-// Prueba de vida dirigida por el servidor: muestra cada gesto y captura frames; el servidor los verifica.
-async function runChallenge(seq) {
-  const video = $('camFront'), ring = $('ringProg');
   resetRing();
-  setInstr(t('selfie_look'), t('selfie_tip'));
-  await waitMs(700);
-  if (padStop || !atSelfieNow()) return;
-  selfieShot = grabDataURL(video, 480, 0.75);   // selfie frontal
+  setInstr(t('live_intro'), t('live_intro_sub'));
+  await waitMs(1600);
   const list = (seq && seq.length) ? seq : ['blink', 'turn', 'up'];
-  const per = reduced.matches ? 1300 : 2600;
+  const per = reduced.matches ? 1800 : 3200;   // tiempo por gesto
   for (let gi = 0; gi < list.length; gi++) {
-    if (padStop || !atSelfieNow()) return;
-    setInstr(t(GTEXT[list[gi]] || 'selfie_look'), t('selfie_tip'));
+    if (stop()) return;
+    // Lead-in: muestra el gesto un momento antes de empezar a capturar (para leerlo)
+    setInstr(t(GTEXT[list[gi]] || 'selfie_look'), t('live_do'));
+    ring.setAttribute('stroke-dashoffset', String(CIRC * (1 - gi / list.length)));
+    await waitMs(1000);
     const start = performance.now();
     while (performance.now() - start < per) {
-      if (padStop || !atSelfieNow()) return;
+      if (stop()) return;
       if (padFrames.length < 16) { const f = grabDataURL(video, 320, 0.55); if (f) padFrames.push(f); }
       const pr = (gi + (performance.now() - start) / per) / list.length;
       ring.setAttribute('stroke-dashoffset', String(CIRC * (1 - pr)));
       await waitMs(300);
     }
   }
-  if (padStop || !atSelfieNow()) return;
+  if (stop()) return;
   ring.style.stroke = 'var(--green)'; ring.setAttribute('stroke-dashoffset', '0');
   finishSelfie();
 }
@@ -1878,9 +1899,12 @@ $('fileFaceCam').addEventListener('change', (e) => { const f = e.target.files &&
 $('retakeFace').addEventListener('click', () => { if (facePending) URL.revokeObjectURL(facePending); facePending = null; showFaceCam(); });
 $('useFace').addEventListener('click', async () => {
   if (!facePending) return;
-  try { selfieShot = await compressURL(facePending, 480, 0.75); } catch (_) { selfieShot = null; }
-  if (!Array.isArray(padFrames)) padFrames = [];
-  finishSelfie();   // sin frames de gestos -> el servidor marcará revisión humana
+  const fresh = grabDataURL($('camFront'), 480, 0.78);   // sin espejo, consistente con los frames de vida
+  if (fresh) selfieShot = fresh;
+  else { try { selfieShot = await compressURL(facePending, 480, 0.78); } catch (_) { selfieShot = null; } }
+  padFrames = [];
+  $('faceReview').hidden = true;
+  startLiveness();   // confirmada la selfie -> pasa a la prueba de vida
 });
 
 /* ================= Result ================= */
